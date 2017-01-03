@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class Landing extends Component {
+class BodyMiddle extends Component {
   render() {
     return (
       <div className="page-header">
-        <h1>landing <small>Gomorronsol</small></h1>
+        <h1>Body middle<small>Gomorronsol</small></h1>
       </div>
     );
   }
 }
 
-export default Landing;
+export default BodyMiddle;

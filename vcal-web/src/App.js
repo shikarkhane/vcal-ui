@@ -2,19 +2,24 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import { Well } from 'react-bootstrap';
-import Header from './Header';
+import Landing from './Landing';
+import Dashboard from './Dashboard';
 
 class App extends Component {
   render() {
-    return (
-      <div className="App">
-        <Header />
-        <Well>
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </Well>
-      </div>
+    var is_auth = true;
+    var content = (
+        <Landing />
     );
+
+    if (is_auth)
+    {
+      content = (
+          <Dashboard />
+      );
+    };
+
+    return content;
   }
 }
 
