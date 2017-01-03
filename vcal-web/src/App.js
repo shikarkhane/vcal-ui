@@ -2,18 +2,17 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { Well } from 'react-bootstrap';
+import Header from './Header';
+
 class App extends Component {
   render() {
-    var message = 'sporify';
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>{message}</h2>
-        </div>
-        <p className="App-intro">
+        <Header />
+        <Well>
           To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        </Well>
       </div>
     );
   }
