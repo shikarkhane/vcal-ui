@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import reqwest from 'reqwest';
+import CreateWorkday from './CreateWorkday';
+import ListWorkday from './ListWorkday';
 
 class Workday extends Component {
   render() {
     return (
-      <div className="page-header">
+      <div>
         <h1>Workday<small>Gomorronsol</small></h1>
+        <CreateWorkday />
+        <ListWorkday />
       </div>
     );
   }

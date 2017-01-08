@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import reqwest from 'reqwest';
 import CreateSummon from './CreateSummon';
 import ListSummon from './ListSummon';
 

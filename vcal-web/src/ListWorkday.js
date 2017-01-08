@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
-class ListSummon extends Component {
+class ListWorkday extends Component {
   handleGet(){
     reqwest({
-        url: 'http://localhost:8080/sv/summon/'
+        url: 'http://localhost:8080/sv/workday/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
@@ -26,4 +26,4 @@ class ListSummon extends Component {
   }
 }
 
-export default ListSummon;
+export default ListWorkday;
