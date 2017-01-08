@@ -19,11 +19,11 @@ class CreateSummon extends Component {
     return (
             <div>
                 <h4>Create summon</h4>
-                <label for="create-summon-date">Date</label>
+                <label >Date</label>
                 <input id="create-summon-date" data-mini="true" type="date" />
-                <label for="create-summon-fromtime">From</label>
+                <label >From</label>
                 <input id="create-summon-fromtime" data-mini="true" type="number" placeholder="0900"/>
-                <label for="create-summon-totime">To</label>
+                <label >To</label>
                 <input id="create-summon-totime" data-mini="true" type="number" placeholder="1630"/>
                 <button id="create-summon-save" onClick={this.handleSave}>Save</button>
             </div>

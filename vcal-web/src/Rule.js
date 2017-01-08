@@ -21,20 +21,20 @@ class Rule extends Component {
         <h1>Rule<small>Gomorronsol</small></h1>
           <div>
               <h4>Stand-in day rule</h4>
-              <label for="standin-rule-family-1">Family with 1 kid</label>
+              <label >Family with 1 kid</label>
               <input id="standin-rule-family-1" onChange={this.handleChange} type="number"  placeholder="15"/>
-              <label for="standin-rule-family-2">Family with 2 kids</label>
+              <label >Family with 2 kids</label>
               <input id="standin-rule-family-2"  onChange={this.handleChange} type="number"  placeholder="5"/>
-              <label for="standin-rule-family-3">Family with 3 kids</label>
+              <label >Family with 3 kids</label>
               <input id="standin-rule-family-3"  onChange={this.handleChange} type="number"  placeholder="1"/>
           </div>
           <div>
               <h4>Work day rule</h4>
-              <label for="workday-rule-family-1">Family with 1 kid</label>
+              <label >Family with 1 kid</label>
               <input id="workday-rule-family-1"  onChange={this.handleChange} type="number"  placeholder="15"/>
-              <label for="workday-rule-family-2">Family with 2 kids</label>
+              <label >Family with 2 kids</label>
               <input id="workday-rule-family-2"  onChange={this.handleChange} type="number"  placeholder="5"/>
-              <label for="workday-rule-family-3">Family with 3 kids</label>
+              <label >Family with 3 kids</label>
               <input id="workday-rule-family-3"  onChange={this.handleChange} type="number"  placeholder="1"/>
           </div>
       </div>

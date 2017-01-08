@@ -20,19 +20,19 @@ class CreateSummon extends Component {
     return (
             <div>
                 <h4>Create term</h4>
-                <label for="term-name">Term name</label>
-                <input id="term-name" data-mini="true" type="text" />
-                <label for="create-term-startdate">Start Date</label>
-                <input id="create-term-startdate" data-mini="true" type="date" />
-                <label for="create-term-enddate">End Date</label>
-                <input id="create-term-enddate" data-mini="true" type="date" />
+                <label >Term name</label>
+                <input id="term-name" type="text" />
+                <label >Start Date</label>
+                <input id="create-term-startdate" type="date" />
+                <label >End Date</label>
+                <input id="create-term-enddate" type="date" />
 
-                <label for="term-family-1">Family count with 1 kid</label>
-                <input id="term-family-1" data-mini="true" type="number"  placeholder="15"/>
-                <label for="term-family-2">Family count with 2 kid</label>
-                <input id="term-family-2" data-mini="true" type="number"  placeholder="5"/>
-                <label for="term-family-3">Family count with 3 kid</label>
-                <input id="term-family-3" data-mini="true" type="number"  placeholder="1"/>
+                <label >Family count with 1 kid</label>
+                <input id="term-family-1" type="number"  placeholder="15"/>
+                <label >Family count with 2 kid</label>
+                <input id="term-family-2" type="number"  placeholder="5"/>
+                <label >Family count with 3 kid</label>
+                <input id="term-family-3" type="number"  placeholder="1"/>
                 <button id="create-term-save" onClick={this.handleSave}>Save</button>
             </div>
     );

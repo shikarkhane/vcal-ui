@@ -19,14 +19,14 @@ class CreateWorkday extends Component {
     return (
             <div>
                 <h4>Create workday</h4>
-                <label for="create-workday-date">Date</label>
-                <input id="create-workday-date" data-mini="true" type="date" />
-                <label for="create-workday-fromtime">From</label>
-                <input id="create-workday-fromtime" data-mini="true" type="number" placeholder="0900"/>
-                <label for="create-workday-totime">To</label>
-                <input id="create-workday-totime" data-mini="true" type="number" placeholder="1630"/>
-                <label for="create-workday-halfday">Half day</label>
-                <input id="create-workday-halfday" data-mini="true" type="checkbox"/>
+                <label >Date</label>
+                <input id="create-workday-date" type="date" />
+                <label >From</label>
+                <input id="create-workday-fromtime" type="number" placeholder="0900"/>
+                <label >To</label>
+                <input id="create-workday-totime" type="number" placeholder="1630"/>
+                <label >Half day</label>
+                <input id="create-workday-halfday" type="checkbox"/>
                 <button id="create-workday-save" onClick={this.handleSave}>Save</button>
             </div>
     );
