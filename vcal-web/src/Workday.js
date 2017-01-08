@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import reqwest from 'reqwest';
 import CreateWorkday from './CreateWorkday';
 import ListWorkday from './ListWorkday';
 
