@@ -6,8 +6,8 @@ class WorkSignUp extends Component {
     return (
       <div className="page-header">
         <h1>WorkSignUp<small>Gomorronsol</small></h1>
-        <WorkSignUpComponent />
-        <WorkSignUpComponent />
+        <WorkSignUpComponent headerCaption="Fill stand-in days"/>
+        <WorkSignUpComponent headerCaption="Fill work days"/>
       </div>
     );
   }

@@ -44,7 +44,7 @@ class WorkSignUpComponent extends Component {
   render() {
     return (
             <div>
-              <h4>Fill {"4"} Stand-in days</h4>
+              <h4>{this.props.headerCaption}</h4>
               <div className="input-group">
                 <input type="checkbox" className="form-control" data-pick-date="2017-01-13"
                   aria-describedby="addon-pickdate-1" onChange={this.handleSave}/>
