@@ -6,17 +6,13 @@ import Landing from './Landing';
 import Dashboard from './Dashboard';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {is_auth: localStorage.getItem("is_auth")};
-  }
   render() {
-
+    this.state = {is_auth: localStorage.getItem("is_auth")};
     var content = (
         <Landing />
     );
 
-    if (this.state.is_auth)
+    if (Boolean(this.state.is_auth) === true)
     {
       content = (
           <Dashboard />
