@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import reqwest from 'reqwest';
 
-class SwitchdayComponent extends Component {
+class PickDate extends Component{
   handleSave(){
     /*
     reqwest({
@@ -17,25 +16,24 @@ class SwitchdayComponent extends Component {
     });
     */
   }
+  render(){
+    return (
+      <div className="input-group">
+        <input type="checkbox" className="form-control" data-pick-date="{this.props.chosenDate}"
+           onChange={this.handleSave}/>
+        <span className="input-group-addon" >{this.props.chosenDate}</span>
+      </div>
+    );
+  }
+}
+class SwitchdayComponent extends Component {
   render() {
     return (
             <div>
               <h4>{this.props.headerCaption}</h4>
-              <div className="input-group">
-                <input type="checkbox" className="form-control" data-pick-date="2017-01-13"
-                  aria-describedby="addon-pickdate-1" onChange={this.handleSave}/>
-                <span className="input-group-addon" id="addon-pickdate-1">2017-01-13</span>
-              </div>
-              <div className="input-group">
-                <input type="checkbox" className="form-control" data-pick-date="2017-01-18"
-                  aria-describedby="addon-pickdate-2" onChange={this.handleSave}/>
-                <span className="input-group-addon" id="addon-pickdate-2">2017-01-18</span>
-              </div>
-              <div className="input-group">
-                <input type="checkbox" className="form-control" data-pick-date="2017-01-21"
-                  aria-describedby="addon-pickdate-3" onChange={this.handleSave}/>
-                <span className="input-group-addon" id="addon-pickdate-3">2017-01-21</span>
-              </div>
+              <PickDate chosenDate="2017-01-18" />
+              <PickDate chosenDate="2017-01-20" />
+              <PickDate chosenDate="2017-01-21" />
             </div>
     );
   }
