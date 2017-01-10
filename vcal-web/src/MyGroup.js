@@ -15,7 +15,12 @@ class GroupElement extends Component{
     );
   }
 }
-class Group extends Component {
+class MyGroup extends Component {
+  constructor(props) {
+   super(props);
+   // todo: get list of groups user is member of
+   this.state = {date: new Date()};
+ }
   render() {
     return (
       <div className="page-header">
@@ -28,4 +33,4 @@ class Group extends Component {
   }
 }
 
-export default Group;
+export default MyGroup;
