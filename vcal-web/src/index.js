@@ -1,9 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+
 import './index.css';
 
+import { Router, Route, IndexRoute, hashHistory } from "react-router";
+
+import App from './App';
+import Group from './Group';
+
 ReactDOM.render(
-  <App />,
-  document.getElementById('root')
+  <Router history={hashHistory}>
+    <Route path="/" component={App}></Route>
+    <Route path="/group" component={Group}></Route>
+  </Router>
+  , document.getElementById('root')
 );
