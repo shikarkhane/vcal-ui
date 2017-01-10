@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
-import reqwest from 'reqwest';
-
 
 class GoogleButton extends Component{
   render(){
     const responseGoogle = (response) => {
       console.log(response);
-      if (response.type === "tokenFailed"){
+      if (response.type !== "tokenFailed"){
         localStorage.setItem("tokenId", response.tokenId);
         localStorage.setItem("profileObj", response.profileObj);
-        localStorage.setItem("is_auth", false);
-    }
+        localStorage.setItem("is_auth", true);
+      }
     }
 
     return (
       <GoogleLogin
-        clientId="50349381828-.apps.googleusercontent.com"
+        clientId="50349381828-vq4r53fp7b0pr2mbh7gpq6k2f05m4kmj.apps.googleusercontent.com"
         buttonText="Login"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
