@@ -4,7 +4,7 @@ import reqwest from 'reqwest';
 class Rule extends Component {
   handleChange(){
     reqwest({
-        url: 'http://localhost:8080/sv/rule/'
+        url: 'http://localhost:8080/rule/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
@@ -18,7 +18,7 @@ class Rule extends Component {
   render() {
     return (
       <div className="page-header">
-        <h1>Rule<small>Gomorronsol</small></h1>
+        <h1>Rule<small>gs</small></h1>
           <div>
               <h4>Stand-in day rule</h4>
               <label >Family with 1 kid</label>

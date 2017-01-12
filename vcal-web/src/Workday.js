@@ -6,7 +6,7 @@ class Workday extends Component {
   render() {
     return (
       <div>
-        <h1>Workday<small>Gomorronsol</small></h1>
+        <h1>Workday<small>gs</small></h1>
         <CreateWorkday />
         <ListWorkday />
       </div>

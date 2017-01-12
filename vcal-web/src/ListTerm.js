@@ -4,7 +4,7 @@ import reqwest from 'reqwest';
 class ListSummon extends Component {
   handleGet(){
     reqwest({
-        url: 'http://localhost:8080/sv/term/'
+        url: 'http://localhost:8080/term/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'

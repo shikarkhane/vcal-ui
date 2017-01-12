@@ -4,7 +4,7 @@ class Oops extends Component {
   render() {
     return (
       <div className="page-header">
-        <h1>Oops<small>Gomorronsol</small></h1>
+        <h1>Oops<small>gs</small></h1>
       </div>
     );
   }

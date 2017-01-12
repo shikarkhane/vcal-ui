@@ -4,7 +4,7 @@ import reqwest from 'reqwest';
 class CreateSummon extends Component {
   handleSave(){
     reqwest({
-        url: 'http://localhost:8080/sv/term/'
+        url: 'http://localhost:8080/term/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'

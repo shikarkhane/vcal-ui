@@ -4,7 +4,7 @@ class Header extends Component {
   render() {
     return (
       <div className="page-header">
-        <h1>Vikarie calendar<small>Gomorronsol</small></h1>
+        <h1>Vikarie calendar<small>gs</small></h1>
       </div>
     );
   }

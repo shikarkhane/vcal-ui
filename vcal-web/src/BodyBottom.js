@@ -75,7 +75,7 @@ class BodyBottom extends Component {
   render() {
     return (
       <div className="page-header">
-        <h1>BodyBottom<small>Gomorronsol</small></h1>
+        <h1>BodyBottom<small>gs</small></h1>
         <button onClick={this.handlerSummon}>summon</button>
         <button onClick={this.handlerWorkDay}>Work day</button>
         <button onClick={this.handlerTerm}>Term</button>

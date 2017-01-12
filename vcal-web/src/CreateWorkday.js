@@ -4,7 +4,7 @@ import reqwest from 'reqwest';
 class CreateWorkday extends Component {
   handleSave(){
     reqwest({
-        url: 'http://localhost:8080/sv/workday/'
+        url: 'http://localhost:8080/workday/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'

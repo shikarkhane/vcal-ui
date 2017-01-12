@@ -11,7 +11,7 @@ class Showups extends Component {
     var workday_user_ids = [1,2];
     var standin_user_ids = [3];
     reqwest({
-        url: 'http://localhost:8080/sv/show-ups/' + group_id + "/date/" + work_date + "/"
+        url: 'http://localhost:8080/show-ups/' + group_id + "/date/" + work_date + "/"
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
@@ -25,7 +25,7 @@ class Showups extends Component {
   render() {
     return (
       <div className="page-header">
-        <h1>Show ups<small>Gomorronsol</small></h1>
+        <h1>Show ups<small>gs</small></h1>
         <div className="input-group">
           <span className="input-group-addon" id="addon-date">Choose date:</span>
           <input type="date" className="form-control" id="showup-chosen-date"

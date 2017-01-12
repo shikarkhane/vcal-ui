@@ -6,7 +6,7 @@ class Term extends Component {
   render() {
     return (
       <div>
-        <h1>Term<small>Gomorronsol</small></h1>
+        <h1>Term<small>gs</small></h1>
         <CreateTerm />
         <ListTerm />
       </div>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import reqwest from 'reqwest';
 
 class GroupElement extends Component{
   handleChooseGroup(groupId, groupName){
@@ -18,16 +19,34 @@ class GroupElement extends Component{
 class MyGroup extends Component {
   constructor(props) {
    super(props);
-   // todo: get list of groups user is member of
-   this.state = {date: new Date()};
+   this.state = {groups: []};
  }
+ componentDidMount() {
+      this.getGroups();
+  }
+  getGroups(){
+    var self = this;
+       // todo: get list of groups user is member of
+       reqwest({
+           url: 'http://localhost:8080/group/'
+         , method: 'get'
+         , success: function (resp) {
+             var j = JSON.parse(resp);
+             self.setState({groups: j});
+           }
+       });
+  }
+
   render() {
+    const grps = this.state.groups;
+    const groupButtons = grps.map((grp) =>
+    <GroupElement groupId="{grp.id}" groupName="{grp.name}" />
+  );
+
     return (
       <div className="page-header">
         <h1>Group </h1>
-        <GroupElement groupId="1" groupName="Gomorronsol" />
-        <GroupElement groupId="2" groupName="Nest" />
-        <GroupElement groupId="3" groupName="Ogolo" />
+        {groupButtons}
       </div>
     );
   }

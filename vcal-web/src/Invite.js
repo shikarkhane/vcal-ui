@@ -6,7 +6,7 @@ class Invite extends Component {
     var emails = 'nikhil@tinktime.com,n@g.com';
     var group_id = 1;
     reqwest({
-        url: 'http://localhost:8080/sv/invite/'
+        url: 'http://localhost:8080/invite/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
@@ -19,7 +19,7 @@ class Invite extends Component {
   render() {
     return (
       <div className="page-header">
-        <h1>Invite <small>Gomorronsol</small></h1>
+        <h1>Invite <small>gs</small></h1>
         <textarea id="textarea-invitees" placeholder="separate emails by comma sign (,) "></textarea>
         <input type="button" value="Send invites" onClick={this.handleSave}/>
       </div>

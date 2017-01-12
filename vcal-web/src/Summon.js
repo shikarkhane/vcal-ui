@@ -6,7 +6,7 @@ class Summon extends Component {
   render() {
     return (
       <div>
-        <h1>Summon<small>Gomorronsol</small></h1>
+        <h1>Summon<small>gs</small></h1>
         <CreateSummon />
         <ListSummon />
       </div>

@@ -11,7 +11,7 @@ class PickDate extends Component{
     var is_taken = true;
 
     reqwest({
-        url: 'http://localhost:8080/sv/work-sign-up/' + group_id + "/"
+        url: 'http://localhost:8080/work-sign-up/' + group_id + "/"
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'

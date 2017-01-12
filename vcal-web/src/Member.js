@@ -5,7 +5,7 @@ class Member extends Component {
   handleAction(){
     console.log('take action after member click');
     /*reqwest({
-        url: 'http://localhost:8080/sv/workday/'
+        url: 'http://localhost:8080/workday/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
@@ -19,7 +19,7 @@ class Member extends Component {
   render() {
     return (
       <div className="page-header">
-        <h1>Member <small>Gomorronsol</small></h1>
+        <h1>Member <small>gs</small></h1>
           <ul className="list-group">
             <li className="list-group-item" onClick={this.handleAction}>Nikhil</li>
             <li className="list-group-item" onClick={this.handleAction}>Carin</li>
