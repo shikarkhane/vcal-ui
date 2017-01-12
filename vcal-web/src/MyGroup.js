@@ -29,9 +29,11 @@ class MyGroup extends Component {
        // todo: get list of groups user is member of
        reqwest({
            url: 'http://localhost:8080/group/'
+           , type: 'json'
+           , contentType: 'application/json'
          , method: 'get'
          , success: function (resp) {
-             var j = JSON.parse(resp);
+             var j = resp;
              self.setState({groups: j});
            }
        });
@@ -40,7 +42,7 @@ class MyGroup extends Component {
   render() {
     const grps = this.state.groups;
     const groupButtons = grps.map((grp) =>
-    <GroupElement groupId="{grp.id}" groupName="{grp.name}" />
+    <GroupElement key={grp.id} groupId={grp.id} groupName={grp.name} />
   );
 
     return (
