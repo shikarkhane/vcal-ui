@@ -1,25 +1,60 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
-class ListSummon extends Component {
-  handleGet(){
+class SummonElement extends Component{
+  handleDeleteSummon(termId){
     reqwest({
-        url: 'http://localhost:8080/summon/'
+        url: 'http://localhost:8080/summon/' + termId + '/'
       , type: 'json'
-      , method: 'post'
+      , method: 'delete'
       , contentType: 'application/json'
-      , data: JSON.stringify({ created_by_id: 1, group_id: 1, work_date: "2016-12-01",
-          from_time: "0900", to_time: "1600"})
       , success: function (resp) {
-          console.log(resp);
+          self.setState({summons: resp});
+        }
+    });
+  }
+  render(){
+    var termId = this.props.termId;
+
+    return (
+      <button onClick={this.handleDeleteSummon.bind(null, termId)}>
+        On {this.props.date} , stand-in needed between {this.props.fromTime}
+        till  {this.props.tillTime}</button>
+    );
+  }
+}
+
+class ListSummon extends Component {
+  constructor(props) {
+   super(props);
+   this.state = {summons: []};
+ }
+ componentDidMount() {
+      this.getSummons();
+  }
+  getSummons(){
+    var self = this;
+    var groupId = 1;
+    reqwest({
+        url: 'http://localhost:8080/summon/' + groupId + '/'
+      , type: 'json'
+      , method: 'get'
+      , contentType: 'application/json'
+      , success: function (resp) {
+          self.setState({summons: resp});
         }
     });
   }
   render() {
+    const smons = this.state.summons;
+    const summonButtons = smons.map((smon) =>
+    <SummonElement key={smon.id} termId={smon.id} date={smon.work_date}
+      fromTime={smon.from_time_in_24hours} tillTime={smon.to_time_in_24hours}/>
+  );
+
     return (
-            <div data-role="collapsible" data-mini="true">
-                  <a href="#" >On 23rd Dec, stand-in needed between 9 AM till 4:30 PM</a>
-                  <a href="#" >On 29th Dec, stand-in needed between 2 PM till 4:30 PM</a>
+            <div>
+                 {summonButtons}
             </div>
 
     );

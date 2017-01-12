@@ -35,8 +35,7 @@ class MyTerm extends Component {
          , contentType: 'application/json'
        , method: 'get'
        , success: function (resp) {
-           var j = resp;
-           self.setState({terms: j});
+           self.setState({terms: resp});
          }
      });
   }

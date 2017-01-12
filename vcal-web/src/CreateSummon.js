@@ -2,14 +2,37 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
 class CreateSummon extends Component {
-  handleSave(){
+  constructor(props) {
+   super(props);
+   this.state = {workDate: "", fromTime: "", tillTime: ""};
+
+   this.changeDate = this.changeDate.bind(this);
+   this.changeFromTime = this.changeFromTime.bind(this);
+   this.changeTillTime = this.changeTillTime.bind(this);
+   this.handleSave = this.handleSave.bind(this);
+
+ }
+
+  changeDate(e){
+    this.setState({workDate: e.target.value });
+  }
+  changeFromTime(e){
+    this.setState({fromTime: e.target.value });
+  }
+  changeTillTime(e){
+    this.setState({tillTime: e.target.value });
+  }
+  handleSave(e){
+    e.preventDefault();
+    var groupId = 1;
+    var creatorId = 1;
     reqwest({
-        url: 'http://localhost:8080/summon/'
+        url: 'http://localhost:8080/summon/' + groupId + '/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
-      , data: JSON.stringify({ created_by_id: 1, group_id: 1, work_date: "2016-12-01",
-          from_time: "0900", to_time: "1600"})
+      , data: JSON.stringify({ created_by_id: creatorId, work_date: this.state.workDate,
+          from_time: this.state.fromTime, to_time: this.state.tillTime})
       , success: function (resp) {
           console.log(resp);
         }
@@ -17,16 +40,22 @@ class CreateSummon extends Component {
   }
   render() {
     return (
-            <div>
-                <h4>Create summon</h4>
-                <label >Date</label>
-                <input id="create-summon-date" data-mini="true" type="date" />
-                <label >From</label>
-                <input id="create-summon-fromtime" data-mini="true" type="number" placeholder="0900"/>
-                <label >To</label>
-                <input id="create-summon-totime" data-mini="true" type="number" placeholder="1630"/>
-                <button id="create-summon-save" onClick={this.handleSave}>Save</button>
-            </div>
+
+            <form onSubmit={this.handleSave}>
+                <label>Date
+                  <input type="date"
+                  onChange={this.changeDate} value={this.state.workDate} />
+                </label>
+                <label >From
+                <input type="number" placeholder="0900"
+                  onChange={this.changeFromTime} value={this.state.fromTime}/>
+                </label>
+                <label >To
+                <input type="number" placeholder="1630"
+                  onChange={this.changeTillTime} value={this.state.tillTime}/>
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
     );
   }
 }

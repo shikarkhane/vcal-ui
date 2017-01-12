@@ -33,8 +33,7 @@ class MyGroup extends Component {
            , contentType: 'application/json'
          , method: 'get'
          , success: function (resp) {
-             var j = resp;
-             self.setState({groups: j});
+             self.setState({groups: resp});
            }
        });
   }
