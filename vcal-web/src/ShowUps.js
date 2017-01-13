@@ -23,6 +23,7 @@ class Showups extends Component {
     this.setState({chosenDate: e.target.value });
   }
   getStandins(e){
+    e.preventDefault();
     var self = this;
     var group_id = 1;
     var work_date = this.state.chosenDate;
@@ -38,6 +39,7 @@ class Showups extends Component {
     });
   }
   handleSave(e){
+    e.preventDefault();
     var group_id = 1;
     var work_date = this.state.chosenDate;
     var workday_user_ids = [1,2];

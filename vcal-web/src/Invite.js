@@ -2,8 +2,17 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
 class Invite extends Component {
-  handleSave(){
-    var emails = 'nikhil@tinktime.com,n@g.com';
+  constructor(props) {
+   super(props);
+   this.state = {invitees:[]};
+
+   this.changeInvitees = this.changeInvitees.bind(this);
+   this.handleSave = this.handleSave.bind(this);
+
+ }
+  handleSave(e){
+    e.preventDefault();
+    var emails = this.state.invitees;
     var group_id = 1;
     reqwest({
         url: 'http://localhost:8080/invite/'
@@ -16,13 +25,18 @@ class Invite extends Component {
         }
     });
   }
+  changeInvitees(e){
+    var i = e.target.value.split(',');
+    this.setState({invitees: i });
+  }
   render() {
     return (
-      <div className="page-header">
+      <form onSubmit={this.handleSave}>
         <h1>Invite <small>gs</small></h1>
-        <textarea id="textarea-invitees" placeholder="separate emails by comma sign (,) "></textarea>
+        <textarea placeholder="separate emails by comma sign (,) "
+          onChange={this.changeInvitees} value={this.state.invitees} ></textarea>
         <input type="button" value="Send invites" onClick={this.handleSave}/>
-      </div>
+      </form>
     );
   }
 }

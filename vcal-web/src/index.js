@@ -9,7 +9,7 @@ import App from './App';
 import MyGroup from './MyGroup';
 import MyTerm from './MyTerm';
 import Term from './Term';
-import Showups from './ShowUps';
+import Invite from './Invite';
 
 ReactDOM.render(
   <Router history={hashHistory}>
@@ -17,7 +17,7 @@ ReactDOM.render(
     <Route path="/mygroup" component={MyGroup}></Route>
     <Route path="/myterm" component={MyTerm}></Route>
     <Route path="/term" component={Term}></Route>
-    <Route path="/showups" component={Showups}></Route>
+    <Route path="/invite" component={Invite}></Route>
   </Router>
   , document.getElementById('root')
 );
