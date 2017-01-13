@@ -1,13 +1,45 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
-class Showups extends Component {
-  handleDateChange(){
-    console.log('handle date change- get vikarie working that date');
+class StandinElement extends Component{
+  render(){
+    return (
+      <label>
+        <input type="checkbox" />
+        {this.props.standinName}
+      </label>
+    );
   }
-  handleSave(){
+}
+class Showups extends Component {
+  constructor(props) {
+   super(props);
+   this.state = {standins: {'standin':[], 'workday':[]}};
+
+   this.changeDate = this.changeDate.bind(this);
+ }
+
+  changeDate(e){
+    this.setState({chosenDate: e.target.value });
+  }
+  getStandins(e){
+    var self = this;
     var group_id = 1;
-    var work_date = '2017-01-15';
+    var work_date = this.state.chosenDate;
+
+    reqwest({
+        url: 'http://localhost:8080/show-ups/' + group_id + "/date/" + work_date + "/"
+      , type: 'json'
+      , method: 'get'
+      , contentType: 'application/json'
+      , success: function (resp) {
+          self.setState({standins: resp});
+        }
+    });
+  }
+  handleSave(e){
+    var group_id = 1;
+    var work_date = this.state.chosenDate;
     var workday_user_ids = [1,2];
     var standin_user_ids = [3];
     reqwest({
@@ -23,31 +55,24 @@ class Showups extends Component {
     });
   }
   render() {
+    const sins = this.state.standins.standin;
+    const standins = sins.map((sin) =>
+    <StandinElement key={sin.id} standinDayId={sin.id}
+      standinUserId={sin.standin_user_id}
+      />
+  );
+
     return (
-      <div className="page-header">
+      <form onSubmit={this.handleSave}>
         <h1>Show ups<small>gs</small></h1>
-        <div className="input-group">
-          <span className="input-group-addon" id="addon-date">Choose date:</span>
-          <input type="date" className="form-control" id="showup-chosen-date"
-            aria-describedby="addon-date" onChange={this.handleDateChange}/>
-        </div>
-        <div className="input-group">
-          <input type="checkbox" className="form-control" id="showup-user-1"
-            aria-describedby="addon-user-1" onChange={this.handleDateChange}/>
-          <span className="input-group-addon" data-user-id="1" id="addon-user-1">Jimmy</span>
-        </div>
-        <div className="input-group">
-          <input type="checkbox" className="form-control" id="showup-user-2"
-            aria-describedby="addon-user-2" onChange={this.handleDateChange}/>
-          <span className="input-group-addon" data-user-id="2" id="addon-user-2">Nikhil</span>
-        </div>
-        <div className="input-group">
-          <input type="checkbox" className="form-control" id="showup-user-3"
-            aria-describedby="addon-user-3" onChange={this.handleDateChange}/>
-          <span className="input-group-addon" data-user-id="3" id="addon-user-3">Eva</span>
-        </div>
-        <button id="confirm-showups" onClick={this.handleSave}>Confirm</button>
-      </div>
+        <label>
+          Choose date:
+          <input type="date" onChange={this.changeDate} value={this.state.chosenDate} />
+          <input type="button" onClick={this.getStandins.bind(this)} value="Get" />
+        </label>
+        {standins}
+        <input type="submit" value="Submit" />
+      </form>
     );
   }
 }
