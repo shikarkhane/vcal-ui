@@ -1,26 +1,66 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
-class ListWorkday extends Component {
-  handleGet(){
+class WorkdayElement extends Component{
+  handleDeleteWorkday(workdayId){
     reqwest({
-        url: 'http://localhost:8080/workday/'
+        url: 'http://localhost:8080/workday/' + workdayId + '/'
       , type: 'json'
-      , method: 'post'
+      , method: 'delete'
       , contentType: 'application/json'
-      , data: JSON.stringify({ created_by_id: 1, group_id: 1, work_date: "2016-12-01",
-          from_time: "0900", to_time: "1600"})
       , success: function (resp) {
-          console.log(resp);
+          self.setState({workdays: resp});
         }
     });
   }
-  render() {
+  render(){
+    var workdayId = this.props.workdayId;
+    var halfDayText = "full day";
+    if ( Boolean(this.props.halfDay)){
+      halfDayText = "half day";
+    }
     return (
-            <div data-role="collapsible" data-mini="true">
-                  <a href="#" >On 23rd Dec, stand-in needed between 9 AM till 4:30 PM</a>
-                  <a href="#" >On 29th Dec, stand-in needed between 2 PM till 4:30 PM</a>
-            </div>
+      <button onClick={this.handleDeleteWorkday.bind(null, workdayId)}>
+        On {this.props.date} , stand-in needed between {this.props.fromTime}
+        till  {this.props.tillTime} for {halfDayText}</button>
+    );
+  }
+}
+
+
+class ListWorkday extends Component {
+  constructor(props) {
+   super(props);
+   this.state = {workdays: []};
+ }
+ componentDidMount() {
+      this.getWorkdays();
+  }
+  getWorkdays(){
+    var self = this;
+    var groupId = 1;
+    reqwest({
+        url: 'http://localhost:8080/workday/' + groupId + '/'
+      , type: 'json'
+      , method: 'get'
+      , contentType: 'application/json'
+      , success: function (resp) {
+          self.setState({workdays: resp});
+        }
+    });
+  }
+
+  render() {
+    const wds = this.state.workdays;
+    const workdayButtons = wds.map((wd) =>
+    <WorkdayElement key={wd.id} workdayId={wd.id} date={wd.work_date}
+      fromTime={wd.from_time_in_24hours} tillTime={wd.to_time_in_24hours}
+      halfDay= {wd.is_half_day} />
+  );
+    return (
+      <div>
+           {workdayButtons}
+      </div>
 
     );
   }

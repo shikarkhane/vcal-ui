@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
 class SummonElement extends Component{
-  handleDeleteSummon(termId){
+  handleDeleteSummon(summonId){
     reqwest({
-        url: 'http://localhost:8080/summon/' + termId + '/'
+        url: 'http://localhost:8080/summon/' + summonId + '/'
       , type: 'json'
       , method: 'delete'
       , contentType: 'application/json'
@@ -14,10 +14,10 @@ class SummonElement extends Component{
     });
   }
   render(){
-    var termId = this.props.termId;
+    var summonId = this.props.summonId;
 
     return (
-      <button onClick={this.handleDeleteSummon.bind(null, termId)}>
+      <button onClick={this.handleDeleteSummon.bind(null, summonId)}>
         On {this.props.date} , stand-in needed between {this.props.fromTime}
         till  {this.props.tillTime}</button>
     );
@@ -48,7 +48,7 @@ class ListSummon extends Component {
   render() {
     const smons = this.state.summons;
     const summonButtons = smons.map((smon) =>
-    <SummonElement key={smon.id} termId={smon.id} date={smon.work_date}
+    <SummonElement key={smon.id} summonId={smon.id} date={smon.work_date}
       fromTime={smon.from_time_in_24hours} tillTime={smon.to_time_in_24hours}/>
   );
 
