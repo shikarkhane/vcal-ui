@@ -1,31 +1,58 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-
+class MemberElement extends Component{
+  render(){
+    var memberId = this.props.memberId;
+    var email = this.props.memberEmail;
+    var userLabel = this.props.memberName;
+    if (userLabel.length === 0){
+      userLabel = email;
+    }
+    return (
+      <li onClick={this.props.onClick.bind(null, memberId, email)} >{userLabel}</li>
+    );
+  }
+}
 class Member extends Component {
-  handleAction(){
-    console.log('take action after member click');
-    /*reqwest({
-        url: 'http://localhost:8080/workday/'
-      , type: 'json'
-      , method: 'post'
-      , contentType: 'application/json'
-      , data: JSON.stringify({ created_by_id: 1, group_id: 1, work_date: '2017-01-10',
-          from_time: "0900", to_time: "1600", standin_user_id: "", is_half_day: false})
-      , success: function (resp) {
-          console.log(resp);
-        }
-    });*/
+  constructor(props) {
+   super(props);
+   this.state = {members: []};
+ }
+ componentDidMount() {
+      this.getMembers();
+  }
+  getMembers(){
+    var self = this;
+    var groupId = 1;
+       // todo: get list of groups user is member of
+       reqwest({
+           url: 'http://localhost:8080/member/' + groupId + '/'
+           , type: 'json'
+           , contentType: 'application/json'
+         , method: 'get'
+         , success: function (resp) {
+             self.setState({members: resp});
+           }
+       });
+  }
+
+  handleAction(memberId, email){
+    // e.preventDefault();
+    console.log('take action after member click, delete or reminder');
+
   }
   render() {
+    const ms = this.state.members;
+    const memberItems = ms.map((m) =>
+    <MemberElement key={m.id} memberId={m.id} memberName={m.name}
+      memberEmail={m.email} onClick={this.handleAction}/>
+    );
+
     return (
       <div className="page-header">
         <h1>Member <small>gs</small></h1>
-          <ul className="list-group">
-            <li className="list-group-item" onClick={this.handleAction}>Nikhil</li>
-            <li className="list-group-item" onClick={this.handleAction}>Carin</li>
-            <li className="list-group-item" onClick={this.handleAction}>Jimmy</li>
-            <li className="list-group-item" onClick={this.handleAction}>Sussane</li>
-            <li className="list-group-item" onClick={this.handleAction}>notYetRegisteredParentEmail@email.com</li>
+          <ul >
+            {memberItems}
           </ul>
       </div>
     );
