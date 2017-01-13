@@ -1,34 +1,72 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
-class ListSummon extends Component {
-  handleGet(){
-    reqwest({
-        url: 'http://localhost:8080/term/'
-      , type: 'json'
-      , method: 'post'
-      , contentType: 'application/json'
-      , data: JSON.stringify({ group_id: 1,
-          term_name: "test term", start_date: '2017-01-14', end_date: '2017-03-14',
-           family_spread: {kid_1: 10, kid_2: 5, kid_3: 2}})
-      , success: function (resp) {
-          console.log(resp);
-        }
-    });
+class TermElement extends Component{
+  handleChooseTerm(termId, termName){
+    localStorage.setItem("termId", termId);
+    localStorage.setItem("termName", termName);
+  }
+  render(){
+    var termId = this.props.termId;
+    var termName = this.props.termName;
+    var fs = JSON.parse(this.props.familySpread);
+    const totalKids = Number(fs["kid_1"]) *1 + Number(fs["kid_2"]) *2
+    + Number(fs["kid_3"]) *3;
+    return (
+
+      <div>
+        <h3>{this.props.termName} ( {this.props.startDate} to {this.props.endDate} )
+          - Total kids: {totalKids}</h3>
+        <ul data-role="listview">
+            <li>{fs["kid_1"]} families with 1 kids</li>
+            <li>{fs["kid_2"]} families with 2 kids</li>
+            <li>{fs["kid_3"]} families with 3 kids</li>
+        </ul>
+        <button onClick={this.handleChooseTerm.bind(null, termId, termName)}>
+          Choose</button>
+      </div>
+    );
+  }
+}
+
+class ListTerm extends Component {
+  constructor(props) {
+   super(props);
+   // todo: get list of active terms in the group
+   this.state = {terms: []};
+ }
+ componentDidMount() {
+      this.getTerms();
+  }
+  getTerms(){
+    var self = this;
+    var groupId = 1;
+     // todo: get list of terms for given group id
+     reqwest({
+         url: 'http://localhost:8080/term_details/' + groupId + '/'
+         , type: 'json'
+         , contentType: 'application/json'
+       , method: 'get'
+       , success: function (resp) {
+           self.setState({terms: resp});
+         }
+     });
   }
   render() {
+    const tms = this.state.terms;
+    const termButtons = tms.map((tm) =>
+    <TermElement key={tm.id} termId={tm.id} termName={tm.name}
+      startDate={tm.start_date} endDate={tm.end_date}
+      familySpread={tm.family_spread}/>
+  );
+
     return (
       <div >
-          <h3>VT 2016 ( Jan to Jul 2016 ) - Total kids: 31</h3>
-          <ul data-role="listview">
-              <li>15 families with 1 kids</li>
-              <li>5 families with 2 kids</li>
-              <li>2 families with 3 kids</li>
-          </ul>
+          {termButtons}
       </div>
 
     );
   }
 }
 
-export default ListSummon;
+export default ListTerm;
