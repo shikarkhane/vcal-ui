@@ -10,7 +10,7 @@ class App extends Component {
   componentDidMount() {
     this.timerID = setInterval(
       () => this.checkTokenStillValid(),
-      500000
+      10
     );
   }
 
@@ -26,12 +26,13 @@ class App extends Component {
         , type: 'json'
         , method: 'get'
         , contentType: 'application/json'
-        , done: function (resp) {
-            var jr = JSON.parse(resp);
-            if (Boolean(jr["email_verified"]) !== true){
-              localStorage.setItem("is_auth", false);
-            }
-          }
+        , error: function (err) {
+          localStorage.setItem("is_auth", false);
+          clearInterval(this.timerID);
+        }
+        , success: function (resp) {
+          var jr = JSON.parse(resp);
+        }
       });
     }
 
