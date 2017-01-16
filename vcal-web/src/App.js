@@ -10,7 +10,7 @@ class App extends Component {
   componentDidMount() {
     this.timerID = setInterval(
       () => this.checkTokenStillValid(),
-      10
+      100000
     );
   }
 
@@ -31,14 +31,12 @@ class App extends Component {
           clearInterval(this.timerID);
         }
         , success: function (resp) {
-          var jr = JSON.parse(resp);
+          //var jr = JSON.parse(resp);
+          console.log(resp);
         }
       });
     }
 
-    this.setState({
-      date: new Date()
-    });
   }
 
   render() {
