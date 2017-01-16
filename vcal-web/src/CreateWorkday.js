@@ -4,7 +4,8 @@ import reqwest from 'reqwest';
 class CreateWorkday extends Component {
   constructor(props) {
    super(props);
-   this.state = {halfDay: false};
+   this.state = {workDate: '', fromTime: '', tillTime : '',
+     halfDay: false};
 
    this.changeDate = this.changeDate.bind(this);
    this.changeFromTime = this.changeFromTime.bind(this);

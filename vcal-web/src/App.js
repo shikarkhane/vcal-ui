@@ -26,7 +26,7 @@ class App extends Component {
         , type: 'json'
         , method: 'get'
         , contentType: 'application/json'
-        , success: function (resp) {
+        , done: function (resp) {
             var jr = JSON.parse(resp);
             if (Boolean(jr["email_verified"]) !== true){
               localStorage.setItem("is_auth", false);
