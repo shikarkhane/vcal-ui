@@ -6,8 +6,7 @@ class Switchday extends Component {
     return (
       <div className="page-header">
         <h1>Switchday<small>gs</small></h1>
-        <SwitchdayComponent headerCaption="Mark days to switch"/>
-        <SwitchdayComponent headerCaption="Open pool - pick dates which others want to switch"/>
+        <SwitchdayComponent />
       </div>
     );
   }
