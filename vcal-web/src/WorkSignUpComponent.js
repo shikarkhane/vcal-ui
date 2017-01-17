@@ -3,11 +3,11 @@ import reqwest from 'reqwest';
 
 
 class PickDate extends Component{
-  handleSave(){
+  handleSave(isWorkday, chosenDate){
     var group_id = 1;
-    var chosen_date = '2017-01-21';
+    var chosen_date = chosenDate;
     var user_id = 1;
-    var is_workday = true;
+    var is_workday = Boolean(isWorkday);
     var is_taken = true;
 
     reqwest({
@@ -21,33 +21,16 @@ class PickDate extends Component{
           console.log(resp);
         }
     });
-
-    /*
-    $.ajax({
-          contentType : 'application/json',
-          method: "GET",
-          url: "/sv/work-sign-up/" + group_id + "/"
-          // ,data: JSON.stringify({ workday_user_ids: workday_user_ids, standin_user_ids: standin_user_ids})
-        })
-          .done(function( msg ) {
-            console.log('get work sign up');
-          });
-    $.ajax({
-          contentType : 'application/json',
-          method: "GET",
-          url: "/sv/term_details/" + group_id + "/"
-        })
-          .done(function( msg ) {
-            console.log(msg);
-          });
-    */
   }
 
   render(){
+    var isWorkday = this.props.isWorkday;
+    var chosenDate = this.props.chosenDate;
+
     return (
       <div className="input-group">
         <input type="checkbox" className="form-control" data-pick-date="{this.props.chosenDate}"
-           onChange={this.handleSave}/>
+           onChange={this.handleSave.bind(null, isWorkday, chosenDate)}/>
         <span className="input-group-addon" >{this.props.chosenDate}</span>
       </div>
     );
@@ -55,13 +38,57 @@ class PickDate extends Component{
 }
 
 class WorkSignUpComponent extends Component {
+  constructor(props) {
+   super(props);
+   this.state = {openWorkday: [], openStandin: []};
+ }
+ componentDidMount() {
+      this.getOpenWorkday();
+      this.getOpenStandin();
+  }
+  getOpenWorkday(){
+    var self = this;
+    var groupId = 1;
+    reqwest({
+        url: 'http://localhost:8080/openworkday/' + groupId + '/'
+      , type: 'json'
+      , method: 'get'
+      , contentType: 'application/json'
+      , success: function (resp) {
+          self.setState({openWorkday: resp});
+        }
+    });
+  }
+  getOpenStandin(){
+    var self = this;
+    var groupId = 1;
+    reqwest({
+        url: 'http://localhost:8080/openstandin/' + groupId + '/'
+      , type: 'json'
+      , method: 'get'
+      , contentType: 'application/json'
+      , success: function (resp) {
+          self.setState({openStandin: resp});
+        }
+    });
+  }
   render() {
+// let user uncheck a date, if its 30 days ahead
+
+    const standins = this.state.openStandin;
+    const standinElements = standins.map((s) =>
+    <PickDate key={s.id} chosenDate={s.standin_date} isWorkday="0"/>
+  );
+  const workdays = this.state.openWorkday;
+  const workdayElements = workdays.map((s) =>
+  <PickDate key={s.id} chosenDate={s.work_date} isWorkday="1"/>
+);
     return (
             <div>
-              <h4>{this.props.headerCaption}</h4>
-                <PickDate chosenDate="2017-01-13" />
-                <PickDate chosenDate="2017-01-18" />
-                <PickDate chosenDate="2017-01-21" />
+              <h4>Choose standin dates</h4>
+                {standinElements}
+              <h4>Choose workday dates</h4>
+                {workdayElements}
             </div>
     );
   }
