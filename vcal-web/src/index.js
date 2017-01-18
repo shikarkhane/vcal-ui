@@ -10,6 +10,7 @@ import MyGroup from './MyGroup';
 import MyTerm from './MyTerm';
 import Term from './Term';
 import Member from './Member';
+import Switchday from './Switchday';
 
 ReactDOM.render(
   <Router history={hashHistory}>
@@ -17,7 +18,7 @@ ReactDOM.render(
     <Route path="/mygroup" component={MyGroup}></Route>
     <Route path="/myterm" component={MyTerm}></Route>
     <Route path="/term" component={Term}></Route>
-    <Route path="/member" component={Member}></Route>
+    <Route path="/switchday" component={Switchday}></Route>
   </Router>
   , document.getElementById('root')
 );
