@@ -1,57 +1,8 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import SwitchMyDate from './SwitchMyDate';
 
-class SwitchMyDate extends Component{
-  handleSave(isWorkday, chosenDate, fromTime, tillTime, isHalfDay){
-    var group_id = 1;
-    var chosen_date = chosenDate;
-    var user_id = 1;
-    var is_workday = Boolean(isWorkday);
-    var is_half_day = Boolean(isHalfDay);
-
-    reqwest({
-        url: 'http://localhost:8080/switchday/' + group_id + "/"
-      , type: 'json'
-      , method: 'post'
-      , contentType: 'application/json'
-      , data: JSON.stringify({ switch_date: chosen_date, user_id: user_id,
-          is_workday: is_workday, from_time: fromTime, to_time: tillTime})
-      , success: function (resp) {
-          console.log(resp);
-        }
-    });
-  }
-
-  render(){
-    var isWorkday = this.props.isWorkday;
-    var chosenDate = this.props.chosenDate;
-    var fromTime = this.props.from_time_in_24hours;
-    var tillTime = this.props.to_time_in_24hours;
-    var isHalfDay = this.props.is_half_day;
-
-    var result = '';
-
-    if(Boolean(isWorkday)){
-      return (<div className="input-group">
-        <input type="checkbox" className="form-control" data-pick-date="{this.props.chosenDate}"
-           onChange={this.handleSave.bind(null, isWorkday, chosenDate, fromTime, tillTime, isHalfDay)}/>
-        <span className="input-group-addon" >{this.props.chosenDate} between
-          {fromTime}
-          till  {tillTime}
-          ( half-day={isHalfDay} )</span>
-      </div>);
-    }
-    else{
-      return (<div className="input-group">
-        <input type="checkbox" className="form-control" data-pick-date="{this.props.chosenDate}"
-           onChange={this.handleSave.bind(null, isWorkday, chosenDate, fromTime, tillTime, isHalfDay)}/>
-        <span className="input-group-addon" >{this.props.chosenDate}</span>
-      </div>);
-    }
-
-  }
-}
-class SwitchdayComponent extends Component {
+class SwitchdayList extends Component {
   constructor(props) {
    super(props);
    this.state = { myWorkday:[], myStandin:[], mySwitchday:[]};
@@ -126,4 +77,4 @@ class SwitchdayComponent extends Component {
   }
 }
 
-export default SwitchdayComponent;
+export default SwitchdayList;

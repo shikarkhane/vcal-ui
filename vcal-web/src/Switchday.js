@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import SwitchdayComponent from './SwitchdayComponent';
+import SwitchdayList from './SwitchdayList';
 
 class Switchday extends Component {
   render() {
     return (
       <div className="page-header">
         <h1>Switchday<small>gs</small></h1>
-        <SwitchdayComponent />
+        <SwitchdayList />
       </div>
     );
   }
