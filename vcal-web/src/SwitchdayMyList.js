@@ -54,17 +54,30 @@ class SwitchdayMyList extends Component {
         }
     });
   }
+  markAlreadySwitched(chosenDate){
+    var self = this;
+    var mySwitchDates = this.state.mySwitchday.map((x) => x.switch_date);
+    for(var i = 0; i < mySwitchDates.length; i++) {
+      if ( chosenDate === mySwitchDates[i]){
+        return true;
+      }
+    }
+    return false;
+  }
   render() {
+
+    // todo intersect with mySwitchday and mark check boxs
     const standins = this.state.myStandin;
     const standinSwitches = standins.map((s) =>
     <SwitchMyDate key={s.id} chosenDate={s.standin_date} fromTime="0800"
-      tillTime="1600" isHalfDay="0" isWorkday="0" isAlreadySwitched="false"/>
+      tillTime="1600" isHalfDay={false} isWorkday={false}
+      isAlreadySwitched={s.is_already_switched}/>
     );
     const workdays = this.state.myWorkday;
     const workdaySwitches = workdays.map((s) =>
     <SwitchMyDate key={s.id} chosenDate={s.work_date} fromTime={s.from_time_in_24hours}
-      tillTime={s.to_time_in_24hours} isHalfDay={s.is_half_day}  isWorkday="1"
-      isAlreadySwitched="false"/>
+      tillTime={s.to_time_in_24hours} isHalfDay={s.is_half_day}  isWorkday={true}
+      isAlreadySwitched={s.is_already_switched}/>
   );
 
     return (
