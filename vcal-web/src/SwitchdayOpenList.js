@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import SwitchMyDate from './SwitchMyDate';
 
-class SwitchdayList extends Component {
+class SwitchdayOpenList extends Component {
   constructor(props) {
    super(props);
-   this.state = { myWorkday:[], myStandin:[], mySwitchday:[]};
+   this.state = { openWorkday:[], openStandin:[], mySwitchday:[]};
  }
  componentDidMount() {
-      this.getMyWorkday();
-      this.getMyStandin();
+      this.getOpenSwitchWorkday();
+      this.getOpenSwitchStandin();
       this.getMySwitchday();
   }
   getMySwitchday(){
@@ -26,55 +26,54 @@ class SwitchdayList extends Component {
         }
     });
   }
-  getMyWorkday(){
+  getOpenSwitchWorkday(){
     var self = this;
     var groupId = 1;
-    var userId = 1;
     reqwest({
-        url: 'http://localhost:8080/myworkday/' + groupId + '/user/' + userId + '/'
+        url: 'http://localhost:8080/switchday/' + groupId + '/type/1/'
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'
       , success: function (resp) {
-          self.setState({myWorkday: resp});
+          self.setState({openWorkday: resp});
         }
     });
   }
-  getMyStandin(){
+  getOpenSwitchStandin(){
     var self = this;
     var groupId = 1;
-    var userId = 1;
     reqwest({
-        url: 'http://localhost:8080/mystandin/' + groupId + '/user/' + userId + '/'
+        url: 'http://localhost:8080/switchday/' + groupId + '/type/0/'
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'
       , success: function (resp) {
-          self.setState({myStandin: resp});
+          self.setState({openStandin: resp});
         }
     });
   }
   render() {
-    const standins = this.state.myStandin;
+    const standins = this.state.openStandin;
     const standinSwitches = standins.map((s) =>
-    <SwitchMyDate key={s.id} chosenDate={s.standin_date} fromTime="0800"
-      tillTime="1600" isHalfDay="0" isWorkday="0"/>
+    <SwitchMyDate key={s.id} chosenDate={s.switch_date} fromTime="0800"
+      tillTime="1600" isHalfDay="0" isWorkday="0" isAlreadySwitched="false"/>
     );
-    const workdays = this.state.myWorkday;
+    const workdays = this.state.openWorkday;
     const workdaySwitches = workdays.map((s) =>
-    <SwitchMyDate key={s.id} chosenDate={s.work_date} fromTime={s.from_time_in_24hours}
-      tillTime={s.to_time_in_24hours} isHalfDay={s.is_half_day}  isWorkday="1" />
+    <SwitchMyDate key={s.id} chosenDate={s.switch_date} fromTime={s.from_time_in_24hours}
+      tillTime={s.to_time_in_24hours} isHalfDay={s.is_half_day}  isWorkday="1"
+      isAlreadySwitched="false"/>
   );
 
     return (
       <div>
-        <h4>You standin dates</h4>
+        <h4>Open standin dates</h4>
           {standinSwitches}
-        <h4>You workday dates</h4>
+        <h4>Open workday dates</h4>
           {workdaySwitches}
       </div>
     );
   }
 }
 
-export default SwitchdayList;
+export default SwitchdayOpenList;

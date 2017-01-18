@@ -29,14 +29,16 @@ class SwitchMyDate extends Component{
     var fromTime = this.props.fromTime;
     var tillTime = this.props.tillTime;
     var isHalfDay = this.props.isHalfDay;
+    var isAlreadySwitched = Boolean(this.props.alreadySwitched);
 
     var result = '';
 
     if(Boolean(isWorkday)){
       return (<div className="input-group">
         <input type="checkbox" className="form-control" data-pick-date="{this.props.chosenDate}"
-           onChange={this.handleSave.bind(null, isWorkday, chosenDate, fromTime, tillTime, isHalfDay)}/>
-        <span className="input-group-addon" >{this.props.chosenDate} between
+           onChange={this.handleSave.bind(null, isWorkday, chosenDate, fromTime, tillTime, isHalfDay)}
+           checked={isAlreadySwitched}/>
+        <span >{this.props.chosenDate} between
           {fromTime}
           till  {tillTime}
           ( half-day={isHalfDay} )</span>
@@ -45,8 +47,12 @@ class SwitchMyDate extends Component{
     else{
       return (<div className="input-group">
         <input type="checkbox" className="form-control" data-pick-date="{this.props.chosenDate}"
-           onChange={this.handleSave.bind(null, isWorkday, chosenDate, fromTime, tillTime, isHalfDay)}/>
-        <span className="input-group-addon" >{this.props.chosenDate}</span>
+           onChange={this.handleSave.bind(null, isWorkday, chosenDate, fromTime, tillTime, isHalfDay)}
+           checked={isAlreadySwitched}/>
+        <span >{this.props.chosenDate} between
+          {fromTime}
+          till  {tillTime}
+          ( half-day={isHalfDay} )</span>
       </div>);
     }
 
