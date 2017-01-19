@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
+import { hashHistory } from 'react-router';
 
 class TermElement extends Component{
   handleChooseTerm(termId, termName){
     localStorage.setItem("termId", termId);
     localStorage.setItem("termName", termName);
+    hashHistory.push('/');
   }
   render(){
     var termId = this.props.termId;
@@ -28,7 +30,7 @@ class MyTerm extends Component {
   }
   getTerms(){
     var self = this;
-    var groupId = 1;
+    var groupId = localStorage.getItem("groupId");
      // todo: get list of terms for given group id
      reqwest({
          url: 'http://localhost:8080/term_details/' + groupId + '/'

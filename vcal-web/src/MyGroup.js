@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
+import { hashHistory } from 'react-router';
 
 class GroupElement extends Component{
   handleChooseGroup(groupId, groupName){
     localStorage.setItem("groupId", groupId);
     localStorage.setItem("groupName", groupName);
+    hashHistory.push('/');
   }
   render(){
     var groupId = this.props.groupId;

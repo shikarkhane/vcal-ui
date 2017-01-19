@@ -18,6 +18,7 @@ import Rule from './Rule';
 import Children from './Children';
 import WorkSignUp from './WorkSignUp';
 import SwitchDay from './Switchday';
+import MyProfile from './MyProfile';
 
 
 ReactDOM.render(
@@ -35,6 +36,7 @@ ReactDOM.render(
     <Route path="/children" component={Children}></Route>
     <Route path="/worksignup" component={WorkSignUp}></Route>
     <Route path="/switchday" component={SwitchDay}></Route>
+    <Route path="/myprofile" component={MyProfile}></Route>
   </Router>
   , document.getElementById('root')
 );

@@ -38,7 +38,7 @@ class ListWorkday extends Component {
   }
   getWorkdays(){
     var self = this;
-    var groupId = 1;
+    var groupId = localStorage.getItem("groupId");
     reqwest({
         url: 'http://localhost:8080/workday/' + groupId + '/'
       , type: 'json'

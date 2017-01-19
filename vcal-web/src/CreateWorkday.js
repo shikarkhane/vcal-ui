@@ -29,7 +29,7 @@ class CreateWorkday extends Component {
   }
   handleSave(e){
     e.preventDefault();
-    var groupId = 1;
+    var groupId = localStorage.getItem("groupId");
     var creatorId = 1;
     reqwest({
         url: 'http://localhost:8080/workday/' + groupId + '/'

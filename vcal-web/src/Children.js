@@ -12,21 +12,22 @@ class Children extends Component {
     }
     getChildrenCount(){
       var self = this;
-      var termId = 1;
+      var termId = localStorage.getItem("termId");
        reqwest({
            url: 'http://localhost:8080/children/' + termId + '/'
            , type: 'json'
            , contentType: 'application/json'
          , method: 'get'
          , success: function (resp) {
-                self.setState({childCount: resp[0].child_count });
+                if(resp.length >0){
+                  self.setState({childCount: resp[0].child_count });
+                }
            }
        });
     }
 
-  handleSave(e, childCount){
-    var self = e;
-    var termId = 1;
+  handleSave(childCount){
+    var termId = localStorage.getItem("termId");
     reqwest({
         url: 'http://localhost:8080/children/' + termId + '/'
       , type: 'json'
@@ -45,9 +46,9 @@ class Children extends Component {
         <h1>Children <small>gs</small><small>VT2016</small></h1>
           <h3>Kids per term at gs -> {this.state.childCount}</h3>
           <div className="btn-group btn-group-lg" role="group">
-            <button id='child_per_term_1' type="button" className="btn btn-default" onClick={this.handleSave.bind(this, 1)}>1</button>
-            <button id='child_per_term_2' type="button" className="btn btn-default" onClick={this.handleSave.bind(this, 2)}>2</button>
-            <button id='child_per_term_3' type="button" className="btn btn-default" onClick={this.handleSave.bind(this, 3)}>3</button>
+            <button id='child_per_term_1' type="button" className="btn btn-default" onClick={this.handleSave.bind(null, 1)}>1</button>
+            <button id='child_per_term_2' type="button" className="btn btn-default" onClick={this.handleSave.bind(null, 2)}>2</button>
+            <button id='child_per_term_3' type="button" className="btn btn-default" onClick={this.handleSave.bind(null, 3)}>3</button>
           </div>
       </div>
     );

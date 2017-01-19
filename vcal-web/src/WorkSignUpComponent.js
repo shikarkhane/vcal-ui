@@ -48,7 +48,7 @@ class WorkSignUpComponent extends Component {
   }
   getOpenWorkday(){
     var self = this;
-    var groupId = 1;
+    var groupId = localStorage.getItem("groupId");
     reqwest({
         url: 'http://localhost:8080/openworkday/' + groupId + '/'
       , type: 'json'
@@ -61,7 +61,7 @@ class WorkSignUpComponent extends Component {
   }
   getOpenStandin(){
     var self = this;
-    var groupId = 1;
+    var groupId = localStorage.getItem("groupId");
     reqwest({
         url: 'http://localhost:8080/openstandin/' + groupId + '/'
       , type: 'json'

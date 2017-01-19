@@ -25,7 +25,7 @@ class Member extends Component {
   }
   getMembers(){
     var self = this;
-    var groupId = 1;
+    var groupId = localStorage.getItem("groupId");
        // todo: get list of groups user is member of
        reqwest({
            url: 'http://localhost:8080/member/' + groupId + '/'

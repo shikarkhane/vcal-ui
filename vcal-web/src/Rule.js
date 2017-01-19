@@ -20,7 +20,7 @@ class Rule extends Component {
      this.handleSave = this.handleSave.bind(this);
    }
   handleSave(){
-    var groupId = 1;
+    var groupId = localStorage.getItem("groupId");
     var standinKid1 = this.state.standinKid1;
     var standinKid2 = this.state.standinKid2;
     var standinKid3 = this.state.standinKid3;
@@ -66,7 +66,7 @@ class Rule extends Component {
   }
   getRule(){
     var self = this;
-    var groupId = 1;
+    var groupId = localStorage.getItem("groupId");
      // todo: get list of terms for given group id
      reqwest({
          url: 'http://localhost:8080/rule/' + groupId + '/'

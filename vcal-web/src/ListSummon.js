@@ -34,7 +34,7 @@ class ListSummon extends Component {
   }
   getSummons(){
     var self = this;
-    var groupId = 1;
+    var groupId = localStorage.getItem("groupId");
     reqwest({
         url: 'http://localhost:8080/summon/' + groupId + '/'
       , type: 'json'

@@ -14,7 +14,7 @@ class SwitchdayMyList extends Component {
   }
   getMySwitchday(){
     var self = this;
-    var groupId = 1;
+    var groupId = localStorage.getItem("groupId");
     var userId = 1;
     reqwest({
         url: 'http://localhost:8080/switchday/' + groupId  + '/user/' + userId + '/'
@@ -28,7 +28,7 @@ class SwitchdayMyList extends Component {
   }
   getMyWorkday(){
     var self = this;
-    var groupId = 1;
+    var groupId = localStorage.getItem("groupId");
     var userId = 1;
     reqwest({
         url: 'http://localhost:8080/myworkday/' + groupId + '/user/' + userId + '/'
@@ -42,7 +42,7 @@ class SwitchdayMyList extends Component {
   }
   getMyStandin(){
     var self = this;
-    var groupId = 1;
+    var groupId = localStorage.getItem("groupId");
     var userId = 1;
     reqwest({
         url: 'http://localhost:8080/mystandin/' + groupId + '/user/' + userId + '/'
