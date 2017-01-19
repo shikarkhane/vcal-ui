@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import Header from './Header';
 
 class GroupElement extends Component{
   handleChooseGroup(groupId, groupName){
@@ -45,7 +46,8 @@ class MyGroup extends Component {
   );
 
     return (
-      <div className="page-header">
+      <div >
+        <Header />
         <h1>Group </h1>
         {groupButtons}
       </div>

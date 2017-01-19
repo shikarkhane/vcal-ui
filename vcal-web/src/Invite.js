@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import Header from './Header';
 
 class Invite extends Component {
   constructor(props) {
@@ -31,12 +32,15 @@ class Invite extends Component {
   }
   render() {
     return (
-      <form onSubmit={this.handleSave}>
-        <h1>Invite <small>gs</small></h1>
-        <textarea placeholder="separate emails by comma sign (,) "
-          onChange={this.changeInvitees} value={this.state.invitees} ></textarea>
-        <input type="button" value="Send invites" onClick={this.handleSave}/>
-      </form>
+      <div>
+        <Header />
+        <form onSubmit={this.handleSave}>
+          <h1>Invite <small>gs</small></h1>
+          <textarea placeholder="separate emails by comma sign (,) "
+            onChange={this.changeInvitees} value={this.state.invitees} ></textarea>
+          <input type="button" value="Send invites" onClick={this.handleSave}/>
+        </form>
+    </div>
     );
   }
 }

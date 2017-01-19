@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import Header from './Header';
 
 class StandinElement extends Component{
   render(){
@@ -65,16 +66,19 @@ class Showups extends Component {
   );
 
     return (
-      <form onSubmit={this.handleSave}>
-        <h1>Show ups<small>gs</small></h1>
-        <label>
-          Choose date:
-          <input type="date" onChange={this.changeDate} value={this.state.chosenDate} />
-          <input type="button" onClick={this.getStandins.bind(this)} value="Get" />
-        </label>
-        {standins}
-        <input type="submit" value="Submit" />
-      </form>
+      <div>
+        <Header />
+        <form onSubmit={this.handleSave}>
+          <h1>Show ups<small>gs</small></h1>
+          <label>
+            Choose date:
+            <input type="date" onChange={this.changeDate} value={this.state.chosenDate} />
+            <input type="button" onClick={this.getStandins.bind(this)} value="Get" />
+          </label>
+          {standins}
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
     );
   }
 }

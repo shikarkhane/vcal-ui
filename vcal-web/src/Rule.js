@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import Header from './Header';
 
 class Rule extends Component {
 
@@ -89,34 +90,37 @@ class Rule extends Component {
   }
   render() {
     return (
-      <form onSubmit={this.handleSave}>
-        <h1>Rule<small>gs</small></h1>
-          <div>
-              <h4>Stand-in day rule</h4>
-              <label >Family with 1 kid</label>
-              <input type="number"
-                onChange={this.changeStandinKid1} value={this.state.standinKid1}/>
-              <label >Family with 2 kids</label>
-              <input type="number"
-                onChange={this.changeStandinKid2} value={this.state.standinKid2}/>
-              <label >Family with 3 kids</label>
-              <input type="number"
-                onChange={this.changeStandinKid3} value={this.state.standinKid3}/>
-          </div>
-          <div>
-              <h4>Work day rule</h4>
-              <label >Family with 1 kid</label>
-              <input type="number"
-                onChange={this.changeWorkdayKid1} value={this.state.workdayKid1}/>
-              <label >Family with 2 kids</label>
-              <input type="number"
-                onChange={this.changeWorkdayKid2} value={this.state.workdayKid2}/>
-              <label >Family with 3 kids</label>
-              <input type="number"
-                onChange={this.changeWorkdayKid3} value={this.state.workdayKid3}/>
-          </div>
-          <input type="submit" value="Submit" />
-      </form>
+      <div>
+        <Header />
+        <form onSubmit={this.handleSave}>
+          <h1>Rule<small>gs</small></h1>
+            <div>
+                <h4>Stand-in day rule</h4>
+                <label >Family with 1 kid</label>
+                <input type="number"
+                  onChange={this.changeStandinKid1} value={this.state.standinKid1}/>
+                <label >Family with 2 kids</label>
+                <input type="number"
+                  onChange={this.changeStandinKid2} value={this.state.standinKid2}/>
+                <label >Family with 3 kids</label>
+                <input type="number"
+                  onChange={this.changeStandinKid3} value={this.state.standinKid3}/>
+            </div>
+            <div>
+                <h4>Work day rule</h4>
+                <label >Family with 1 kid</label>
+                <input type="number"
+                  onChange={this.changeWorkdayKid1} value={this.state.workdayKid1}/>
+                <label >Family with 2 kids</label>
+                <input type="number"
+                  onChange={this.changeWorkdayKid2} value={this.state.workdayKid2}/>
+                <label >Family with 3 kids</label>
+                <input type="number"
+                  onChange={this.changeWorkdayKid3} value={this.state.workdayKid3}/>
+            </div>
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
     );
   }
 

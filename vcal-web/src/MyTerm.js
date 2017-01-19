@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import Header from './Header';
 
 class TermElement extends Component{
   handleChooseTerm(termId, termName){
@@ -46,7 +47,8 @@ class MyTerm extends Component {
   );
 
     return (
-      <div className="page-header">
+      <div>
+        <Header />
         <h1>Term </h1>
         {termButtons}
       </div>

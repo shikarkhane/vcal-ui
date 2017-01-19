@@ -8,17 +8,33 @@ import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import App from './App';
 import MyGroup from './MyGroup';
 import MyTerm from './MyTerm';
+import Summon from './Summon';
+import Workday from './Workday';
 import Term from './Term';
+import ShowUps from './ShowUps';
+import Invite from './Invite';
 import Member from './Member';
-import Switchday from './Switchday';
+import Rule from './Rule';
+import Children from './Children';
+import WorkSignUp from './WorkSignUp';
+import SwitchDay from './Switchday';
+
 
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={App}></Route>
     <Route path="/mygroup" component={MyGroup}></Route>
     <Route path="/myterm" component={MyTerm}></Route>
+    <Route path="/summon" component={Summon}></Route>
+    <Route path="/workday" component={Workday}></Route>
     <Route path="/term" component={Term}></Route>
-    <Route path="/switchday" component={Switchday}></Route>
+    <Route path="/showups" component={ShowUps}></Route>
+    <Route path="/invite" component={Invite}></Route>
+    <Route path="/member" component={Member}></Route>
+    <Route path="/rule" component={Rule}></Route>
+    <Route path="/children" component={Children}></Route>
+    <Route path="/worksignup" component={WorkSignUp}></Route>
+    <Route path="/switchday" component={SwitchDay}></Route>
   </Router>
   , document.getElementById('root')
 );

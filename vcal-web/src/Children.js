@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import Header from './Header';
 
 class Children extends Component {
   constructor(props) {
@@ -39,7 +40,8 @@ class Children extends Component {
   }
   render() {
     return (
-      <div className="page-header">
+      <div>
+        <Header />
         <h1>Children <small>gs</small><small>VT2016</small></h1>
           <h3>Kids per term at gs -> {this.state.childCount}</h3>
           <div className="btn-group btn-group-lg" role="group">

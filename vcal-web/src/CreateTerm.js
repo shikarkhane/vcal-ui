@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import {hashHistory} from 'react-router';
 
 class CreateSummon extends Component {
   constructor(props) {
@@ -54,7 +53,7 @@ class CreateSummon extends Component {
           console.log(resp);
         }
     });
-    hashHistory.push('/switchday');
+
   }
   render() {
     return (

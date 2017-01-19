@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
+import {hashHistory} from 'react-router';
 
 class GoogleButton extends Component{
   render(){
@@ -8,13 +9,14 @@ class GoogleButton extends Component{
       if (response.type !== "tokenFailed"){
         localStorage.setItem("tokenId", response.tokenId);
         localStorage.setItem("profileObj", response.profileObj);
-        localStorage.setItem("is_auth", true);        
+        localStorage.setItem("is_auth", true);
+        hashHistory.push('/');
       }
     }
 
     return (
       <GoogleLogin
-        clientId="50349381828-vq4r53fp7b0pr2mbh7gpq6k2f05m4kmj.apps.googleusercontent.com"
+        clientId="50349381828-.apps.googleusercontent.com"
         buttonText="Login"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}

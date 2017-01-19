@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import Header from './Header';
+
 class MemberElement extends Component{
   render(){
     var memberId = this.props.memberId;
@@ -49,7 +51,8 @@ class Member extends Component {
     );
 
     return (
-      <div className="page-header">
+      <div >
+        <Header />
         <h1>Member <small>gs</small></h1>
           <ul >
             {memberItems}
