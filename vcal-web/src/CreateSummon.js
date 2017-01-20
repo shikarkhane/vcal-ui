@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import { hashHistory } from 'react-router';
@@ -28,7 +29,7 @@ class CreateSummon extends Component {
     var groupId = localStorage.getItem("groupId");
     var creatorId = 1;
     reqwest({
-        url: 'http://localhost:8080/summon/' + groupId + '/'
+        url: conf.serverUrl + '/summon/' + groupId + '/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'

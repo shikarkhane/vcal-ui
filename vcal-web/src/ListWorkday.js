@@ -1,10 +1,11 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
 class WorkdayElement extends Component{
   handleDeleteWorkday(workdayId){
     reqwest({
-        url: 'http://localhost:8080/workday/' + workdayId + '/'
+        url: conf.serverUrl + '/workday/' + workdayId + '/'
       , type: 'json'
       , method: 'delete'
       , contentType: 'application/json'
@@ -40,7 +41,7 @@ class ListWorkday extends Component {
     var self = this;
     var groupId = localStorage.getItem("groupId");
     reqwest({
-        url: 'http://localhost:8080/workday/' + groupId + '/'
+        url: conf.serverUrl + '/workday/' + groupId + '/'
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'

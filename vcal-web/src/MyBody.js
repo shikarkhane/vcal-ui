@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import BodyTop from './BodyTop';
 import BodyMiddle from './BodyMiddle';

@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
@@ -28,7 +29,7 @@ class Member extends Component {
     var groupId = localStorage.getItem("groupId");
        // todo: get list of groups user is member of
        reqwest({
-           url: 'http://localhost:8080/member/' + groupId + '/'
+           url: conf.serverUrl + '/member/' + groupId + '/'
            , type: 'json'
            , contentType: 'application/json'
          , method: 'get'

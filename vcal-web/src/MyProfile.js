@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 //import reqwest from 'reqwest';
 import Header from './Header';

@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
@@ -31,7 +32,7 @@ class MyGroup extends Component {
     var self = this;
        // todo: get list of groups user is member of
        reqwest({
-           url: 'http://localhost:8080/group/'
+           url: conf.serverUrl + '/group/'
            , type: 'json'
            , contentType: 'application/json'
          , method: 'get'

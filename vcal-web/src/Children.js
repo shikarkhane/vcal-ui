@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
@@ -14,7 +15,7 @@ class Children extends Component {
       var self = this;
       var termId = localStorage.getItem("termId");
        reqwest({
-           url: 'http://localhost:8080/children/' + termId + '/'
+           url: conf.serverUrl + '/children/' + termId + '/'
            , type: 'json'
            , contentType: 'application/json'
          , method: 'get'
@@ -29,7 +30,7 @@ class Children extends Component {
   handleSave(childCount){
     var termId = localStorage.getItem("termId");
     reqwest({
-        url: 'http://localhost:8080/children/' + termId + '/'
+        url: conf.serverUrl + '/children/' + termId + '/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'

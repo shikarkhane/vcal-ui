@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 //import ReactDOM from 'react-dom';
 import { Link } from 'react-router';

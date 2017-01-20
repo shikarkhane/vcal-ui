@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
@@ -33,7 +34,7 @@ class MyTerm extends Component {
     var groupId = localStorage.getItem("groupId");
      // todo: get list of terms for given group id
      reqwest({
-         url: 'http://localhost:8080/term_details/' + groupId + '/'
+         url: conf.serverUrl + '/term_details/' + groupId + '/'
          , type: 'json'
          , contentType: 'application/json'
        , method: 'get'

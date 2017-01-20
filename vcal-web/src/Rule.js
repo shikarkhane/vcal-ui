@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
@@ -29,7 +30,7 @@ class Rule extends Component {
     var workdayKid3 = this.state.workdayKid3;
 
     reqwest({
-        url: 'http://localhost:8080/rule/' + groupId + '/'
+        url: conf.serverUrl + '/rule/' + groupId + '/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
@@ -69,7 +70,7 @@ class Rule extends Component {
     var groupId = localStorage.getItem("groupId");
      // todo: get list of terms for given group id
      reqwest({
-         url: 'http://localhost:8080/rule/' + groupId + '/'
+         url: conf.serverUrl + '/rule/' + groupId + '/'
          , type: 'json'
          , contentType: 'application/json'
        , method: 'get'

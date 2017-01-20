@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 
 class Footer extends Component {

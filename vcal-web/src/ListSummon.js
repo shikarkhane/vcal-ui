@@ -1,10 +1,11 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
 class SummonElement extends Component{
   handleDeleteSummon(summonId){
     reqwest({
-        url: 'http://localhost:8080/summon/' + summonId + '/'
+        url: conf.serverUrl + '/summon/' + summonId + '/'
       , type: 'json'
       , method: 'delete'
       , contentType: 'application/json'
@@ -36,7 +37,7 @@ class ListSummon extends Component {
     var self = this;
     var groupId = localStorage.getItem("groupId");
     reqwest({
-        url: 'http://localhost:8080/summon/' + groupId + '/'
+        url: conf.serverUrl + '/summon/' + groupId + '/'
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'

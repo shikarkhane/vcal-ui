@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import WorkSignUpComponent from './WorkSignUpComponent';
 import WorkSignUpSummary from './WorkSignUpSummary';

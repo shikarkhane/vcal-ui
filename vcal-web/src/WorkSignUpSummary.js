@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
@@ -15,7 +16,7 @@ class WorkSignUpSummary extends Component {
     var groupId = localStorage.getItem("groupId");
     var userId = 1;
     reqwest({
-        url: 'http://localhost:8080/myworkday/' + groupId + '/user/' + userId + '/'
+        url: conf.serverUrl + '/myworkday/' + groupId + '/user/' + userId + '/'
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'
@@ -29,7 +30,7 @@ class WorkSignUpSummary extends Component {
     var groupId = localStorage.getItem("groupId");
     var userId = 1;
     reqwest({
-        url: 'http://localhost:8080/mystandin/' + groupId + '/user/' + userId + '/'
+        url: conf.serverUrl + '/mystandin/' + groupId + '/user/' + userId + '/'
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'

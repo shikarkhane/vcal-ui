@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import {hashHistory} from 'react-router';
@@ -16,7 +17,7 @@ class GoogleButton extends Component{
 
     return (
       <GoogleLogin
-        clientId="50349381828-.apps.googleusercontent.com"
+        clientId={conf.googleClientId}
         buttonText="Login"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}

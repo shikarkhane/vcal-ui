@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import SwitchdayMyList from './SwitchdayMyList';
 import SwitchdayOpenList from './SwitchdayOpenList';

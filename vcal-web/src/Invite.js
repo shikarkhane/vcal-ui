@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
@@ -16,7 +17,7 @@ class Invite extends Component {
     var emails = this.state.invitees;
     var groupId = localStorage.getItem("groupId");
     reqwest({
-        url: 'http://localhost:8080/invite/'
+        url: conf.serverUrl + '/invite/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'

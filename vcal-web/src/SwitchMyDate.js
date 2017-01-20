@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
@@ -13,7 +14,7 @@ class SwitchMyDate extends Component{
     //to this user
     if ( fromOpenList ){
       reqwest({
-          url: 'http://localhost:8080/work-sign-up/' + groupId + "/"
+          url: conf.serverUrl + '/work-sign-up/' + groupId + "/"
         , type: 'json'
         , method: 'post'
         , contentType: 'application/json'
@@ -24,7 +25,7 @@ class SwitchMyDate extends Component{
           }
       });
       reqwest({
-          url: 'http://localhost:8080/switchday/' + groupId + '/user/' + userId + '/'
+          url: conf.serverUrl + '/switchday/' + groupId + '/user/' + userId + '/'
         , type: 'json'
         , method: 'delete'
         , contentType: 'application/json'
@@ -36,7 +37,7 @@ class SwitchMyDate extends Component{
     }
     else{
       reqwest({
-          url: 'http://localhost:8080/switchday/' + groupId + '/user/' + userId + '/'
+          url: conf.serverUrl + '/switchday/' + groupId + '/user/' + userId + '/'
         , type: 'json'
         , method: 'post'
         , contentType: 'application/json'

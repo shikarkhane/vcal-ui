@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
@@ -32,7 +33,7 @@ class CreateWorkday extends Component {
     var groupId = localStorage.getItem("groupId");
     var creatorId = 1;
     reqwest({
-        url: 'http://localhost:8080/workday/' + groupId + '/'
+        url: conf.serverUrl + '/workday/' + groupId + '/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'

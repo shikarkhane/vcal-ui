@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import SwitchMyDate from './SwitchMyDate';
@@ -17,7 +18,7 @@ class SwitchdayOpenList extends Component {
     var groupId = localStorage.getItem("groupId");
     var userId = 1;
     reqwest({
-        url: 'http://localhost:8080/switchday/' + groupId  + '/user/' + userId + '/'
+        url: conf.serverUrl + '/switchday/' + groupId  + '/user/' + userId + '/'
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'
@@ -30,7 +31,7 @@ class SwitchdayOpenList extends Component {
     var self = this;
     var groupId = localStorage.getItem("groupId");
     reqwest({
-        url: 'http://localhost:8080/switchday/' + groupId + '/type/1/'
+        url: conf.serverUrl + '/switchday/' + groupId + '/type/1/'
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'
@@ -43,7 +44,7 @@ class SwitchdayOpenList extends Component {
     var self = this;
     var groupId = localStorage.getItem("groupId");
     reqwest({
-        url: 'http://localhost:8080/switchday/' + groupId + '/type/0/'
+        url: conf.serverUrl + '/switchday/' + groupId + '/type/0/'
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'

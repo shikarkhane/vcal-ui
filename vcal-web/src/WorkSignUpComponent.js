@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
@@ -10,7 +11,7 @@ class PickDate extends Component{
     var isTaken = true;
 
     reqwest({
-        url: 'http://localhost:8080/work-sign-up/' + groupId + "/"
+        url: conf.serverUrl + '/work-sign-up/' + groupId + "/"
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
@@ -49,7 +50,7 @@ class WorkSignUpComponent extends Component {
     var self = this;
     var groupId = localStorage.getItem("groupId");
     reqwest({
-        url: 'http://localhost:8080/openworkday/' + groupId + '/'
+        url: conf.serverUrl + '/openworkday/' + groupId + '/'
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'
@@ -62,7 +63,7 @@ class WorkSignUpComponent extends Component {
     var self = this;
     var groupId = localStorage.getItem("groupId");
     reqwest({
-        url: 'http://localhost:8080/openstandin/' + groupId + '/'
+        url: conf.serverUrl + '/openstandin/' + groupId + '/'
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'

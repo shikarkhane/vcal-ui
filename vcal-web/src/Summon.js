@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import CreateSummon from './CreateSummon';
 import ListSummon from './ListSummon';

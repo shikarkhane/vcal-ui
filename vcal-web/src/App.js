@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
@@ -24,7 +25,7 @@ class App extends Component {
     if (Boolean(localStorage.getItem("is_auth")) === true)
     {
       reqwest({
-          url: 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + localStorage.getItem("tokenId")
+          url: conf.googleTokenVerifyUrl + localStorage.getItem("tokenId")
         , type: 'json'
         , method: 'get'
         , contentType: 'application/json'

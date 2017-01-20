@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
@@ -40,7 +41,7 @@ class CreateSummon extends Component {
     var groupId = localStorage.getItem("groupId");
     //var creatorId = 1;
     reqwest({
-        url: 'http://localhost:8080/term/'
+        url: conf.serverUrl + '/term/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'

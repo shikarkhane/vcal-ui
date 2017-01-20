@@ -1,3 +1,4 @@
+import { conf } from './config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
@@ -31,7 +32,7 @@ class Showups extends Component {
     var workDate = this.state.chosenDate;
 
     reqwest({
-        url: 'http://localhost:8080/show-ups/' + groupId + "/date/" + workDate + "/"
+        url: conf.serverUrl + '/show-ups/' + groupId + "/date/" + workDate + "/"
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'
@@ -47,7 +48,7 @@ class Showups extends Component {
     var workdayUserIds = [1,2];
     var standinUserIds = [3];
     reqwest({
-        url: 'http://localhost:8080/show-ups/' + groupId + "/date/" + workDate + "/"
+        url: conf.serverUrl + '/show-ups/' + groupId + "/date/" + workDate + "/"
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
