@@ -6,7 +6,7 @@ class SwitchMyDate extends Component{
   handleSave(pIsWorkday, chosenDate, fromTime, tillTime, pIsHalfDay,
     fromOpenList){
     var groupId = localStorage.getItem("groupId");
-    var userId = 1;
+    var userId = localStorage.getItem("userId");
     var isWorkday = Boolean(pIsWorkday);
     var isHalfDay = Boolean(pIsHalfDay);
 

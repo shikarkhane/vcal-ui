@@ -14,7 +14,7 @@ class WorkSignUpSummary extends Component {
   getMyWorkday(){
     var self = this;
     var groupId = localStorage.getItem("groupId");
-    var userId = 1;
+    var userId = localStorage.getItem("userId");
     reqwest({
         url: conf.serverUrl + '/myworkday/' + groupId + '/user/' + userId + '/'
       , type: 'json'
@@ -28,7 +28,7 @@ class WorkSignUpSummary extends Component {
   getMyStandin(){
     var self = this;
     var groupId = localStorage.getItem("groupId");
-    var userId = 1;
+    var userId = localStorage.getItem("userId");
     reqwest({
         url: conf.serverUrl + '/mystandin/' + groupId + '/user/' + userId + '/'
       , type: 'json'

@@ -9,7 +9,7 @@ import Dashboard from './Dashboard';
 
 class App extends Component {
   componentDidMount() {
-    if ( Boolean(localStorage.getItem("is_auth")) === true){
+    if ( localStorage.getItem("is_auth") === "1"){
       this.timerID = setInterval(
         () => this.checkTokenStillValid(),
         100000
@@ -22,7 +22,8 @@ class App extends Component {
   }
 
   checkTokenStillValid() {
-    if (Boolean(localStorage.getItem("is_auth")) === true)
+    var self = this;
+    if (localStorage.getItem("is_auth") === "1")
     {
       reqwest({
           url: conf.googleTokenVerifyUrl + localStorage.getItem("tokenId")
@@ -31,7 +32,7 @@ class App extends Component {
         , contentType: 'application/json'
         , error: function (err) {
           localStorage.setItem("is_auth", 0);
-          clearInterval(this.timerID);
+          clearInterval(self.timerID);
         }
         , success: function (resp) {
           //var jr = JSON.parse(resp);
@@ -47,7 +48,7 @@ class App extends Component {
         <Landing />
     );
 
-    if (Boolean(localStorage.getItem("is_auth")) === true)
+    if (localStorage.getItem("is_auth") === "1")
     {
       content = (
           <Dashboard />

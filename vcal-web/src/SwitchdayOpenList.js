@@ -16,7 +16,7 @@ class SwitchdayOpenList extends Component {
   getMySwitchday(){
     var self = this;
     var groupId = localStorage.getItem("groupId");
-    var userId = 1;
+    var userId = localStorage.getItem("userId");
     reqwest({
         url: conf.serverUrl + '/switchday/' + groupId  + '/user/' + userId + '/'
       , type: 'json'

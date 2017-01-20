@@ -2,16 +2,36 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import {hashHistory} from 'react-router';
+import reqwest from 'reqwest';
 
 class GoogleButton extends Component{
+  handleUserSave(profileObj, tokenId){
+    reqwest({
+        url: conf.serverUrl + '/user/'
+      , type: 'json'
+      , method: 'post'
+      , contentType: 'application/json'
+      , data: JSON.stringify({
+        name: profileObj.name, givenName: profileObj.givenName,
+        familyName: profileObj.familyName, email: profileObj.email,
+        tokenId: tokenId, imageUrl: profileObj.imageUrl
+      })
+      , success: function (resp) {
+          console.log(resp);
+          localStorage.setItem("userId", resp.userId);
+          hashHistory.push('/dashboard');
+        }
+    });
+  }
   render(){
+    var self = this;
     const responseGoogle = (response) => {
       console.log(response);
       if (response.type !== "tokenFailed"){
         localStorage.setItem("tokenId", response.tokenId);
-        localStorage.setItem("profileObj", response.profileObj);
+        localStorage.setItem("profileObj", JSON.stringify(response.profileObj));
         localStorage.setItem("is_auth", 1);
-        hashHistory.push('/dashboard');
+        self.handleUserSave(response.profileObj, response.tokenId);
       }
     }
 
