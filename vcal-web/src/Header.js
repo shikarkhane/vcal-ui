@@ -1,4 +1,4 @@
-import { conf } from './config';
+import { conf } from './Config';
 import React, { Component } from 'react';
 import { hashHistory, Link } from 'react-router';
 

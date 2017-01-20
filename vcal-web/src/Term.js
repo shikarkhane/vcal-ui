@@ -1,4 +1,4 @@
-import { conf } from './config';
+import { conf } from './Config';
 import React, { Component } from 'react';
 import CreateTerm from './CreateTerm';
 import ListTerm from './ListTerm';
