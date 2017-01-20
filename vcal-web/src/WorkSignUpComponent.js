@@ -3,20 +3,19 @@ import reqwest from 'reqwest';
 
 
 class PickDate extends Component{
-  handleSave(isWorkday, chosenDate){
-    var group_id = 1;
-    var chosen_date = chosenDate;
-    var user_id = 1;
-    var is_workday = Boolean(isWorkday);
-    var is_taken = true;
+  handleSave(pIsWorkday, chosenDate){
+    var groupId = localStorage.getItem("groupId");
+    var userId = 1;
+    var isWorkday = Boolean(pIsWorkday);
+    var isTaken = true;
 
     reqwest({
-        url: 'http://localhost:8080/work-sign-up/' + group_id + "/"
+        url: 'http://localhost:8080/work-sign-up/' + groupId + "/"
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
-      , data: JSON.stringify({ chosen_date: chosen_date, user_id: user_id,
-          is_workday: is_workday, is_taken: is_taken})
+      , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
+          is_workday: isWorkday, is_taken: isTaken})
       , success: function (resp) {
           console.log(resp);
         }

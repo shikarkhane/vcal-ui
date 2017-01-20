@@ -14,13 +14,13 @@ class Invite extends Component {
   handleSave(e){
     e.preventDefault();
     var emails = this.state.invitees;
-    var group_id = 1;
+    var groupId = localStorage.getItem("groupId");
     reqwest({
         url: 'http://localhost:8080/invite/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
-      , data: JSON.stringify({ group_id: group_id, emails: emails })
+      , data: JSON.stringify({ group_id: groupId, emails: emails })
       , success: function (resp) {
           console.log(resp);
         }

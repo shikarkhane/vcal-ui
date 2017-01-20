@@ -27,11 +27,11 @@ class Showups extends Component {
   getStandins(e){
     e.preventDefault();
     var self = this;
-    var group_id = 1;
-    var work_date = this.state.chosenDate;
+    var groupId = localStorage.getItem("groupId");
+    var workDate = this.state.chosenDate;
 
     reqwest({
-        url: 'http://localhost:8080/show-ups/' + group_id + "/date/" + work_date + "/"
+        url: 'http://localhost:8080/show-ups/' + groupId + "/date/" + workDate + "/"
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'
@@ -42,17 +42,17 @@ class Showups extends Component {
   }
   handleSave(e){
     e.preventDefault();
-    var group_id = 1;
-    var work_date = this.state.chosenDate;
-    var workday_user_ids = [1,2];
-    var standin_user_ids = [3];
+    var groupId = localStorage.getItem("groupId");
+    var workDate = this.state.chosenDate;
+    var workdayUserIds = [1,2];
+    var standinUserIds = [3];
     reqwest({
-        url: 'http://localhost:8080/show-ups/' + group_id + "/date/" + work_date + "/"
+        url: 'http://localhost:8080/show-ups/' + groupId + "/date/" + workDate + "/"
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
-      , data: JSON.stringify({ workday_user_ids: workday_user_ids,
-          standin_user_ids: standin_user_ids})
+      , data: JSON.stringify({ workday_user_ids: workdayUserIds,
+          standin_user_ids: standinUserIds})
       , success: function (resp) {
           console.log(resp);
         }

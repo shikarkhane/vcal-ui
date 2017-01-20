@@ -71,20 +71,20 @@ class SwitchdayMyList extends Component {
     const standinSwitches = standins.map((s) =>
     <SwitchMyDate key={s.id} chosenDate={s.standin_date} fromTime="0800"
       tillTime="1600" isHalfDay={false} isWorkday={false}
-      isAlreadySwitched={s.is_already_switched}/>
+      isAlreadySwitched={s.is_already_switched} fromOpenList={false}/>
     );
     const workdays = this.state.myWorkday;
     const workdaySwitches = workdays.map((s) =>
     <SwitchMyDate key={s.id} chosenDate={s.work_date} fromTime={s.from_time_in_24hours}
       tillTime={s.to_time_in_24hours} isHalfDay={s.is_half_day}  isWorkday={true}
-      isAlreadySwitched={s.is_already_switched}/>
+      isAlreadySwitched={s.is_already_switched} fromOpenList={false}/>
   );
 
     return (
       <div>
-        <h4>You standin dates</h4>
+        <h4>Your standin dates</h4>
           {standinSwitches}
-        <h4>You workday dates</h4>
+        <h4>Your workday dates</h4>
           {workdaySwitches}
       </div>
     );

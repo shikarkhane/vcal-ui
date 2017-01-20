@@ -2,25 +2,52 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
 class SwitchMyDate extends Component{
-  handleSave(isWorkday, chosenDate, fromTime, tillTime, isHalfDay){
-    var group_id = 1;
-    var chosen_date = chosenDate;
-    var user_id = 1;
-    var is_workday = Boolean(isWorkday);
-    var is_half_day = Boolean(isHalfDay);
+  handleSave(pIsWorkday, chosenDate, fromTime, tillTime, pIsHalfDay,
+    fromOpenList){
+    var groupId = localStorage.getItem("groupId");
+    var userId = 1;
+    var isWorkday = Boolean(pIsWorkday);
+    var isHalfDay = Boolean(pIsHalfDay);
 
-    reqwest({
-        url: 'http://localhost:8080/switchday/' + group_id + '/user/' + user_id + '/'
-      , type: 'json'
-      , method: 'post'
-      , contentType: 'application/json'
-      , data: JSON.stringify({ chosen_date: chosen_date, user_id: user_id,
-          is_workday: is_workday, from_time: fromTime, to_time: tillTime,
-        is_half_day: is_half_day})
-      , success: function (resp) {
-          console.log(resp);
-        }
-    });
+    //if switch is from open list, delete switchday and assign workday/standin
+    //to this user
+    if ( fromOpenList ){
+      reqwest({
+          url: 'http://localhost:8080/work-sign-up/' + groupId + "/"
+        , type: 'json'
+        , method: 'post'
+        , contentType: 'application/json'
+        , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
+            is_workday: isWorkday, is_taken: true})
+        , success: function (resp) {
+            console.log(resp);
+          }
+      });
+      reqwest({
+          url: 'http://localhost:8080/switchday/' + groupId + '/user/' + userId + '/'
+        , type: 'json'
+        , method: 'delete'
+        , contentType: 'application/json'
+        , data: JSON.stringify({ chosen_date: chosenDate})
+        , success: function (resp) {
+            console.log(resp);
+          }
+      });
+    }
+    else{
+      reqwest({
+          url: 'http://localhost:8080/switchday/' + groupId + '/user/' + userId + '/'
+        , type: 'json'
+        , method: 'post'
+        , contentType: 'application/json'
+        , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
+            is_workday: isWorkday, from_time: fromTime, to_time: tillTime,
+          is_half_day: isHalfDay})
+        , success: function (resp) {
+            console.log(resp);
+          }
+      });
+    }
   }
 
   render(){
@@ -30,11 +57,13 @@ class SwitchMyDate extends Component{
     var tillTime = this.props.tillTime;
     var isHalfDay = this.props.isHalfDay;
     var isAlreadySwitched = Boolean(this.props.isAlreadySwitched);
+    var fromOpenList=Boolean(this.props.fromOpenList);
 
     if(Boolean(isWorkday)){
       return (<div >
         <input type="checkbox"
-           onChange={this.handleSave.bind(null, isWorkday, chosenDate, fromTime, tillTime, isHalfDay)}
+           onChange={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
+             tillTime, isHalfDay, fromOpenList)}
            checked={isAlreadySwitched}/>
         <span >{this.props.chosenDate} between
           {fromTime}
@@ -45,7 +74,8 @@ class SwitchMyDate extends Component{
     else{
       return (<div >
         <input type="checkbox"
-           onChange={this.handleSave.bind(null, isWorkday, chosenDate, fromTime, tillTime, isHalfDay)}
+           onChange={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
+             tillTime, isHalfDay, fromOpenList)}
            checked={isAlreadySwitched}/>
         <span >{this.props.chosenDate} between
           {fromTime}
