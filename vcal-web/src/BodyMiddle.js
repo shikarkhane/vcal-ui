@@ -1,4 +1,3 @@
-import { conf } from './Config';
 import React, { Component } from 'react';
 
 class BodyMiddle extends Component {
