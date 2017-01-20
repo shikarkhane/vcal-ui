@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './index.css';
 
-import { Router, Route, IndexRoute, hashHistory } from "react-router";
+import { Router, Route, hashHistory } from "react-router";
 
 import App from './App';
 import MyGroup from './MyGroup';
@@ -19,6 +19,7 @@ import Children from './Children';
 import WorkSignUp from './WorkSignUp';
 import SwitchDay from './Switchday';
 import MyProfile from './MyProfile';
+import Dashboard from './Dashboard';
 
 
 ReactDOM.render(
@@ -37,6 +38,7 @@ ReactDOM.render(
     <Route path="/worksignup" component={WorkSignUp}></Route>
     <Route path="/switchday" component={SwitchDay}></Route>
     <Route path="/myprofile" component={MyProfile}></Route>
+    <Route path="/dashboard" component={Dashboard}></Route>
   </Router>
   , document.getElementById('root')
 );

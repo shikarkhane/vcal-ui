@@ -18,6 +18,7 @@ class Showups extends Component {
    this.state = {standins: {'standin':[], 'workday':[]}};
 
    this.changeDate = this.changeDate.bind(this);
+   this.handleSave = this.handleSave.bind(this);
  }
 
   changeDate(e){

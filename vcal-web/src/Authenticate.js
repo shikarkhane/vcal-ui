@@ -9,8 +9,8 @@ class GoogleButton extends Component{
       if (response.type !== "tokenFailed"){
         localStorage.setItem("tokenId", response.tokenId);
         localStorage.setItem("profileObj", response.profileObj);
-        localStorage.setItem("is_auth", true);
-        hashHistory.push('/');
+        localStorage.setItem("is_auth", 1);
+        hashHistory.push('/dashboard');
       }
     }
 

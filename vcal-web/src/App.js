@@ -8,10 +8,12 @@ import Dashboard from './Dashboard';
 
 class App extends Component {
   componentDidMount() {
-    this.timerID = setInterval(
-      () => this.checkTokenStillValid(),
-      100000
-    );
+    if ( Boolean(localStorage.getItem("is_auth")) === true){
+      this.timerID = setInterval(
+        () => this.checkTokenStillValid(),
+        100000
+      );
+    }
   }
 
   componentWillUnmount() {
@@ -27,7 +29,7 @@ class App extends Component {
         , method: 'get'
         , contentType: 'application/json'
         , error: function (err) {
-          localStorage.setItem("is_auth", false);
+          localStorage.setItem("is_auth", 0);
           clearInterval(this.timerID);
         }
         , success: function (resp) {
@@ -40,12 +42,11 @@ class App extends Component {
   }
 
   render() {
-    this.state = {is_auth: localStorage.getItem("is_auth")};
     var content = (
         <Landing />
     );
 
-    if (Boolean(this.state.is_auth) === true)
+    if (Boolean(localStorage.getItem("is_auth")) === true)
     {
       content = (
           <Dashboard />

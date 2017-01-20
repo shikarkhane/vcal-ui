@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import reqwest from 'reqwest';
+//import reqwest from 'reqwest';
 import Header from './Header';
 
 class MyProfile extends Component {
@@ -10,7 +10,7 @@ class MyProfile extends Component {
         <h3>My Profile</h3>
       </div>
     );
-    
+
   }
 }
 

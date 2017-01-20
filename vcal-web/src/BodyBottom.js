@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 
 class ActionButton extends Component{
@@ -7,8 +7,8 @@ class ActionButton extends Component{
     if (this.props.notifyCount > 0){
       return (
         <Link to={'/{this.props.actionLinkName}'}>
-          <button class="btn btn-primary" type="button">
-            {this.props.actionLabel} <span class="badge">{this.props.notifyCount}</span>
+          <button className="btn btn-primary" type="button">
+            {this.props.actionLabel} <span className="badge">{this.props.notifyCount}</span>
           </button>
         </Link>
       );
@@ -16,7 +16,7 @@ class ActionButton extends Component{
     else{
       return (
         <Link to={'/' + this.props.actionLinkName}>
-          <button class="btn btn-primary" type="button">
+          <button className="btn btn-primary" type="button">
             {this.props.actionLabel}
           </button>
         </Link>
@@ -37,7 +37,7 @@ class BodyBottom extends Component {
         <ActionButton actionLinkName="member" actionLabel="Member" notifyCount="0"/>
         <ActionButton actionLinkName="rule" actionLabel="Rule" notifyCount="0"/>
         <ActionButton actionLinkName="children" actionLabel="Children" notifyCount="0"/>
-        <ActionButton actionLinkName="signup" actionLabel="Sign-up" notifyCount="0"/>
+        <ActionButton actionLinkName="worksignup" actionLabel="Sign-up" notifyCount="0"/>
         <ActionButton actionLinkName="switchday" actionLabel="Switch day" notifyCount="0"/>
       </div>
     );

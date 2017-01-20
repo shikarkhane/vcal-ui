@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import { hashHistory } from 'react-router';
 
 class CreateSummon extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class CreateSummon extends Component {
           from_time: this.state.fromTime, to_time: this.state.tillTime})
       , success: function (resp) {
           console.log(resp);
+          hashHistory.push('/summon');
         }
     });
   }

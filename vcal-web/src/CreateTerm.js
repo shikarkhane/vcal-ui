@@ -38,7 +38,7 @@ class CreateSummon extends Component {
   handleSave(e){
     e.preventDefault();
     var groupId = localStorage.getItem("groupId");
-    var creatorId = 1;
+    //var creatorId = 1;
     reqwest({
         url: 'http://localhost:8080/term/'
       , type: 'json'

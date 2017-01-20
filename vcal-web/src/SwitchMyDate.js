@@ -31,8 +31,6 @@ class SwitchMyDate extends Component{
     var isHalfDay = this.props.isHalfDay;
     var isAlreadySwitched = Boolean(this.props.isAlreadySwitched);
 
-    var result = '';
-
     if(Boolean(isWorkday)){
       return (<div >
         <input type="checkbox"

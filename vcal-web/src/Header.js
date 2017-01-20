@@ -28,25 +28,25 @@ class Header extends Component {
       <div >
         <div>
           <Link to={'/'}>
-            <button type="button" class="btn btn-default btn-lg">
-              <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home
+            <button type="button" className="btn btn-default btn-lg">
+              <span className="glyphicon glyphicon-home" aria-hidden="true"></span> Home
             </button>
           </Link>
         </div>
         <div className="pull-right">
           <Link to={'/mygroup'}>
-            <button type="button" class="btn btn-default btn-lg">{this.state.groupName}
-              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            <button type="button" className="btn btn-default btn-lg">{this.state.groupName}
+              <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
             </button>
           </Link>
           <Link to={'/myterm'}>
-            <button type="button" class="btn btn-default btn-lg">{this.state.termName}
-              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            <button type="button" className="btn btn-default btn-lg">{this.state.termName}
+              <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
             </button>
           </Link>
           <Link to={'/myprofile'}>
-            <button type="button" class="btn btn-default btn-lg">Profile
-              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            <button type="button" className="btn btn-default btn-lg">Profile
+              <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
             </button>
           </Link>
         </div>

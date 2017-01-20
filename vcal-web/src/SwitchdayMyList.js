@@ -55,7 +55,7 @@ class SwitchdayMyList extends Component {
     });
   }
   markAlreadySwitched(chosenDate){
-    var self = this;
+    //var self = this;
     var mySwitchDates = this.state.mySwitchday.map((x) => x.switch_date);
     for(var i = 0; i < mySwitchDates.length; i++) {
       if ( chosenDate === mySwitchDates[i]){
