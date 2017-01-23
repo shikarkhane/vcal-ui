@@ -5,7 +5,10 @@ import {hashHistory} from 'react-router';
 import reqwest from 'reqwest';
 
 class GoogleButton extends Component{
-  handleUserSave(profileObj, tokenId){
+  handleUserSave(){
+    var profileObj = JSON.parse(localStorage.getItem("profileObj"));
+    var tokenId = localStorage.getItem("tokenId");
+
     reqwest({
         url: conf.serverUrl + '/user/'
       , type: 'json'
@@ -16,9 +19,16 @@ class GoogleButton extends Component{
         familyName: profileObj.familyName, email: profileObj.email,
         tokenId: tokenId, imageUrl: profileObj.imageUrl
       })
+      , error: function (err) {
+        console.log(err);
+        localStorage.clear();
+        hashHistory.push('/');
+      }
       , success: function (resp) {
           console.log(resp);
           localStorage.setItem("userId", resp.userId);
+          localStorage.setItem("role", resp.role);
+          localStorage.setItem("isActive", resp.isActive);
           hashHistory.push('/dashboard');
         }
     });
@@ -31,7 +41,7 @@ class GoogleButton extends Component{
         localStorage.setItem("tokenId", response.tokenId);
         localStorage.setItem("profileObj", JSON.stringify(response.profileObj));
         localStorage.setItem("is_auth", 1);
-        self.handleUserSave(response.profileObj, response.tokenId);
+        self.handleUserSave();
       }
     }
 
