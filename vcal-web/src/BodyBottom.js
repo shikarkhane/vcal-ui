@@ -54,10 +54,12 @@ class ActionButton extends Component{
 }
 class BodyBottom extends Component {
   render() {
-    if ( Number(localStorage.getItem("role")) === 2){
+    if ( Number(localStorage.getItem("role")) === 1){
       return (
-        <AdminUserAction />
-        <RegularUserAction />
+        <div>
+          <AdminUserAction />
+          <RegularUserAction />
+        </div>
       );
     }
     else{

@@ -10,13 +10,15 @@ class Header extends Component {
    var groupName = localStorage.getItem("groupName");
    var termName = localStorage.getItem("termName");
 
-   if (! groupName){
-      hashHistory.push('/mygroup');
-      return;
-   }
-   if (! termName) {
-      hashHistory.push('/myterm');
-      return;
+   if ( Number(localStorage.getItem("role")) !== 1){
+     if (! groupName){
+        hashHistory.push('/mygroup');
+        return;
+     }
+     if (! termName) {
+        hashHistory.push('/myterm');
+        return;
+     }
    }
 
     this.setState({groupName: groupName });

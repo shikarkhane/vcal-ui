@@ -22,6 +22,7 @@ class Rule extends Component {
    }
   handleSave(){
     var groupId = localStorage.getItem("groupId");
+    var termId = localStorage.getItem("termId");
     var standinKid1 = this.state.standinKid1;
     var standinKid2 = this.state.standinKid2;
     var standinKid3 = this.state.standinKid3;
@@ -30,7 +31,7 @@ class Rule extends Component {
     var workdayKid3 = this.state.workdayKid3;
 
     reqwest({
-        url: conf.serverUrl + '/rule/' + groupId + '/'
+        url: conf.serverUrl + '/rule/' + groupId + '/term/' + termId + '/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
@@ -68,14 +69,15 @@ class Rule extends Component {
   getRule(){
     var self = this;
     var groupId = localStorage.getItem("groupId");
+    var termId = localStorage.getItem("termId");
+
      // todo: get list of terms for given group id
      reqwest({
-         url: conf.serverUrl + '/rule/' + groupId + '/'
+         url: conf.serverUrl + '/rule/' + groupId + '/term/' + termId + '/'
          , type: 'json'
          , contentType: 'application/json'
        , method: 'get'
        , success: function (resp) {
-            if ( resp ){
               var x = JSON.parse(resp.definition)
               self.setState({
                 standinKid1: x.standin[0],
@@ -85,7 +87,6 @@ class Rule extends Component {
                 workdayKid2: x.workday[1],
                 workdayKid3: x.workday[2],
               });
-          }
          }
      });
   }
