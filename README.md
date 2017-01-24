@@ -1,2 +1,0 @@
-# vcal-ui
-frontend

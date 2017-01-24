@@ -17,7 +17,8 @@ class CreateWorkday extends Component {
  }
 
   changeDate(e){
-    this.setState({workDate: e.target.value });
+    var dt = new Date(e.target.value).getTime();
+    this.setState({workDate: dt });
   }
   changeFromTime(e){
     this.setState({fromTime: e.target.value });
