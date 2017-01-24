@@ -16,8 +16,7 @@ class CreateSummon extends Component {
  }
 
   changeDate(e){
-    var dt = new Date(e.target.value).getTime();
-    this.setState({workDate: dt });
+    this.setState({workDate: e.target.value });
   }
   changeFromTime(e){
     this.setState({fromTime: e.target.value });

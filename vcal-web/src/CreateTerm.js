@@ -21,12 +21,10 @@ class CreateSummon extends Component {
     this.setState({termName: e.target.value });
   }
   changeStartDate(e){
-    var dt = new Date(e.target.value).getTime();
-    this.setState({startDate: dt });
+    this.setState({startDate: e.target.value });
   }
   changeEndDate(e){
-    var dt = new Date(e.target.value).getTime();
-    this.setState({endDate: dt });
+    this.setState({endDate: e.target.value });
   }
   changeKid1(e){
     this.setState({kid1: e.target.value });

@@ -57,7 +57,7 @@ class ListTerm extends Component {
     const tms = this.state.terms;
     const termButtons = tms.map((tm) =>
     <TermElement key={tm.id} termId={tm.id} termName={tm.name}
-      startDate={new Date(tm.start_date)} endDate={new Date(tm.end_date)}
+      startDate={tm.start_date} endDate={tm.end_date}
       familySpread={tm.family_spread}/>
   );
 

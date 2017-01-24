@@ -23,8 +23,7 @@ class Showups extends Component {
  }
 
   changeDate(e){
-    var dt = new Date(e.target.value).getTime();
-    this.setState({chosenDate: dt });
+    this.setState({chosenDate: e.target.value });
   }
   getStandins(e){
     e.preventDefault();

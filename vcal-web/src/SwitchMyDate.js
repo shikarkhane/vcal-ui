@@ -53,7 +53,7 @@ class SwitchMyDate extends Component{
 
   render(){
     var isWorkday = this.props.isWorkday;
-    var chosenDate = new Date(this.props.chosenDate).getTime();
+    var chosenDate = this.props.chosenDate;
     var fromTime = this.props.fromTime;
     var tillTime = this.props.tillTime;
     var isHalfDay = this.props.isHalfDay;

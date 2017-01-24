@@ -49,8 +49,7 @@ class ListSummon extends Component {
   render() {
     const smons = this.state.summons;
     const summonButtons = smons.map((smon) =>
-    <SummonElement key={smon.id} summonId={smon.id}
-      date={new Date(smon.work_date)}
+    <SummonElement key={smon.id} summonId={smon.id} date={smon.work_date}
       fromTime={smon.from_time_in_24hours} tillTime={smon.to_time_in_24hours}/>
   );
 
