@@ -58,14 +58,15 @@ class SwitchdayOpenList extends Component {
     // todo intersect with mySwitchday and exclude from open list
     const standins = this.state.openStandin;
     const standinSwitches = standins.map((s) =>
-    <SwitchMyDate key={s.id} chosenDate={s.switch_date} fromTime="0800"
-      tillTime="1600" isHalfDay={false} isWorkday={false} isAlreadySwitched={false}
+    <SwitchMyDate key={s.id} chosenDate={new Date(s.switch_date)}
+      fromTime="0800" tillTime="1600" isHalfDay={false} isWorkday={false} isAlreadySwitched={false}
       fromOpenList={true}/>
     );
     const workdays = this.state.openWorkday;
     const workdaySwitches = workdays.map((s) =>
-    <SwitchMyDate key={s.id} chosenDate={s.switch_date } fromTime={s.from_time_in_24hours}
-      tillTime={s.to_time_in_24hours} isHalfDay={s.is_half_day}  isWorkday={true}
+    <SwitchMyDate key={s.id} chosenDate={new Date(s.switch_date) } 
+      fromTime={s.from_time_in_24hours} tillTime={s.to_time_in_24hours}
+      isHalfDay={s.is_half_day}  isWorkday={true}
       isAlreadySwitched={false} fromOpenList={true}/>
   );
 

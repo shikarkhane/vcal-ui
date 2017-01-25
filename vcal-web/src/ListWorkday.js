@@ -54,7 +54,8 @@ class ListWorkday extends Component {
   render() {
     const wds = this.state.workdays;
     const workdayButtons = wds.map((wd) =>
-    <WorkdayElement key={wd.id} workdayId={wd.id} date={wd.work_date}
+    <WorkdayElement key={wd.id} workdayId={wd.id}
+      date={new Date(wd.work_date)}
       fromTime={wd.from_time_in_24hours} tillTime={wd.to_time_in_24hours}
       halfDay={wd.is_half_day} />
   );

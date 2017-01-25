@@ -25,7 +25,7 @@ class PickDate extends Component{
 
   render(){
     var isWorkday = this.props.isWorkday;
-    var chosenDate = this.props.chosenDate;
+    var chosenDate = new Date(this.props.chosenDate).getTime();
 
     return (
       <div className="input-group">
@@ -77,12 +77,12 @@ class WorkSignUpComponent extends Component {
 
     const standins = this.state.openStandin;
     const standinElements = standins.map((s) =>
-    <PickDate key={s.id} chosenDate={s.standin_date} isWorkday="0"/>
-  );
-  const workdays = this.state.openWorkday;
-  const workdayElements = workdays.map((s) =>
-  <PickDate key={s.id} chosenDate={s.work_date} isWorkday="1"/>
-);
+    <PickDate key={s.id} chosenDate={new Date(s.standin_date)} isWorkday="0"/>
+      );
+    const workdays = this.state.openWorkday;
+    const workdayElements = workdays.map((s) =>
+    <PickDate key={s.id} chosenDate={new Date(s.work_date)} isWorkday="1"/>
+    );
     return (
             <div>
               <h4>Choose standin dates</h4>
