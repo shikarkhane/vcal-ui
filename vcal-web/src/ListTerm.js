@@ -39,6 +39,14 @@ class ListTerm extends Component {
  componentDidMount() {
       this.getTerms();
   }
+  getHumanDate(epochDate){
+    var date = new Date( epochDate);
+    return(
+        (date.getMonth() + 1) + "-" +
+        date.getDate() + "-" +
+        date.getFullYear() + " "
+    );
+  }
   getTerms(){
     var self = this;
     var groupId = localStorage.getItem("groupId");
@@ -57,7 +65,7 @@ class ListTerm extends Component {
     const tms = this.state.terms;
     const termButtons = tms.map((tm) =>
     <TermElement key={tm.id} termId={tm.id} termName={tm.name}
-      startDate={new Date(tm.start_date)} endDate={new Date(tm.end_date)}
+      startDate={this.getHumanDate(tm.start_date)} endDate={this.getHumanDate(tm.end_date)}
       familySpread={tm.family_spread}/>
   );
 

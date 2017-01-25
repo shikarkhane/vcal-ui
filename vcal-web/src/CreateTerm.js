@@ -21,12 +21,10 @@ class CreateSummon extends Component {
     this.setState({termName: e.target.value });
   }
   changeStartDate(e){
-    var dt = new Date(e.target.value).getTime();
-    this.setState({startDate: dt });
+    this.setState({startDate: e.target.value });
   }
   changeEndDate(e){
-    var dt = new Date(e.target.value).getTime();
-    this.setState({endDate: dt });
+    this.setState({endDate: e.target.value });
   }
   changeKid1(e){
     this.setState({kid1: e.target.value });
@@ -40,6 +38,9 @@ class CreateSummon extends Component {
 
   handleSave(e){
     e.preventDefault();
+    var startDt = new Date(this.state.startDate).getTime();
+    var endDt = new Date(this.state.endDate).getTime();
+    
     var groupId = localStorage.getItem("groupId");
     //var creatorId = 1;
     reqwest({
@@ -48,8 +49,8 @@ class CreateSummon extends Component {
       , method: 'post'
       , contentType: 'application/json'
       , data: JSON.stringify({ group_id: groupId,
-          term_name: this.state.termName, start_date: this.state.startDate,
-          end_date: this.state.endDate,
+          term_name: this.state.termName, start_date: startDt,
+          end_date: endDt,
            family_spread: {kid_1: this.state.kid1, kid_2: this.state.kid2,
              kid_3: this.state.kid3}})
       , success: function (resp) {

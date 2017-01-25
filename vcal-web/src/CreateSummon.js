@@ -16,8 +16,7 @@ class CreateSummon extends Component {
  }
 
   changeDate(e){
-    var dt = new Date(e.target.value).getTime();
-    this.setState({workDate: dt });
+    this.setState({workDate: e.target.value });
   }
   changeFromTime(e){
     this.setState({fromTime: e.target.value });
@@ -29,12 +28,13 @@ class CreateSummon extends Component {
     e.preventDefault();
     var groupId = localStorage.getItem("groupId");
     var creatorId = 1;
+    var workDate = new Date(this.state.workDate).getTime();
     reqwest({
         url: conf.serverUrl + '/summon/' + groupId + '/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
-      , data: JSON.stringify({ created_by_id: creatorId, work_date: this.state.workDate,
+      , data: JSON.stringify({ created_by_id: creatorId, work_date: workDate,
           from_time: this.state.fromTime, to_time: this.state.tillTime})
       , success: function (resp) {
           console.log(resp);
