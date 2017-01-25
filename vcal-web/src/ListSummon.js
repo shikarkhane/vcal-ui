@@ -1,6 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import getHumanDate from './Utility';
 
 class SummonElement extends Component{
   handleDeleteSummon(summonId){
@@ -50,7 +51,7 @@ class ListSummon extends Component {
     const smons = this.state.summons;
     const summonButtons = smons.map((smon) =>
     <SummonElement key={smon.id} summonId={smon.id}
-      date={new Date(smon.work_date)}
+      date={getHumanDate(smon.work_date)}
       fromTime={smon.from_time_in_24hours} tillTime={smon.to_time_in_24hours}/>
   );
 

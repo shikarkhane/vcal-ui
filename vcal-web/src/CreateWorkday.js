@@ -17,8 +17,7 @@ class CreateWorkday extends Component {
  }
 
   changeDate(e){
-    var dt = new Date(e.target.value).getTime();
-    this.setState({workDate: dt });
+    this.setState({workDate: e.target.value });
   }
   changeFromTime(e){
     this.setState({fromTime: e.target.value });
@@ -33,12 +32,13 @@ class CreateWorkday extends Component {
     e.preventDefault();
     var groupId = localStorage.getItem("groupId");
     var creatorId = 1;
+    var workDate = new Date(this.state.workDate).getTime();
     reqwest({
         url: conf.serverUrl + '/workday/' + groupId + '/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
-      , data: JSON.stringify({ created_by_id: creatorId, work_date: this.state.workDate,
+      , data: JSON.stringify({ created_by_id: creatorId, work_date: workDate,
           from_time: this.state.fromTime, to_time: this.state.tillTime,
         standin_user_id: "", is_half_day: this.state.halfDay})
       , success: function (resp) {

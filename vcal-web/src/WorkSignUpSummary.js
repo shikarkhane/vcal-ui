@@ -1,6 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import getHumanDate from './Utility';
 
 class WorkSignUpSummary extends Component {
   constructor(props) {
@@ -42,11 +43,11 @@ class WorkSignUpSummary extends Component {
   render() {
     const standins = this.state.myStandin;
     const standinLabels = standins.map((s) =>
-    <label key={s.id}>{new Date(s.standin_date)}</label>
+    <label key={s.id}>{getHumanDate(s.standin_date)}</label>
   );
   const workdays = this.state.myWorkday;
   const workdayLabels = workdays.map((s) =>
-  <label key={s.id}>{new Date(s.work_date)} between  {s.from_time_in_24hours}
+  <label key={s.id}>{getHumanDate(s.work_date)} between  {s.from_time_in_24hours}
     till  {s.to_time_in_24hours} ( half-day={s.is_half_day} )</label>
 );
 

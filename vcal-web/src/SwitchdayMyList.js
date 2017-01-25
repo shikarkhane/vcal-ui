@@ -2,6 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import SwitchMyDate from './SwitchMyDate';
+import getHumanDate from './Utility';
 
 class SwitchdayMyList extends Component {
   constructor(props) {
@@ -71,13 +72,13 @@ class SwitchdayMyList extends Component {
     const standins = this.state.myStandin;
     const standinSwitches = standins.map((s) =>
     <SwitchMyDate key={s.id}
-      chosenDate={new Date(s.standin_date)}
+      chosenDate={getHumanDate(s.standin_date)}
       fromTime="0800" tillTime="1600" isHalfDay={false} isWorkday={false}
       isAlreadySwitched={s.is_already_switched} fromOpenList={false}/>
     );
     const workdays = this.state.myWorkday;
     const workdaySwitches = workdays.map((s) =>
-    <SwitchMyDate key={s.id} chosenDate={new Date(s.work_date)} 
+    <SwitchMyDate key={s.id} chosenDate={getHumanDate(s.work_date)}
       fromTime={s.from_time_in_24hours} tillTime={s.to_time_in_24hours}
       isHalfDay={s.is_half_day}  isWorkday={true}
       isAlreadySwitched={s.is_already_switched} fromOpenList={false}/>

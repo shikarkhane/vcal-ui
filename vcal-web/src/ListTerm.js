@@ -1,6 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import getHumanDate from './Utility';
 
 class TermElement extends Component{
   handleChooseTerm(termId, termName){
@@ -39,14 +40,6 @@ class ListTerm extends Component {
  componentDidMount() {
       this.getTerms();
   }
-  getHumanDate(epochDate){
-    var date = new Date( epochDate);
-    return(
-        (date.getMonth() + 1) + "-" +
-        date.getDate() + "-" +
-        date.getFullYear() + " "
-    );
-  }
   getTerms(){
     var self = this;
     var groupId = localStorage.getItem("groupId");
@@ -65,7 +58,7 @@ class ListTerm extends Component {
     const tms = this.state.terms;
     const termButtons = tms.map((tm) =>
     <TermElement key={tm.id} termId={tm.id} termName={tm.name}
-      startDate={this.getHumanDate(tm.start_date)} endDate={this.getHumanDate(tm.end_date)}
+      startDate={getHumanDate(tm.start_date)} endDate={getHumanDate(tm.end_date)}
       familySpread={tm.family_spread}/>
   );
 

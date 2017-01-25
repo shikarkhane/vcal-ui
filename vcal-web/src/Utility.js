@@ -1,4 +1,4 @@
-function getHumanDate(epochDate){
+var getHumanDate = function(epochDate){
   var date = new Date( epochDate);
   return(
       (date.getMonth() + 1) + "-" +
