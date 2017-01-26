@@ -23,14 +23,14 @@ class Showups extends Component {
  }
 
   changeDate(e){
-    var dt = new Date(e.target.value).getTime();
-    this.setState({chosenDate: dt });
+
+    this.setState({chosenDate: e.target.value });
   }
   getStandins(e){
     e.preventDefault();
     var self = this;
     var groupId = localStorage.getItem("groupId");
-    var workDate = this.state.chosenDate;
+    var workDate = new Date(this.state.chosenDate).getTime();
 
     reqwest({
         url: conf.serverUrl + '/show-ups/' + groupId + "/date/" + workDate + "/"
@@ -45,7 +45,7 @@ class Showups extends Component {
   handleSave(e){
     e.preventDefault();
     var groupId = localStorage.getItem("groupId");
-    var workDate = this.state.chosenDate;
+    var workDate = new Date(this.state.chosenDate).getTime();
     var workdayUserIds = [1,2];
     var standinUserIds = [3];
     reqwest({
