@@ -42,7 +42,7 @@ class CreateSummon extends Component {
     var endDt = new Date(this.state.endDate).getTime();
     
     var groupId = localStorage.getItem("groupId");
-    //var creatorId = 1;
+    //var creatorId = localStorage.getItem("userId");
     reqwest({
         url: conf.serverUrl + '/term/'
       , type: 'json'

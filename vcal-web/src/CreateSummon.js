@@ -27,7 +27,7 @@ class CreateSummon extends Component {
   handleSave(e){
     e.preventDefault();
     var groupId = localStorage.getItem("groupId");
-    var creatorId = 1;
+    var creatorId = localStorage.getItem("userId");
     var workDate = new Date(this.state.workDate).getTime();
     reqwest({
         url: conf.serverUrl + '/summon/' + groupId + '/'
