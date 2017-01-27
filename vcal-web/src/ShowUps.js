@@ -30,7 +30,7 @@ class Showups extends Component {
     e.preventDefault();
     var self = this;
     var groupId = localStorage.getItem("groupId");
-    var workDate = new Date(this.state.chosenDate).getTime();
+    var workDate = Math.floor(((new Date(this.state.chosenDate)).getTime())/1000);
 
     reqwest({
         url: conf.serverUrl + '/show-ups/' + groupId + "/date/" + workDate + "/"
@@ -45,7 +45,7 @@ class Showups extends Component {
   handleSave(e){
     e.preventDefault();
     var groupId = localStorage.getItem("groupId");
-    var workDate = new Date(this.state.chosenDate).getTime();
+    var workDate = Math.floor(((new Date(this.state.chosenDate)).getTime())/1000);
     var workdayUserIds = [1,2];
     var standinUserIds = [3];
     reqwest({

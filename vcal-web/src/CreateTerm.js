@@ -38,8 +38,8 @@ class CreateSummon extends Component {
 
   handleSave(e){
     e.preventDefault();
-    var startDt = new Date(this.state.startDate).getTime();
-    var endDt = new Date(this.state.endDate).getTime();
+    var startDt = Math.floor(((new Date(this.state.startDate)).getTime())/1000);
+    var endDt = Math.floor(((new Date(this.state.endDate)).getTime())/1000);
     
     var groupId = localStorage.getItem("groupId");
     //var creatorId = localStorage.getItem("userId");
@@ -57,6 +57,17 @@ class CreateSummon extends Component {
           console.log(resp);
         }
     });
+      reqwest({
+          url: conf.serverUrl + '/standindayrange/'
+          , type: 'json'
+          , method: 'post'
+          , contentType: 'application/json'
+          , data: JSON.stringify({ group_id: groupId,
+              start_date: startDt,  end_date: endDt})
+          , success: function (resp) {
+              console.log(resp);
+          }
+      });
 
   }
   render() {
