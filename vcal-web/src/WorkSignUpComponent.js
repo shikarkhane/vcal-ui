@@ -8,7 +8,7 @@ class PickDate extends Component{
   handleSave(pIsWorkday, chosenDate){
     var groupId = localStorage.getItem("groupId");
     var userId = localStorage.getItem("userId");
-    var isWorkday = Boolean(pIsWorkday);
+    var isWorkday = (pIsWorkday === '1');
     var isTaken = true;
 
     reqwest({

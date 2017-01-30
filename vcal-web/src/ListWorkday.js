@@ -18,7 +18,8 @@ class WorkdayElement extends Component{
   render(){
     var workdayId = this.props.workdayId;
     var halfDayText = "full day";
-    if ( Boolean(this.props.halfDay)){
+    var isHalfDay = this.props.halfDay;
+    if ( isHalfDay ){
       halfDayText = "half day";
     }
     return (

@@ -2,32 +2,61 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
+import getHumanDate from './Utility';
+
 
 class StandinElement extends Component{
+  handleSave(userId, isWorkday, chosenDate){
+    var groupId = localStorage.getItem("groupId");
+    var workDate = Math.floor(((new Date(chosenDate)).getTime())/1000);
+
+    reqwest({
+        url: conf.serverUrl + '/show-ups/' + groupId + "/date/" + workDate + "/"
+      , type: 'json'
+      , method: 'post'
+      , contentType: 'application/json'
+      , data: JSON.stringify({ userId: userId,
+          isWorkday: isWorkday})
+      , success: function (resp) {
+          console.log(resp);
+        }
+    });
+  }
   render(){
-    return (
-      <label>
-        <input type="checkbox" />
-        {this.props.standinName}
-      </label>
-    );
+    var userId = this.props.standinUserId;
+    var isWorkday = this.props.isWorkday;
+    var chosenDate = this.props.chosenDate;
+    if (userId === null){
+      return null;
+    }
+    else{
+      return (
+        <label>
+          <input type="checkbox" onChange={this.handleSave.bind(null, userId, isWorkday, chosenDate)}/>
+          {userId}
+        </label>
+      );
+    }
   }
 }
 class Showups extends Component {
   constructor(props) {
    super(props);
-   this.state = {standins: {'standin':[], 'workday':[]}};
+   //set todays date
+   var dt = getHumanDate(((new Date()).getTime())/1000);
+   this.state = {chosenDate: dt, standins: {'standin':[], 'workday':[]}};
 
    this.changeDate = this.changeDate.bind(this);
-   this.handleSave = this.handleSave.bind(this);
  }
-
+  componentDidMount() {
+    this.getStandins();
+  }
   changeDate(e){
 
     this.setState({chosenDate: e.target.value });
   }
-  getStandins(e){
-    e.preventDefault();
+  getStandins(){
+
     var self = this;
     var groupId = localStorage.getItem("groupId");
     var workDate = Math.floor(((new Date(this.state.chosenDate)).getTime())/1000);
@@ -42,36 +71,19 @@ class Showups extends Component {
         }
     });
   }
-  handleSave(e){
-    e.preventDefault();
-    var groupId = localStorage.getItem("groupId");
-    var workDate = Math.floor(((new Date(this.state.chosenDate)).getTime())/1000);
-    var workdayUserIds = [1,2];
-    var standinUserIds = [3];
-    reqwest({
-        url: conf.serverUrl + '/show-ups/' + groupId + "/date/" + workDate + "/"
-      , type: 'json'
-      , method: 'post'
-      , contentType: 'application/json'
-      , data: JSON.stringify({ workday_user_ids: workdayUserIds,
-          standin_user_ids: standinUserIds})
-      , success: function (resp) {
-          console.log(resp);
-        }
-    });
-  }
   render() {
     const sins = this.state.standins.standin;
     const standins = sins.map((sin) =>
     <StandinElement key={sin.id} standinDayId={sin.id}
-      standinUserId={sin.standin_user_id}
+      standinUserId={sin.standin_user_id} chosenDate={this.state.chosenDate}
+      isWorkday={false}
       />
   );
 
     return (
       <div>
         <Header />
-        <form onSubmit={this.handleSave}>
+
           <h1>Show ups<small>gs</small></h1>
           <label>
             Choose date:
@@ -79,8 +91,7 @@ class Showups extends Component {
             <input type="button" onClick={this.getStandins.bind(this)} value="Get" />
           </label>
           {standins}
-          <input type="submit" value="Submit" />
-        </form>
+
       </div>
     );
   }

@@ -7,8 +7,8 @@ class SwitchMyDate extends Component{
     fromOpenList){
     var groupId = localStorage.getItem("groupId");
     var userId = localStorage.getItem("userId");
-    var isWorkday = Boolean(pIsWorkday);
-    var isHalfDay = Boolean(pIsHalfDay);
+    var isWorkday = pIsWorkday;
+    var isHalfDay = pIsHalfDay;
 
     //if switch is from open list, delete switchday and assign workday/standin
     //to this user
@@ -53,14 +53,15 @@ class SwitchMyDate extends Component{
 
   render(){
     var isWorkday = this.props.isWorkday;
-    var chosenDate = new Date(this.props.chosenDate).getTime();
+    var chosenDate = Math.floor(((new Date(this.props.chosenDate)).getTime())/1000);
+
     var fromTime = this.props.fromTime;
     var tillTime = this.props.tillTime;
     var isHalfDay = this.props.isHalfDay;
-    var isAlreadySwitched = Boolean(this.props.isAlreadySwitched);
-    var fromOpenList=Boolean(this.props.fromOpenList);
+    var isAlreadySwitched = this.props.isAlreadySwitched;
+    var fromOpenList= this.props.fromOpenList;
 
-    if(Boolean(isWorkday)){
+    if(isWorkday){
       return (<div >
         <input type="checkbox"
            onChange={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
