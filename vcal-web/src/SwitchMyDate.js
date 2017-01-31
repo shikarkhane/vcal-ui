@@ -66,7 +66,7 @@ class SwitchMyDate extends Component{
         <input type="checkbox"
            onChange={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
              tillTime, isHalfDay, fromOpenList)}
-           checked={isAlreadySwitched}/>
+           />
         <span >{this.props.chosenDate} between
           {fromTime}
           till  {tillTime}
@@ -78,7 +78,7 @@ class SwitchMyDate extends Component{
         <input type="checkbox"
            onChange={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
              tillTime, isHalfDay, fromOpenList)}
-           checked={isAlreadySwitched}/>
+           />
         <span >{this.props.chosenDate} between
           {fromTime}
           till  {tillTime}
