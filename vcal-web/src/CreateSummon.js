@@ -44,22 +44,36 @@ class CreateSummon extends Component {
   }
   render() {
     return (
-
-            <form onSubmit={this.handleSave}>
-                <label>Date
-                  <input type="date"
-                  onChange={this.changeDate} value={this.state.workDate} />
-                </label>
-                <label >From
-                <input type="number" placeholder="0900"
+      <form className="form-horizontal" onSubmit={this.handleSave}>
+        <div className="form-group">
+          <label htmlFor="inputDate1" className="col-sm-2 control-label">Date:</label>
+          <div className="col-sm-10">
+            <input type="date" className="form-control" id="inputDate1"
+                onChange={this.changeDate} value={this.state.workDate}/>
+          </div>
+        </div>
+        <div className="form-group">
+          <label htmlFor="inputFromtime" className="col-sm-2 control-label">From time:</label>
+          <div className="col-sm-10">
+            <input type="number" className="form-control" id="inputFromtime"
+              placeholder="0900"
                   onChange={this.changeFromTime} value={this.state.fromTime}/>
-                </label>
-                <label >To
-                <input type="number" placeholder="1630"
+          </div>
+        </div>
+        <div className="form-group">
+          <label htmlFor="inputTilltime" className="col-sm-2 control-label">Till time:</label>
+          <div className="col-sm-10">
+            <input type="number" className="form-control" id="inputTilltime"
+              placeholder="1600"
                   onChange={this.changeTillTime} value={this.state.tillTime}/>
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
+          </div>
+        </div>
+        <div className="form-group">
+          <div className="col-sm-offset-2 col-sm-10">
+            <button type="submit" className="btn btn-default">Create</button>
+          </div>
+        </div>
+      </form>
     );
   }
 }

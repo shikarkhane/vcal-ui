@@ -23,9 +23,14 @@ class WorkdayElement extends Component{
       halfDayText = "half day";
     }
     return (
-      <button onClick={this.handleDeleteWorkday.bind(null, workdayId)}>
+      <div className="alert alert-success" role="alert">
         On {this.props.date} , stand-in needed between {this.props.fromTime}
-        till  {this.props.tillTime} for {halfDayText}</button>
+        till  {this.props.tillTime} for {halfDayText}
+
+        <button type="button" className="close bg-warning" aria-label="Close"
+          onClick={this.handleDeleteWorkday.bind(null, workdayId)}>
+          <span aria-hidden="true">&times;</span></button>
+      </div>
     );
   }
 }

@@ -3,6 +3,45 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import getHumanDate from './Utility';
 
+class MySignUps extends Component{
+  handleDeleteSignup(signupId, isWorkday){
+    if (isWorkday){
+      reqwest({
+          url: conf.serverUrl + '/workday/' + signupId + '/'
+        , type: 'json'
+        , method: 'delete'
+        , contentType: 'application/json'
+        , success: function (resp) {
+            console.log(resp);
+          }
+      });
+    }
+    else{
+      reqwest({
+          url: conf.serverUrl + '/standinday/' + signupId + '/'
+        , type: 'json'
+        , method: 'delete'
+        , contentType: 'application/json'
+        , success: function (resp) {
+            console.log(resp);
+          }
+      });
+    }
+
+  }
+  render(){
+    var signupId = this.props.signupId;
+    var isWorkday = this.props.isWorkday;
+    return (
+      <div className="alert alert-success" role="alert">
+        {this.props.textToDisplay}
+        <button type="button" className="close bg-warning" aria-label="Close"
+          onClick={this.handleDeleteSignup.bind(null, signupId, isWorkday)}>
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+    );
+  }
+}
 class WorkSignUpSummary extends Component {
   constructor(props) {
    super(props);
@@ -43,20 +82,30 @@ class WorkSignUpSummary extends Component {
   render() {
     const standins = this.state.myStandin;
     const standinLabels = standins.map((s) =>
-    <label key={s.id}>{getHumanDate(s.standin_date)}</label>
-  );
-  const workdays = this.state.myWorkday;
-  const workdayLabels = workdays.map((s) =>
-  <label key={s.id}>{getHumanDate(s.work_date)} between  {s.from_time_in_24hours}
-    till  {s.to_time_in_24hours} ( half-day={s.is_half_day} )</label>
-);
+    <MySignUps key={s.id} textToDisplay={getHumanDate(s.standin_date)}
+      isWorkday={false} signupId={s.id}/>
+      );
+      const workdays = this.state.myWorkday;
+      const workdayLabels = workdays.map((s) =>
+      <MySignUps key={s.id} textToDisplay={getHumanDate(s.work_date) + 'between'
+        +  s.from_time_in_24hours + 'till' + s.to_time_in_24hours}
+        isWorkday={true} signupId={s.id}/>
+    );
 
     return (
       <div>
-        <h4>You standin dates</h4>
-          {standinLabels}
-        <h4>you workday dates</h4>
-          {workdayLabels}
+        <div className="panel panel-default">
+          <div className="panel-heading">Your standin dates</div>
+          <div className="panel-body">
+            {standinLabels}
+          </div>
+        </div>
+        <div className="panel panel-default">
+          <div className="panel-heading">Your workday dates</div>
+          <div className="panel-body">
+            {workdayLabels}
+          </div>
+        </div>
       </div>
     );
   }

@@ -31,11 +31,15 @@ class RegularUserAction extends Component{
   }
 }
 class ActionButton extends Component{
+
   render(){
+    const marginButtons = {
+      marginRight: 5,
+    };
     if (this.props.notifyCount > 0){
       return (
         <Link to={'/{this.props.actionLinkName}'}>
-          <button className="btn btn-primary" type="button">
+          <button className="btn btn-primary btn-lg" type="button" style={marginButtons}>
             {this.props.actionLabel} <span className="badge">{this.props.notifyCount}</span>
           </button>
         </Link>
@@ -44,7 +48,7 @@ class ActionButton extends Component{
     else{
       return (
         <Link to={'/' + this.props.actionLinkName}>
-          <button className="btn btn-primary" type="button">
+          <button className="btn btn-primary btn-lg" type="button" style={marginButtons}>
             {this.props.actionLabel}
           </button>
         </Link>

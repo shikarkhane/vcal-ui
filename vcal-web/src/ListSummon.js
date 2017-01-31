@@ -11,7 +11,7 @@ class SummonElement extends Component{
       , method: 'delete'
       , contentType: 'application/json'
       , success: function (resp) {
-          self.setState({summons: resp});
+          console.log(resp);
         }
     });
   }
@@ -19,9 +19,14 @@ class SummonElement extends Component{
     var summonId = this.props.summonId;
 
     return (
-      <button onClick={this.handleDeleteSummon.bind(null, summonId)}>
+      <div className="alert alert-success" role="alert">
         On {this.props.date} , stand-in needed between {this.props.fromTime}
-        till  {this.props.tillTime}</button>
+        till  {this.props.tillTime}
+
+        <button type="button" className="close bg-warning" aria-label="Close"
+          onClick={this.handleDeleteSummon.bind(null, summonId)}>
+          <span aria-hidden="true">&times;</span></button>
+      </div>
     );
   }
 }

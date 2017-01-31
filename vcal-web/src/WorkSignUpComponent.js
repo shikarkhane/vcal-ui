@@ -29,11 +29,10 @@ class PickDate extends Component{
     var chosenDate = this.props.chosenDate;
 
     return (
-      <div className="input-group">
-        <input type="checkbox" className="form-control" data-pick-date="{this.props.chosenDate}"
-           onChange={this.handleSave.bind(null, isWorkday, chosenDate)}/>
-         <span className="input-group-addon" >{getHumanDate(this.props.chosenDate)}</span>
-      </div>
+      <button type="button" className="list-group-item"
+        onClick={this.handleSave.bind(null, isWorkday, chosenDate)}>
+        {getHumanDate(this.props.chosenDate)}
+      </button>
     );
   }
 }
@@ -86,10 +85,22 @@ class WorkSignUpComponent extends Component {
     );
     return (
             <div>
-              <h4>Choose standin dates</h4>
-                {standinElements}
-              <h4>Choose workday dates</h4>
-                {workdayElements}
+              <div className="panel panel-default">
+                <div className="panel-heading">Choose standin dates</div>
+                <div className="panel-body">
+                  <div className="list-group">
+                    {standinElements}
+                  </div>
+                </div>
+              </div>
+              <div className="panel panel-default">
+                <div className="panel-heading">Choose workday dates</div>
+                <div className="panel-body">
+                  <div className="list-group">
+                    {workdayElements}
+                  </div>
+                </div>
+              </div>
             </div>
     );
   }
