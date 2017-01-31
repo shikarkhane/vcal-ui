@@ -79,6 +79,13 @@ class Showups extends Component {
       isWorkday={false}
       />
   );
+  const ws = this.state.standins.workday;
+  const wdays = ws.map((sin) =>
+  <StandinElement key={sin.id} standinDayId={sin.id}
+    standinUserId={sin.standin_user_id} chosenDate={this.state.chosenDate}
+    isWorkday={true}
+    />
+);
 
     return (
       <div>
@@ -91,6 +98,7 @@ class Showups extends Component {
             <input type="button" onClick={this.getStandins.bind(this)} value="Get" />
           </label>
           {standins}
+          {wdays}
 
       </div>
     );
