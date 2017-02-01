@@ -96,31 +96,45 @@ class Rule extends Component {
         <Header />
         <form onSubmit={this.handleSave}>
           <h1>Rule<small>gs</small></h1>
-            <div>
-                <h4>Stand-in day rule</h4>
-                <label >Family with 1 kid</label>
-                <input type="number"
-                  onChange={this.changeStandinKid1} value={this.state.standinKid1}/>
-                <label >Family with 2 kids</label>
-                <input type="number"
-                  onChange={this.changeStandinKid2} value={this.state.standinKid2}/>
-                <label >Family with 3 kids</label>
-                <input type="number"
-                  onChange={this.changeStandinKid3} value={this.state.standinKid3}/>
+            <div className="form-group">
+              <label className="col-sm-2 control-label">Stand-in days for Families with </label>
+              <div className="row">
+                  <div className="col-xs-4">
+                    <input type="number"  placeholder="1 kid"  className="form-control"
+                    onChange={this.changeStandinKid1} value={this.state.standinKid1} />
+                </div>
+                  <div className="col-xs-4">
+                    <input type="number"  placeholder="2 kids"  className="form-control"
+                    onChange={this.changeStandinKid2} value={this.state.standinKid2} />
+                </div>
+                  <div className="col-xs-4">
+                    <input type="number"  placeholder="3 kids"  className="form-control"
+                    onChange={this.changeStandinKid3} value={this.state.standinKid3} />
+                </div>
+              </div>
             </div>
-            <div>
-                <h4>Work day rule</h4>
-                <label >Family with 1 kid</label>
-                <input type="number"
-                  onChange={this.changeWorkdayKid1} value={this.state.workdayKid1}/>
-                <label >Family with 2 kids</label>
-                <input type="number"
-                  onChange={this.changeWorkdayKid2} value={this.state.workdayKid2}/>
-                <label >Family with 3 kids</label>
-                <input type="number"
-                  onChange={this.changeWorkdayKid3} value={this.state.workdayKid3}/>
+            <div className="form-group">
+              <label className="col-sm-2 control-label">Work days with Families with </label>
+              <div className="row">
+                  <div className="col-xs-4">
+                    <input type="number"  placeholder="1 kid"  className="form-control"
+                    onChange={this.changeWorkdayKid1} value={this.state.workdayKid1} />
+                </div>
+                  <div className="col-xs-4">
+                    <input type="number"  placeholder="2 kids"  className="form-control"
+                    onChange={this.changeWorkdayKid2} value={this.state.workdayKid2} />
+                </div>
+                  <div className="col-xs-4">
+                    <input type="number"  placeholder="3 kids"  className="form-control"
+                    onChange={this.changeWorkdayKid3} value={this.state.workdayKid3} />
+                </div>
+              </div>
             </div>
-            <input type="submit" value="Submit" />
+            <div className="form-group">
+              <div className="col-sm-offset-2 col-sm-10">
+                <button type="submit" className="btn btn-default">Save</button>
+              </div>
+            </div>
         </form>
     </div>
     );

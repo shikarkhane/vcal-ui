@@ -13,10 +13,16 @@ class TermElement extends Component{
   render(){
     var termId = this.props.termId;
     var termName = this.props.termName;
+    const marginButtons = {
+      marginRight: 5,
+    };
 
     return (
-      <button onClick={this.handleChooseTerm.bind(null, termId, termName)}>
-        {this.props.termName}</button>
+      <button className="btn btn-primary btn-lg" type="button" style={marginButtons}
+         onClick={this.handleChooseTerm.bind(null, termId, termName)}>
+        {this.props.termName}
+      </button>
+    
     );
   }
 }
@@ -52,8 +58,12 @@ class MyTerm extends Component {
     return (
       <div>
         <Header />
-        <h1>Term </h1>
-        {termButtons}
+          <div className="panel panel-default">
+            <div className="panel-heading">Select Term</div>
+            <div className="panel-body">
+              {termButtons}
+            </div>
+          </div>
       </div>
     );
   }

@@ -86,10 +86,23 @@ class SwitchdayMyList extends Component {
 
     return (
       <div>
-        <h4>Your standin dates</h4>
-          {standinSwitches}
-        <h4>Your workday dates</h4>
-          {workdaySwitches}
+        <div className="panel panel-default">
+          <div className="panel-heading">Your standin dates</div>
+          <div className="panel-body">
+            <div className="list-group">
+              {standinSwitches}
+            </div>
+          </div>
+        </div>
+
+        <div className="panel panel-default">
+          <div className="panel-heading">Your workday dates</div>
+          <div className="panel-body">
+            <div className="list-group">
+              {workdaySwitches}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

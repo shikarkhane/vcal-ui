@@ -41,16 +41,25 @@ class Children extends Component {
     });
   }
   render() {
+    var termName = localStorage.getItem("termName");
     return (
       <div>
         <Header />
         <h1>Children <small>gs</small><small>VT2016</small></h1>
-          <h3>Kids per term at gs -> {this.state.childCount}</h3>
-          <div className="btn-group btn-group-lg" role="group">
-            <button id='child_per_term_1' type="button" className="btn btn-default" onClick={this.handleSave.bind(null, 1)}>1</button>
-            <button id='child_per_term_2' type="button" className="btn btn-default" onClick={this.handleSave.bind(null, 2)}>2</button>
-            <button id='child_per_term_3' type="button" className="btn btn-default" onClick={this.handleSave.bind(null, 3)}>3</button>
+          <div className="panel panel-default">
+            <div className="panel-heading">
+              <h3 className="panel-title">Kids in {termName} term
+              <span className="label label-default">{this.state.childCount}</span> </h3>
+              </div>
+            <div className="panel-body">
+              <div className="btn-group btn-group-lg" role="group">
+                <button id='child_per_term_1' type="button" className="btn btn-default" onClick={this.handleSave.bind(null, 1)}>1</button>
+                <button id='child_per_term_2' type="button" className="btn btn-default" onClick={this.handleSave.bind(null, 2)}>2</button>
+                <button id='child_per_term_3' type="button" className="btn btn-default" onClick={this.handleSave.bind(null, 3)}>3</button>
+              </div>
+            </div>
           </div>
+
       </div>
     );
   }

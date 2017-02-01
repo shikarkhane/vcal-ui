@@ -40,7 +40,7 @@ class CreateSummon extends Component {
     e.preventDefault();
     var startDt = Math.floor(((new Date(this.state.startDate)).getTime())/1000);
     var endDt = Math.floor(((new Date(this.state.endDate)).getTime())/1000);
-    
+
     var groupId = localStorage.getItem("groupId");
     //var creatorId = localStorage.getItem("userId");
     reqwest({
@@ -72,34 +72,53 @@ class CreateSummon extends Component {
   }
   render() {
     return (
-          <form onSubmit={this.handleSave}>
-              <h4>Create term</h4>
-              <label >Term name
-                    <input type="text" onChange={this.changeTerm}
-                  value={this.state.termName}/>
-              </label>
-              <label >Start Date
-                    <input type="date" onChange={this.changeStartDate}
-            value={this.state.startDate}/>
-              </label>
-              <label >End Date
-                    <input type="date" onChange={this.changeEndDate}
-            value={this.state.endDate}/>
-              </label>
-              <label >Family count with 1 kid
-                    <input type="number"  placeholder="15"
-            onChange={this.changeKid1} value={this.state.kid1} />
-              </label>
-              <label >Family count with 2 kid
-                    <input type="number"  placeholder="5"
-            onChange={this.changeKid2} value={this.state.kid2} />
-              </label>
-              <label >Family count with 3 kid
-                    <input id="term-family-3" type="number"  placeholder="1"
-            onChange={this.changeKid3} value={this.state.kid3} />
-              </label>
-              <input type="submit" value="Submit" />
-          </form>
+      <form className="form-horizontal" onSubmit={this.handleSave}>
+        <div className="form-group">
+          <label htmlFor="inputName1" className="col-sm-2 control-label">Name</label>
+          <div className="col-sm-10">
+            <input type="text" className="form-control" id="inputName1"
+                onChange={this.changeTerm} value={this.state.termName}/>
+          </div>
+        </div>
+        <div className="form-group">
+          <label htmlFor="inputDate1" className="col-sm-2 control-label">Start Date</label>
+          <div className="col-sm-10">
+            <input type="date" className="form-control" id="inputDate1"
+                onChange={this.changeStartDate} value={this.state.startDate}/>
+          </div>
+        </div>
+        <div className="form-group">
+          <label htmlFor="inputDate2" className="col-sm-2 control-label">End Date(inclusive)</label>
+          <div className="col-sm-10">
+            <input type="date" className="form-control" id="inputDate2"
+                onChange={this.changeEndDate} value={this.state.endDate}/>
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label className="col-sm-2 control-label">Count of Families with </label>
+          <div className="row">
+              <div className="col-xs-4">
+                <input type="number"  placeholder="1 kid"  className="form-control"
+                onChange={this.changeKid1} value={this.state.kid1} />
+            </div>
+              <div className="col-xs-4">
+                <input type="number"  placeholder="2 kids"  className="form-control"
+                onChange={this.changeKid2} value={this.state.kid2} />
+            </div>
+              <div className="col-xs-4">
+                <input type="number"  placeholder="3 kids"  className="form-control"
+                onChange={this.changeKid3} value={this.state.kid3} />
+            </div>
+          </div>
+        </div>
+        <div className="form-group">
+          <div className="col-sm-offset-2 col-sm-10">
+            <button type="submit" className="btn btn-default">Create</button>
+          </div>
+        </div>
+      </form>
+
     );
   }
 }

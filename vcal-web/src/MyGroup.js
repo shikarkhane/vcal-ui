@@ -13,10 +13,15 @@ class GroupElement extends Component{
   render(){
     var groupId = this.props.groupId;
     var groupName = this.props.groupName;
+    const marginButtons = {
+      marginRight: 5,
+    };
 
     return (
-      <button onClick={this.handleChooseGroup.bind(null, groupId, groupName)}>
-        {this.props.groupName}</button>
+      <button className="btn btn-primary btn-lg" type="button" style={marginButtons}
+         onClick={this.handleChooseGroup.bind(null, groupId, groupName)}>
+        {this.props.groupName}
+      </button>
     );
   }
 }
@@ -51,8 +56,12 @@ class MyGroup extends Component {
     return (
       <div >
         <Header />
-        <h1>Group </h1>
-        {groupButtons}
+          <div className="panel panel-default">
+            <div className="panel-heading">Select Group</div>
+            <div className="panel-body">
+              {groupButtons}
+            </div>
+          </div>
       </div>
     );
   }

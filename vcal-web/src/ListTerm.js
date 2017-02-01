@@ -15,18 +15,36 @@ class TermElement extends Component{
     const totalKids = Number(fs["kid_1"]) *1 + Number(fs["kid_2"]) *2
     + Number(fs["kid_3"]) *3;
     return (
-
-      <div>
-        <h3>{this.props.termName} ( {this.props.startDate} to {this.props.endDate} )
-          - Total kids: {totalKids}</h3>
-        <ul data-role="listview">
-            <li>{fs["kid_1"]} families with 1 kids</li>
-            <li>{fs["kid_2"]} families with 2 kids</li>
-            <li>{fs["kid_3"]} families with 3 kids</li>
-        </ul>
-        <button onClick={this.handleChooseTerm.bind(null, termId, termName)}>
-          Choose</button>
+      <div className="panel panel-default">
+        <div className="panel-heading">{this.props.termName} ( {this.props.startDate} to {this.props.endDate} )</div>
+        <div className="panel-body">
+          <ul className="list-group">
+            <li className="list-group-item">
+              <span className="badge">{fs["kid_1"]}</span>
+            Families with 1 kids
+            </li>
+            <li className="list-group-item">
+              <span className="badge">{fs["kid_2"]}</span>
+              families with 2 kids
+            </li>
+            <li className="list-group-item">
+              <span className="badge">{fs["kid_3"]}</span>
+              families with 3 kids
+            </li>
+          </ul>
+        </div>
+        <div className="panel-footer">Total kids
+          <span className="badge">{totalKids}</span>
+            <div className="form-group">
+              <div className="col-sm-offset-2 col-sm-10">
+                <button type="submit" className="btn btn-default pull-right"
+                  onClick={this.handleChooseTerm.bind(null, termId, termName)}>
+                  Choose</button>
+              </div>
+            </div>
+            </div>
       </div>
+
     );
   }
 }

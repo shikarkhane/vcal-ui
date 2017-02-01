@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
-class SwitchMyDate extends Component{
+class SwitchTakeDate extends Component{
   handleSave(pIsWorkday, chosenDate, fromTime, tillTime, pIsHalfDay,
     fromOpenList){
     var groupId = localStorage.getItem("groupId");
@@ -66,28 +66,21 @@ class SwitchMyDate extends Component{
     }
     if(isWorkday){
       return (
-        <div className="alert alert-success" role="alert">
+        <button type="button" className="list-group-item"
+          onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
+            tillTime, isHalfDay, fromOpenList)}>
           {this.props.chosenDate} between
             {fromTime} till {tillTime} for ({halfDayText})
-
-          <button type="button" className="btn btn-success pull-right"
-            onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
-              tillTime, isHalfDay, fromOpenList)}>
-            <span className="glyphicon glyphicon-transfer" aria-hidden="true"></span>
-          </button>
-        </div>
+        </button>
       );
     }
     else{
       return (
-        <div className="alert alert-success" role="alert">
-        {this.props.chosenDate}
-        <button type="button" className="btn btn-success pull-right"
+        <button type="button" className="list-group-item"
           onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
             tillTime, isHalfDay, fromOpenList)}>
-          <span className="glyphicon glyphicon-transfer" aria-hidden="true"></span>
+          {this.props.chosenDate}
         </button>
-      </div>
     );
     }
 
@@ -95,4 +88,4 @@ class SwitchMyDate extends Component{
 }
 
 
-export default SwitchMyDate;
+export default SwitchTakeDate;
