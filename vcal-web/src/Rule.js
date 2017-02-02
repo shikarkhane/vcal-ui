@@ -99,15 +99,15 @@ class Rule extends Component {
             <div className="form-group">
               <label className="col-sm-2 control-label">Stand-in days for Families with </label>
               <div className="row">
-                  <div className="col-xs-4">
+                  <div className="col-xs-4 col-md-4">
                     <input type="number"  placeholder="1 kid"  className="form-control"
                     onChange={this.changeStandinKid1} value={this.state.standinKid1} />
                 </div>
-                  <div className="col-xs-4">
+                  <div className="col-xs-4 col-md-4">
                     <input type="number"  placeholder="2 kids"  className="form-control"
                     onChange={this.changeStandinKid2} value={this.state.standinKid2} />
                 </div>
-                  <div className="col-xs-4">
+                  <div className="col-xs-4 col-md-4">
                     <input type="number"  placeholder="3 kids"  className="form-control"
                     onChange={this.changeStandinKid3} value={this.state.standinKid3} />
                 </div>
@@ -116,15 +116,15 @@ class Rule extends Component {
             <div className="form-group">
               <label className="col-sm-2 control-label">Work days with Families with </label>
               <div className="row">
-                  <div className="col-xs-4">
+                  <div className="col-xs-4 col-md-4">
                     <input type="number"  placeholder="1 kid"  className="form-control"
                     onChange={this.changeWorkdayKid1} value={this.state.workdayKid1} />
                 </div>
-                  <div className="col-xs-4">
+                  <div className="col-xs-4 col-md-4">
                     <input type="number"  placeholder="2 kids"  className="form-control"
                     onChange={this.changeWorkdayKid2} value={this.state.workdayKid2} />
                 </div>
-                  <div className="col-xs-4">
+                  <div className="col-xs-4 col-md-4">
                     <input type="number"  placeholder="3 kids"  className="form-control"
                     onChange={this.changeWorkdayKid3} value={this.state.workdayKid3} />
                 </div>

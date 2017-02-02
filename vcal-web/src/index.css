@@ -3,3 +3,10 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.container {
+  width: 940px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

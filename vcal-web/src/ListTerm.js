@@ -4,7 +4,7 @@ import reqwest from 'reqwest';
 import getHumanDate from './Utility';
 
 class TermElement extends Component{
-  handleChooseTerm(termId, termName){
+  handleEditTerm(termId, termName){
     localStorage.setItem("termId", termId);
     localStorage.setItem("termName", termName);
   }
@@ -38,8 +38,8 @@ class TermElement extends Component{
             <div className="form-group">
               <div className="col-sm-offset-2 col-sm-10">
                 <button type="submit" className="btn btn-default pull-right"
-                  onClick={this.handleChooseTerm.bind(null, termId, termName)}>
-                  Choose</button>
+                  onClick={this.handleEditTerm.bind(null, termId, termName)}>
+                  Edit</button>
               </div>
             </div>
             </div>
