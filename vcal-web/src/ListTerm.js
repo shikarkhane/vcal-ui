@@ -39,7 +39,7 @@ class TermElement extends Component{
               <div className="col-sm-offset-2 col-sm-10">
                 <button type="submit" className="btn btn-default pull-right"
                   onClick={this.handleEditTerm.bind(null, termId, termName)}>
-                  Edit</button>
+                  Choose</button>
               </div>
             </div>
             </div>
