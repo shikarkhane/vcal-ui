@@ -83,11 +83,11 @@ class WorkSignUpComponent extends Component {
 
     const standins = this.state.openStandin;
     const standinElements = standins.map((s) =>
-    <PickDate key={s.id} chosenDate={s.standin_date} isWorkday="0"/>
+    <PickDate key={s.standin_date+s.id} chosenDate={s.standin_date} isWorkday="0"/>
       );
     const workdays = this.state.openWorkday;
     const workdayElements = workdays.map((s) =>
-    <PickDate key={s.id} chosenDate={s.work_date} isWorkday="1"/>
+    <PickDate key={s.work_date+s.id} chosenDate={s.work_date} isWorkday="1"/>
     );
     return (
             <div>

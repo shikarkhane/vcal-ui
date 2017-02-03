@@ -89,12 +89,12 @@ class WorkSignUpSummary extends Component {
   render() {
     const standins = this.state.myStandin;
     const standinLabels = standins.map((s) =>
-    <MySignUps key={s.id} textToDisplay={getHumanDate(s.standin_date)}
+    <MySignUps key={s.standin_date+s.id} textToDisplay={getHumanDate(s.standin_date)}
       isWorkday={false} signupId={s.id}/>
       );
       const workdays = this.state.myWorkday;
       const workdayLabels = workdays.map((s) =>
-      <MySignUps key={s.id} textToDisplay={getHumanDate(s.work_date) + 'between'
+      <MySignUps key={s.work_date+s.id} textToDisplay={getHumanDate(s.work_date) + 'between'
         +  s.from_time_in_24hours + 'till' + s.to_time_in_24hours}
         isWorkday={true} signupId={s.id}/>
     );
