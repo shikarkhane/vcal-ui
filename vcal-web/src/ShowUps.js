@@ -6,7 +6,13 @@ import getHumanDate from './Utility';
 
 
 class StandinElement extends Component{
+    constructor(props) {
+        super(props);
+        this.handleSave = this.handleSave.bind(this);
+        this.state = {disabled: false};
+    }
   handleSave(userId, isWorkday, chosenDate){
+      this.setState({disabled: true });
     var groupId = localStorage.getItem("groupId");
     var workDate = Math.floor(((new Date(chosenDate)).getTime())/1000);
 
@@ -26,15 +32,17 @@ class StandinElement extends Component{
     var userId = this.props.standinUserId;
     var isWorkday = this.props.isWorkday;
     var chosenDate = this.props.chosenDate;
+      var isChosen = "list-group-item " + (this.state.disabled ? 'list-group-item-success' : '');
+
     if (userId === null){
       return null;
     }
     else{
       return (
-        <label>
-          <input type="checkbox" onChange={this.handleSave.bind(null, userId, isWorkday, chosenDate)}/>
-          {userId}
-        </label>
+          <button type="button" className={isChosen}
+                onClick={this.handleSave.bind(null, userId, isWorkday, chosenDate)} disabled={this.state.disabled}>
+                {userId}
+            </button>
       );
     }
   }
@@ -90,16 +98,37 @@ class Showups extends Component {
     return (
       <div>
         <Header />
+        <h1>Show ups<small>gs</small></h1>
 
-          <h1>Show ups<small>gs</small></h1>
-          <label>
-            Choose date:
-            <input type="date" onChange={this.changeDate} value={this.state.chosenDate} />
-            <input type="button" onClick={this.getStandins.bind(this)} value="Get" />
-          </label>
-          {standins}
-          {wdays}
+          <div className="row">
+            <div className="col-xs-12 col-lg-6">
+                <div className="input-group">
+                    <span className="input-group-addon" id="basic-addon1">Choose date:</span>
+                    <input type="date" className="form-control" onChange={this.changeDate}
+                        aria-describedby="basic-addon1" value={this.state.chosenDate} />
+                    <span className="input-group-btn">
+                        <button className="btn btn-default" onClick={this.getStandins.bind(this)} type="button">Get!</button>
+                    </span>
+                </div>
+             </div>
+            </div>
 
+          <div className="panel panel-default">
+                  <div className="panel-heading">Users who were standin</div>
+              <div className="panel-body">
+                  <div className="list-group">
+                  {standins}
+                  </div>
+                  </div>
+                  </div>
+          <div className="panel panel-default">
+                  <div className="panel-heading">Users who had workday</div>
+              <div className="panel-body">
+                  <div className="list-group">
+                  {wdays}
+                  </div>
+                  </div>
+                  </div>
       </div>
     );
   }

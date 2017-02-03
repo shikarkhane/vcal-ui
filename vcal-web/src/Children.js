@@ -7,9 +7,15 @@ class Children extends Component {
   constructor(props) {
      super(props);
      this.state = {childCount: 1};
+      this.changeChildrenCount = this.changeChildrenCount.bind(this);
+      this.handleSave = this.handleSave.bind(this);
    }
    componentDidMount() {
         this.getChildrenCount();
+    }
+
+    changeChildrenCount(e){
+        this.setState({childCount: e.target.value });
     }
     getChildrenCount(){
       var self = this;
@@ -27,14 +33,14 @@ class Children extends Component {
        });
     }
 
-  handleSave(childCount){
+  handleSave(){
     var termId = localStorage.getItem("termId");
     reqwest({
         url: conf.serverUrl + '/children/' + termId + '/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
-      , data: JSON.stringify({child_count: childCount})
+      , data: JSON.stringify({child_count: this.state.childCount})
       , success: function (resp) {
           console.log(resp);
         }
@@ -46,20 +52,16 @@ class Children extends Component {
       <div>
         <Header />
         <h1>Children <small>gs</small><small>VT2016</small></h1>
-          <div className="panel panel-default">
-            <div className="panel-heading">
-              <h3 className="panel-title">Kids in {termName} term
-              <span className="label label-default">{this.state.childCount}</span> </h3>
-              </div>
-            <div className="panel-body">
-              <div className="btn-group btn-group-lg" role="group">
-                <button id='child_per_term_1' type="button" className="btn btn-default" onClick={this.handleSave.bind(null, 1)}>1</button>
-                <button id='child_per_term_2' type="button" className="btn btn-default" onClick={this.handleSave.bind(null, 2)}>2</button>
-                <button id='child_per_term_3' type="button" className="btn btn-default" onClick={this.handleSave.bind(null, 3)}>3</button>
-              </div>
-            </div>
-          </div>
+        <label htmlFor="basic-url">How many of your kids will attend dagis in {termName} term?</label>
+        <div className="input-group">
+            <span className="input-group-addon" id="basic-addon3">Kid count</span>
+              <input type="number" className="form-control" id="basic-url" aria-describedby="basic-addon3"
+                onChange={this.changeChildrenCount} value={this.state.childCount}/>
 
+          <span className="input-group-btn">
+              <button className="btn btn-default" onClick={this.handleSave.bind(this)} type="button">Save</button>
+          </span>
+          </div>
       </div>
     );
   }
