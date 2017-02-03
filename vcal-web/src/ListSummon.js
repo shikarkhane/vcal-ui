@@ -4,7 +4,13 @@ import reqwest from 'reqwest';
 import getHumanDate from './Utility';
 
 class SummonElement extends Component{
+    constructor(props) {
+        super(props);
+        this.handleDeleteSummon = this.handleDeleteSummon.bind(this);
+        this.state = {disabled: false};
+    }
   handleDeleteSummon(summonId){
+      this.setState({disabled: true });
     reqwest({
         url: conf.serverUrl + '/summon/' + summonId + '/'
       , type: 'json'
@@ -23,9 +29,10 @@ class SummonElement extends Component{
         On {this.props.date} , stand-in needed between {this.props.fromTime}
         till  {this.props.tillTime}
 
-        <button type="button" className="close bg-warning" aria-label="Close"
-          onClick={this.handleDeleteSummon.bind(null, summonId)}>
-          <span aria-hidden="true">&times;</span></button>
+          <button type="button" className="btn btn-warning pull-right" disabled={this.state.disabled}
+              onClick={this.handleDeleteSummon.bind(this, summonId)} >
+            <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </button>
       </div>
     );
   }

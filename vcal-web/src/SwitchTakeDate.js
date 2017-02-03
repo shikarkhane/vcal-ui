@@ -3,8 +3,14 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
 class SwitchTakeDate extends Component{
+  constructor(props) {
+    super(props);
+    this.handleSave = this.handleSave.bind(this);
+    this.state = {disabled: false};
+  }
   handleSave(pIsWorkday, chosenDate, fromTime, tillTime, pIsHalfDay,
     fromOpenList){
+    this.setState({disabled: true });
     var groupId = localStorage.getItem("groupId");
     var userId = localStorage.getItem("userId");
     var isWorkday = pIsWorkday;
@@ -54,7 +60,7 @@ class SwitchTakeDate extends Component{
   render(){
     var isWorkday = this.props.isWorkday;
     var chosenDate = Math.floor(((new Date(this.props.chosenDate)).getTime())/1000);
-
+    var isChosen = "list-group-item " + (this.state.disabled ? 'list-group-item-success' : '');
     var fromTime = this.props.fromTime;
     var tillTime = this.props.tillTime;
     var isHalfDay = this.props.isHalfDay;
@@ -66,9 +72,9 @@ class SwitchTakeDate extends Component{
     }
     if(isWorkday){
       return (
-        <button type="button" className="list-group-item"
+        <button type="button" className={isChosen}
           onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
-            tillTime, isHalfDay, fromOpenList)}>
+            tillTime, isHalfDay, fromOpenList)} disabled={this.state.disabled}>
           {this.props.chosenDate} between
             {fromTime} till {tillTime} for ({halfDayText})
         </button>
@@ -76,9 +82,9 @@ class SwitchTakeDate extends Component{
     }
     else{
       return (
-        <button type="button" className="list-group-item"
+        <button type="button" className={isChosen}
           onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
-            tillTime, isHalfDay, fromOpenList)}>
+            tillTime, isHalfDay, fromOpenList)} disabled={this.state.disabled}>
           {this.props.chosenDate}
         </button>
     );

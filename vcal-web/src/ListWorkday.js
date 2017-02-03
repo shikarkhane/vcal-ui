@@ -4,7 +4,13 @@ import reqwest from 'reqwest';
 import getHumanDate from './Utility';
 
 class WorkdayElement extends Component{
-  handleDeleteWorkday(workdayId){
+    constructor(props) {
+        super(props);
+        this.handleDeleteWorkday = this.handleDeleteWorkday.bind(this);
+        this.state = {disabled: false};
+    }
+  handleDeleteWorkday(workdayId, self){
+      this.setState({disabled: true });
     reqwest({
         url: conf.serverUrl + '/workday/' + workdayId + '/'
       , type: 'json'
@@ -16,6 +22,7 @@ class WorkdayElement extends Component{
     });
   }
   render(){
+
     var workdayId = this.props.workdayId;
     var halfDayText = "full day";
     var isHalfDay = this.props.halfDay;
@@ -27,8 +34,8 @@ class WorkdayElement extends Component{
         On {this.props.date} , stand-in needed between {this.props.fromTime}
         till  {this.props.tillTime} for {halfDayText}
 
-        <button type="button" className="btn btn-warning pull-right"
-          onClick={this.handleDeleteWorkday.bind(null, workdayId)}>
+        <button type="button" className="btn btn-warning pull-right" disabled={this.state.disabled}
+          onClick={this.handleDeleteWorkday.bind(this, workdayId)} >
           <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
       </div>

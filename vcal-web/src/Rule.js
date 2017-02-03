@@ -97,36 +97,54 @@ class Rule extends Component {
         <form onSubmit={this.handleSave}>
           <h1>Rule<small>gs</small></h1>
             <div className="form-group">
-              <label className="col-sm-2 control-label">Stand-in days for Families with </label>
+              <label className=" control-label">Stand-in days for Families with </label>
               <div className="row">
                   <div className="col-xs-4 col-md-4">
-                    <input type="number"  placeholder="1 kid"  className="form-control"
-                    onChange={this.changeStandinKid1} value={this.state.standinKid1} />
+                    <div className="input-group">
+                        <span className="input-group-addon" id="basic-addon1">1 kid</span>
+                        <input type="number"  placeholder="1 kid"  className="form-control"
+                        onChange={this.changeStandinKid1} value={this.state.standinKid1} aria-describedby="basic-addon1"/>
+                    </div>
                 </div>
                   <div className="col-xs-4 col-md-4">
-                    <input type="number"  placeholder="2 kids"  className="form-control"
-                    onChange={this.changeStandinKid2} value={this.state.standinKid2} />
+                    <div className="input-group">
+                        <span className="input-group-addon" id="basic-addon2">2 kids</span>
+                        <input type="number"  placeholder="2 kids"  className="form-control"
+                        onChange={this.changeStandinKid2} value={this.state.standinKid2} aria-describedby="basic-addon2"/>
+                    </div>
                 </div>
                   <div className="col-xs-4 col-md-4">
-                    <input type="number"  placeholder="3 kids"  className="form-control"
-                    onChange={this.changeStandinKid3} value={this.state.standinKid3} />
+                    <div className="input-group">
+                        <span className="input-group-addon" id="basic-addon3">3 kids</span>
+                        <input type="number"  placeholder="3 kids"  className="form-control"
+                        onChange={this.changeStandinKid3} value={this.state.standinKid3} aria-describedby="basic-addon3"/>
+                    </div>
                 </div>
               </div>
             </div>
             <div className="form-group">
-              <label className="col-sm-2 control-label">Work days with Families with </label>
+              <label className="control-label">Work days with Families with </label>
               <div className="row">
                   <div className="col-xs-4 col-md-4">
-                    <input type="number"  placeholder="1 kid"  className="form-control"
-                    onChange={this.changeWorkdayKid1} value={this.state.workdayKid1} />
+                    <div className="input-group">
+                        <span className="input-group-addon" id="basic-addon4">1 kid</span>
+                        <input type="number"  placeholder="1 kid"  className="form-control"
+                        onChange={this.changeWorkdayKid1} value={this.state.workdayKid1} aria-describedby="basic-addon4"/>
+                    </div>
                 </div>
                   <div className="col-xs-4 col-md-4">
-                    <input type="number"  placeholder="2 kids"  className="form-control"
-                    onChange={this.changeWorkdayKid2} value={this.state.workdayKid2} />
+                    <div className="input-group">
+                        <span className="input-group-addon" id="basic-addon5">2 kids</span>
+                        <input type="number"  placeholder="2 kids"  className="form-control"
+                        onChange={this.changeWorkdayKid2} value={this.state.workdayKid2} aria-describedby="basic-addon5"/>
+                    </div>
                 </div>
                   <div className="col-xs-4 col-md-4">
-                    <input type="number"  placeholder="3 kids"  className="form-control"
-                    onChange={this.changeWorkdayKid3} value={this.state.workdayKid3} />
+                    <div className="input-group">
+                        <span className="input-group-addon" id="basic-addon6">3 kids</span>
+                        <input type="number"  placeholder="3 kids"  className="form-control"
+                        onChange={this.changeWorkdayKid3} value={this.state.workdayKid3} aria-describedby="basic-addon6"/>
+                    </div>
                 </div>
               </div>
             </div>

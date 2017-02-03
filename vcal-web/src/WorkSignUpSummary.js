@@ -4,12 +4,18 @@ import reqwest from 'reqwest';
 import getHumanDate from './Utility';
 
 class MySignUps extends Component{
+    constructor(props) {
+        super(props);
+        this.handleDeleteSignup = this.handleDeleteSignup.bind(this);
+        this.state = {disabled: false};
+    }
   handleDeleteSignup(signupId, isWorkday){
+      this.setState({disabled: true });
     if (isWorkday){
       reqwest({
           url: conf.serverUrl + '/workday/' + signupId + '/'
         , type: 'json'
-        , method: 'delete'
+        , method: 'put'
         , contentType: 'application/json'
         , success: function (resp) {
             console.log(resp);
@@ -20,7 +26,7 @@ class MySignUps extends Component{
       reqwest({
           url: conf.serverUrl + '/standinday/' + signupId + '/'
         , type: 'json'
-        , method: 'delete'
+        , method: 'put'
         , contentType: 'application/json'
         , success: function (resp) {
             console.log(resp);
@@ -35,9 +41,10 @@ class MySignUps extends Component{
     return (
       <div className="alert alert-success" role="alert">
         {this.props.textToDisplay}
-        <button type="button" className="close bg-warning" aria-label="Close"
-          onClick={this.handleDeleteSignup.bind(null, signupId, isWorkday)}>
-          <span aria-hidden="true">&times;</span></button>
+          <button type="button" className="btn btn-warning pull-right" disabled={this.state.disabled}
+              onClick={this.handleDeleteSignup.bind(null, signupId, isWorkday)} >
+                <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </button>
       </div>
     );
   }

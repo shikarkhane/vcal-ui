@@ -5,7 +5,13 @@ import getHumanDate from './Utility';
 
 
 class PickDate extends Component{
+    constructor(props) {
+        super(props);
+        this.handleSave = this.handleSave.bind(this);
+        this.state = {disabled: false};
+    }
   handleSave(pIsWorkday, chosenDate){
+      this.setState({disabled: true });
     var groupId = localStorage.getItem("groupId");
     var userId = localStorage.getItem("userId");
     var isWorkday = (pIsWorkday === '1');
@@ -27,10 +33,10 @@ class PickDate extends Component{
   render(){
     var isWorkday = this.props.isWorkday;
     var chosenDate = this.props.chosenDate;
-
+    var isChosen = "list-group-item " + (this.state.disabled ? 'list-group-item-success' : '');
     return (
-      <button type="button" className="list-group-item"
-        onClick={this.handleSave.bind(null, isWorkday, chosenDate)}>
+      <button type="button" className={isChosen}
+        onClick={this.handleSave.bind(null, isWorkday, chosenDate)} disabled={this.state.disabled}>
         {getHumanDate(this.props.chosenDate)}
       </button>
     );

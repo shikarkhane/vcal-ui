@@ -6,7 +6,8 @@ import { hashHistory } from 'react-router';
 class CreateSummon extends Component {
   constructor(props) {
    super(props);
-   this.state = {workDate: "", fromTime: "", tillTime: ""};
+   this.state = {workDate: "", fromTime: "",
+       tillTime: "", createDisabled: false};
 
    this.changeDate = this.changeDate.bind(this);
    this.changeFromTime = this.changeFromTime.bind(this);
@@ -26,6 +27,7 @@ class CreateSummon extends Component {
   }
   handleSave(e){
     e.preventDefault();
+      this.setState({createDisabled: true });
     var groupId = localStorage.getItem("groupId");
     var creatorId = localStorage.getItem("userId");
     var workDate = Math.floor(((new Date(this.state.workDate)).getTime())/1000);
@@ -70,7 +72,8 @@ class CreateSummon extends Component {
         </div>
         <div className="form-group">
           <div className="col-sm-offset-2 col-sm-10">
-            <button type="submit" className="btn btn-default">Create</button>
+            <button type="submit" className="btn btn-default" disabled={this.state.createDisabled}>
+                Create </button>
           </div>
         </div>
       </form>

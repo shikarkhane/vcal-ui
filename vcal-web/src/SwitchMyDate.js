@@ -3,8 +3,14 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 
 class SwitchMyDate extends Component{
+  constructor(props) {
+    super(props);
+    this.handleSave = this.handleSave.bind(this);
+    this.state = {disabled: false};
+  }
   handleSave(pIsWorkday, chosenDate, fromTime, tillTime, pIsHalfDay,
     fromOpenList){
+    this.setState({disabled: true });
     var groupId = localStorage.getItem("groupId");
     var userId = localStorage.getItem("userId");
     var isWorkday = pIsWorkday;
@@ -72,7 +78,7 @@ class SwitchMyDate extends Component{
 
           <button type="button" className="btn btn-success pull-right"
             onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
-              tillTime, isHalfDay, fromOpenList)}>
+              tillTime, isHalfDay, fromOpenList)} disabled={this.state.disabled}>
             <span className="glyphicon glyphicon-transfer" aria-hidden="true"></span>
           </button>
         </div>
@@ -84,7 +90,7 @@ class SwitchMyDate extends Component{
         {this.props.chosenDate}
         <button type="button" className="btn btn-success pull-right"
           onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
-            tillTime, isHalfDay, fromOpenList)}>
+            tillTime, isHalfDay, fromOpenList)} disabled={this.state.disabled}>
           <span className="glyphicon glyphicon-transfer" aria-hidden="true"></span>
         </button>
       </div>

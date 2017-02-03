@@ -5,7 +5,7 @@ import reqwest from 'reqwest';
 class CreateSummon extends Component {
   constructor(props) {
    super(props);
-   this.state = {};
+   this.state = {createDisabled: false, termName: ''};
 
    this.changeTerm = this.changeTerm.bind(this);
    this.changeStartDate = this.changeStartDate.bind(this);
@@ -38,6 +38,7 @@ class CreateSummon extends Component {
 
   handleSave(e){
     e.preventDefault();
+      this.setState({createDisabled: true });
     var startDt = Math.floor(((new Date(this.state.startDate)).getTime())/1000);
     var endDt = Math.floor(((new Date(this.state.endDate)).getTime())/1000);
 
@@ -99,22 +100,32 @@ class CreateSummon extends Component {
           <label className="col-sm-2 control-label">Count of Families with </label>
           <div className="row">
               <div className="col-xs-4">
-                <input type="number"  placeholder="1 kid"  className="form-control"
-                onChange={this.changeKid1} value={this.state.kid1} />
+                <div className="input-group">
+                    <span className="input-group-addon" id="basic-addon1">1 kid</span>
+                    <input type="number"  placeholder="1 kid"  className="form-control"
+                    onChange={this.changeKid1} value={this.state.kid1} aria-describedby="basic-addon1"/>
+                </div>
             </div>
               <div className="col-xs-4">
-                <input type="number"  placeholder="2 kids"  className="form-control"
-                onChange={this.changeKid2} value={this.state.kid2} />
+                <div className="input-group">
+                    <span className="input-group-addon" id="basic-addon2">2 kids</span>
+                    <input type="number"  placeholder="2 kids"  className="form-control"
+                    onChange={this.changeKid2} value={this.state.kid2} aria-describedby="basic-addon2"/>
+                </div>
             </div>
               <div className="col-xs-4">
-                <input type="number"  placeholder="3 kids"  className="form-control"
-                onChange={this.changeKid3} value={this.state.kid3} />
+                <div className="input-group">
+                    <span className="input-group-addon" id="basic-addon3">3 kids</span>
+                    <input type="number"  placeholder="3 kids"  className="form-control"
+                    onChange={this.changeKid3} value={this.state.kid3} aria-describedby="basic-addon3"/>
+                </div>
             </div>
           </div>
         </div>
         <div className="form-group">
           <div className="col-sm-offset-2 col-sm-10">
-            <button type="submit" className="btn btn-default">Create</button>
+            <button type="submit" className="btn btn-default" disabled={this.state.createDisabled}>
+                Create</button>
           </div>
         </div>
       </form>
