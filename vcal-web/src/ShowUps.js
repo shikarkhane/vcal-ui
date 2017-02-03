@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import getHumanDate from './Utility';
+import {getDateFormat} from './Utility';
 
 
 class StandinElement extends Component{
@@ -51,7 +51,7 @@ class Showups extends Component {
   constructor(props) {
    super(props);
    //set todays date
-   var dt = getHumanDate(((new Date()).getTime())/1000);
+   var dt = getDateFormat(((new Date()).getTime())/1000);
    this.state = {chosenDate: dt, standins: {'standin':[], 'workday':[]}};
 
    this.changeDate = this.changeDate.bind(this);

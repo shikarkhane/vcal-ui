@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import SwitchMyDate from './SwitchMyDate';
-import getHumanDate from './Utility';
+import {getHumanDate}from './Utility';
 
 class SwitchdayMyList extends Component {
   constructor(props) {

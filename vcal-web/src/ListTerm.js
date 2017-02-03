@@ -1,7 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import getHumanDate from './Utility';
+import {getHumanDate}from './Utility';
 
 class TermElement extends Component{
   handleEditTerm(termId, termName){

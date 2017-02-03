@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import SwitchTakeDate from './SwitchTakeDate';
-import getHumanDate from './Utility';
+import {getHumanDate}from './Utility';
 
 class SwitchdayOpenList extends Component {
   constructor(props) {

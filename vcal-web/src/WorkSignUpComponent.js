@@ -1,7 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import getHumanDate from './Utility';
+import {getHumanDate, isWeekend} from './Utility';
 
 
 class PickDate extends Component{
@@ -82,12 +82,16 @@ class WorkSignUpComponent extends Component {
 // let user uncheck a date, if its 30 days ahead
 
     const standins = this.state.openStandin;
-    const standinElements = standins.map((s) =>
-    <PickDate key={s.standin_date+s.id} chosenDate={s.standin_date} isWorkday="0"/>
+    const standinElements = standins
+            .filter(function(s) { return !isWeekend(s.standin_date); })
+            .map((s) =>
+    <PickDate key={s.standin_date+s.id} chosenDate={s.standin_date} isWorkday="0" />
       );
     const workdays = this.state.openWorkday;
-    const workdayElements = workdays.map((s) =>
-    <PickDate key={s.work_date+s.id} chosenDate={s.work_date} isWorkday="1"/>
+    const workdayElements = workdays
+            .filter(function(s) { return !isWeekend(s.work_date); })
+            .map((s) =>
+    <PickDate key={s.work_date+s.id} chosenDate={s.work_date} isWorkday="1" />
     );
     return (
             <div>
