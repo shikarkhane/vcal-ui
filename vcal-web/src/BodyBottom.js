@@ -14,6 +14,7 @@ class AdminUserAction extends Component{
           <ActionButton actionLinkName="invite" actionLabel="Invite" notifyCount="0"/>
           <ActionButton actionLinkName="member" actionLabel="Member" notifyCount="0"/>
           <ActionButton actionLinkName="rule" actionLabel="Rule" notifyCount="0"/>
+          <ActionButton actionLinkName="holidays" actionLabel="Holidays" notifyCount="0"/>
       </div>
     );
   }

@@ -20,6 +20,7 @@ import WorkSignUp from './WorkSignUp';
 import SwitchDay from './Switchday';
 import MyProfile from './MyProfile';
 import Dashboard from './Dashboard';
+import Holidays from './Holidays';
 
 
 ReactDOM.render(
@@ -39,6 +40,7 @@ ReactDOM.render(
     <Route path="/switchday" component={SwitchDay}></Route>
     <Route path="/myprofile" component={MyProfile}></Route>
     <Route path="/dashboard" component={Dashboard}></Route>
+    <Route path="/holidays" component={Holidays}></Route>
   </Router>
   , document.getElementById('root')
 );
