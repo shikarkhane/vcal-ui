@@ -14,6 +14,7 @@ class App extends Component {
         () => this.checkTokenStillValid(),
         100000
       );
+      this.getAllUsers();
     }
   }
 
@@ -41,6 +42,18 @@ class App extends Component {
       });
     }
 
+  }
+  getAllUsers(){
+    reqwest({
+      url: conf.serverUrl + '/alluser/'
+      , type: 'json'
+      , method: 'get'
+      , contentType: 'application/json'
+      , success: function (resp) {
+        console.log(resp);
+        localStorage.setItem("usersObj", JSON.stringify(resp));
+      }
+    });
   }
 
   render() {

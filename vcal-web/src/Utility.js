@@ -47,6 +47,18 @@ var _getDayOfWeek = function(day){
   return ( weekday[day]);
 };
 
+var _getUserInfo = function(userId){
+  var users = JSON.parse(localStorage.getItem("usersObj"));
+  var returnValue = false;
+  users.forEach( function (user)
+  {
+    if ( user.id === userId ) {
+      returnValue = user;
+    }
+  });
+  return (returnValue);
+};
 export const getHumanDate = _getHumanDate;
 export const isWeekend = _isWeekend;
 export const getDateFormat = _getDateFormat;
+export const getUserInfo = _getUserInfo;

@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import {getDateFormat} from './Utility';
+import {getDateFormat, getUserInfo} from './Utility';
 
 
 class StandinElement extends Component{
@@ -38,10 +38,12 @@ class StandinElement extends Component{
       return null;
     }
     else{
-      return (
+        var user = getUserInfo(userId);
+
+        return (
           <button type="button" className={isChosen}
                 onClick={this.handleSave.bind(null, userId, isWorkday, chosenDate)} disabled={this.state.disabled}>
-                {userId}
+                {user.name}
             </button>
       );
     }
