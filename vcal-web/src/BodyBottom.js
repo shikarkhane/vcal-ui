@@ -4,19 +4,20 @@ import { Link } from 'react-router';
 
 class AdminUserAction extends Component{
   render(){
+    //<ActionButton actionLinkName="invite" actionLabel="Invite" notifyCount="0"/>
+    //<ActionButton actionLinkName="member" actionLabel="Member" notifyCount="0"/>
+
     return (
       <div>
         <h3>Admin actions</h3>
+          <ActionButton actionLinkName="overview" actionLabel="Overview" notifyCount="0"/>
+          <ActionButton actionLinkName="statistic" actionLabel="Statistic" notifyCount="0"/>
           <ActionButton actionLinkName="summon" actionLabel="Summon" notifyCount="0"/>
           <ActionButton actionLinkName="workday" actionLabel="Work day" notifyCount="0"/>
           <ActionButton actionLinkName="term" actionLabel="Term" notifyCount="0"/>
           <ActionButton actionLinkName="showups" actionLabel="Show-ups" notifyCount="0"/>
-          <ActionButton actionLinkName="invite" actionLabel="Invite" notifyCount="0"/>
-          <ActionButton actionLinkName="member" actionLabel="Member" notifyCount="0"/>
           <ActionButton actionLinkName="rule" actionLabel="Rule" notifyCount="0"/>
           <ActionButton actionLinkName="holidays" actionLabel="Holidays" notifyCount="0"/>
-        <ActionButton actionLinkName="overview" actionLabel="Overview" notifyCount="0"/>
-        <ActionButton actionLinkName="statistic" actionLabel="Statistic" notifyCount="0"/>
       </div>
     );
   }
