@@ -21,7 +21,7 @@ import SwitchDay from './Switchday';
 import MyProfile from './MyProfile';
 import Dashboard from './Dashboard';
 import Holidays from './Holidays';
-
+import Overview from './Overview';
 
 ReactDOM.render(
   <Router history={hashHistory}>
@@ -41,6 +41,7 @@ ReactDOM.render(
     <Route path="/myprofile" component={MyProfile}></Route>
     <Route path="/dashboard" component={Dashboard}></Route>
     <Route path="/holidays" component={Holidays}></Route>
+    <Route path="/overview" component={Overview}></Route>
   </Router>
   , document.getElementById('root')
 );

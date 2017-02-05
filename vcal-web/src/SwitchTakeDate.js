@@ -59,7 +59,8 @@ class SwitchTakeDate extends Component{
 
   render(){
     var isWorkday = this.props.isWorkday;
-    var chosenDate = Math.floor(((new Date(this.props.chosenDate)).getTime())/1000);
+    var chosenDate = this.props.chosenDate;
+    var displayDate = this.props.displayDate;
     var isChosen = "list-group-item " + (this.state.disabled ? 'list-group-item-success' : '');
     var fromTime = this.props.fromTime;
     var tillTime = this.props.tillTime;
@@ -75,7 +76,7 @@ class SwitchTakeDate extends Component{
         <button type="button" className={isChosen}
           onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
             tillTime, isHalfDay, fromOpenList)} disabled={this.state.disabled}>
-          {this.props.chosenDate} between
+          {displayDate} between
             {fromTime} till {tillTime} for ({halfDayText})
         </button>
       );
@@ -85,7 +86,7 @@ class SwitchTakeDate extends Component{
         <button type="button" className={isChosen}
           onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
             tillTime, isHalfDay, fromOpenList)} disabled={this.state.disabled}>
-          {this.props.chosenDate}
+          {displayDate}
         </button>
     );
     }

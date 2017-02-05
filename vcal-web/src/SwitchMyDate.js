@@ -5,10 +5,10 @@ import reqwest from 'reqwest';
 class SwitchMyDate extends Component{
   constructor(props) {
     super(props);
-    this.handleSave = this.handleSave.bind(this);
+    this.handleSwitch = this.handleSwitch.bind(this);
     this.state = {disabled: false};
   }
-  handleSave(pIsWorkday, chosenDate, fromTime, tillTime, pIsHalfDay,
+  handleSwitch(pIsWorkday, chosenDate, fromTime, tillTime, pIsHalfDay,
     fromOpenList){
     this.setState({disabled: true });
     var groupId = localStorage.getItem("groupId");
@@ -59,8 +59,8 @@ class SwitchMyDate extends Component{
 
   render(){
     var isWorkday = this.props.isWorkday;
-    var chosenDate = Math.floor(((new Date(this.props.chosenDate)).getTime())/1000);
-
+    var chosenDate = this.props.chosenDate;
+    var displayDate = this.props.displayDate;
     var fromTime = this.props.fromTime;
     var tillTime = this.props.tillTime;
     var isHalfDay = this.props.isHalfDay;
@@ -73,11 +73,11 @@ class SwitchMyDate extends Component{
     if(isWorkday){
       return (
         <div className="alert alert-success" role="alert">
-          {this.props.chosenDate} between
+          {displayDate} between
             {fromTime} till {tillTime} for ({halfDayText})
 
           <button type="button" className="btn btn-success pull-right"
-            onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
+            onClick={this.handleSwitch.bind(null, isWorkday, chosenDate, fromTime,
               tillTime, isHalfDay, fromOpenList)} disabled={this.state.disabled}>
             <span className="glyphicon glyphicon-transfer" aria-hidden="true"></span>
           </button>
@@ -87,9 +87,9 @@ class SwitchMyDate extends Component{
     else{
       return (
         <div className="alert alert-success" role="alert">
-        {this.props.chosenDate}
+        {displayDate}
         <button type="button" className="btn btn-success pull-right"
-          onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
+          onClick={this.handleSwitch.bind(null, isWorkday, chosenDate, fromTime,
             tillTime, isHalfDay, fromOpenList)} disabled={this.state.disabled}>
           <span className="glyphicon glyphicon-transfer" aria-hidden="true"></span>
         </button>
