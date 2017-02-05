@@ -25,7 +25,7 @@ class SwitchTakeDate extends Component{
         , method: 'post'
         , contentType: 'application/json'
         , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
-            is_workday: isWorkday, standinUserid: standinUserId})
+            is_workday: isWorkday, standinUserId: standinUserId})
         , success: function (resp) {
           console.log(resp);
           }
