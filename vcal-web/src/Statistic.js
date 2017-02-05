@@ -101,11 +101,17 @@ class Statistic extends Component {
 
       var userStandinStat = {}; // this will look like { '2jhjkh339-23jhjh32': 5, ...}
       for (var i = 0; i < nonStandinArray.length; i++) {
-          userStandinStat[nonStandinArray[i]] = (userStandinStat[nonStandinArray[i]] ? null: 0 ) + 1;
+          if( userStandinStat[nonStandinArray[i]] === null || userStandinStat[nonStandinArray[i]] === undefined) {
+              userStandinStat[nonStandinArray[i]] = 0;
+          }
+          userStandinStat[nonStandinArray[i]] += 1;
       }
       var userWorkdayStat = {};
       for (var i = 0; i < nonWorkdayArray.length; i++) {
-          userWorkdayStat[nonWorkdayArray[i]] = (userWorkdayStat[nonWorkdayArray[i]] ? null: 0 ) + 1;
+          if( userWorkdayStat[nonWorkdayArray[i]] === null || userWorkdayStat[nonWorkdayArray[i]] === undefined) {
+              userWorkdayStat[nonWorkdayArray[i]] = 0;
+          }
+          userWorkdayStat[nonWorkdayArray[i]] += 1;
       }
 
       //consolidate
@@ -114,13 +120,13 @@ class Statistic extends Component {
           if( userStats[key] === null || userStats[key] === undefined) {
               userStats[key] = {"standin_count": 0, "workday_count": 0};
           }
-          userStats[key]['standin_count'] = userStandinStat[key];
+          userStats[key]['standin_count'] += userStandinStat[key];
       };
       for (var key in userWorkdayStat) {
           if( userStats[key] === null || userStats[key] === undefined) {
               userStats[key] = {"standin_count": 0, "workday_count": 0};
           }
-          userStats[key]['workday_count'] = userStandinStat[key];
+          userStats[key]['workday_count'] += userWorkdayStat[key];
       };
 
       var finalStats = [];
