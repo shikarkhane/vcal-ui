@@ -18,7 +18,7 @@ class HolidayElement extends Component{
             , method: 'delete'
             , contentType: 'application/json'
             , success: function (resp) {
-                console.log(resp);
+                //console.log(resp);
             }
         });
     }
@@ -82,7 +82,7 @@ class Holidays extends Component {
       , contentType: 'application/json'
       , data: JSON.stringify({ created_by_id: creatorId, holiday_date: holidayDate})
       , success: function (resp) {
-          console.log(resp);
+          //console.log(resp);
             var hds = self.state.holidayDates;
             hds.push(holidayDate);
             self.setState({holidayDates: hds});

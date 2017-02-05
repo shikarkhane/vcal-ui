@@ -23,7 +23,7 @@ class Invite extends Component {
       , contentType: 'application/json'
       , data: JSON.stringify({ group_id: groupId, emails: emails })
       , success: function (resp) {
-          console.log(resp);
+          //console.log(resp);
         }
     });
   }

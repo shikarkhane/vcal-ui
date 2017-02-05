@@ -43,7 +43,7 @@ class CreateWorkday extends Component {
           from_time: this.state.fromTime, to_time: this.state.tillTime,
         standin_user_id: "", is_half_day: this.state.halfDay})
       , success: function (resp) {
-          console.log(resp);
+          //console.log(resp);
         }
     });
   }

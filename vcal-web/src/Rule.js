@@ -39,7 +39,7 @@ class Rule extends Component {
            definition: {standin: [standinKid1, standinKid2, standinKid3],
              workday: [workdayKid1, workdayKid2, workdayKid3]}})
       , success: function (resp) {
-          console.log(resp);
+          //console.log(resp);
         }
     });
   }

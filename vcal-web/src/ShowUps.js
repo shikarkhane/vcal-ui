@@ -24,7 +24,7 @@ class StandinElement extends Component{
       , data: JSON.stringify({ userId: userId,
           isWorkday: isWorkday})
       , success: function (resp) {
-          console.log(resp);
+          //console.log(resp);
         }
     });
   }

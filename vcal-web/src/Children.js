@@ -42,7 +42,7 @@ class Children extends Component {
       , contentType: 'application/json'
       , data: JSON.stringify({child_count: this.state.childCount})
       , success: function (resp) {
-          console.log(resp);
+          //console.log(resp);
         }
     });
   }

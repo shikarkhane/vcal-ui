@@ -37,7 +37,7 @@ class App extends Component {
         }
         , success: function (resp) {
           //var jr = JSON.parse(resp);
-          console.log(resp);
+          //console.log(resp);
         }
       });
     }
@@ -50,7 +50,7 @@ class App extends Component {
       , method: 'get'
       , contentType: 'application/json'
       , success: function (resp) {
-        console.log(resp);
+        //console.log(resp);
         localStorage.setItem("usersObj", JSON.stringify(resp));
       }
     });

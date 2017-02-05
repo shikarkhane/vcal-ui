@@ -25,7 +25,7 @@ class PickDate extends Component{
       , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
           is_workday: isWorkday, is_taken: isTaken})
       , success: function (resp) {
-          console.log(resp);
+          //console.log(resp);
         }
     });
   }

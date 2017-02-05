@@ -55,7 +55,7 @@ class CreateSummon extends Component {
            family_spread: {kid_1: this.state.kid1, kid_2: this.state.kid2,
              kid_3: this.state.kid3}})
       , success: function (resp) {
-          console.log(resp);
+          //console.log(resp);
         }
     });
       reqwest({
@@ -66,7 +66,7 @@ class CreateSummon extends Component {
           , data: JSON.stringify({ group_id: groupId,
               start_date: startDt,  end_date: endDt})
           , success: function (resp) {
-              console.log(resp);
+              //console.log(resp);
           }
       });
 

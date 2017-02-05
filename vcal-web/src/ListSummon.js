@@ -17,7 +17,7 @@ class SummonElement extends Component{
       , method: 'delete'
       , contentType: 'application/json'
       , success: function (resp) {
-          console.log(resp);
+          //console.log(resp);
         }
     });
   }

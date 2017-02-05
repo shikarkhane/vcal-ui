@@ -27,7 +27,7 @@ class SwitchMyDate extends Component{
         , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
             is_workday: isWorkday, is_taken: true})
         , success: function (resp) {
-            console.log(resp);
+            //console.log(resp);
           }
       });
       reqwest({
@@ -37,7 +37,7 @@ class SwitchMyDate extends Component{
         , contentType: 'application/json'
         , data: JSON.stringify({ chosen_date: chosenDate})
         , success: function (resp) {
-            console.log(resp);
+            //console.log(resp);
           }
       });
     }
@@ -51,7 +51,7 @@ class SwitchMyDate extends Component{
             is_workday: isWorkday, from_time: fromTime, to_time: tillTime,
           is_half_day: isHalfDay})
         , success: function (resp) {
-            console.log(resp);
+            //console.log(resp);
           }
       });
     }

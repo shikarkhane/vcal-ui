@@ -41,7 +41,7 @@ class Member extends Component {
 
   handleAction(memberId, email){
     // e.preventDefault();
-    console.log('take action after member click, delete or reminder');
+    //console.log('take action after member click, delete or reminder');
 
   }
   render() {

@@ -20,12 +20,12 @@ class GoogleButton extends Component{
         tokenId: tokenId, imageUrl: profileObj.imageUrl
       })
       , error: function (err) {
-        console.log(err);
+        //console.log(err);
         localStorage.clear();
         hashHistory.push('/');
       }
       , success: function (resp) {
-          console.log(resp);
+          //console.log(resp);
           localStorage.setItem("userId", resp.userId);
           localStorage.setItem("role", resp.role);
           localStorage.setItem("isActive", resp.isActive);
@@ -36,7 +36,7 @@ class GoogleButton extends Component{
   render(){
     var self = this;
     const responseGoogle = (response) => {
-      console.log(response);
+      //console.log(response);
       if (response.type !== "tokenFailed"){
         localStorage.setItem("tokenId", response.tokenId);
         localStorage.setItem("profileObj", JSON.stringify(response.profileObj));

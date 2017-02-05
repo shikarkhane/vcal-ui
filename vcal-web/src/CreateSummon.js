@@ -39,7 +39,7 @@ class CreateSummon extends Component {
       , data: JSON.stringify({ created_by_id: creatorId, work_date: workDate,
           from_time: this.state.fromTime, to_time: this.state.tillTime})
       , success: function (resp) {
-          console.log(resp);
+          //console.log(resp);
           hashHistory.push('/summon');
         }
     });
