@@ -75,7 +75,7 @@ class SwitchdayMyList extends Component {
       chosenDate={s.standin_date}
       displayDate={getHumanDate(s.standin_date)}
       fromTime="0800" tillTime="1600" isHalfDay={false} isWorkday={false}
-      isAlreadySwitched={s.is_already_switched} fromOpenList={false}/>
+      isAlreadySwitched={this.markAlreadySwitched(s.standin_date)} fromOpenList={false}/>
     );
     const workdays = this.state.myWorkday;
     const workdaySwitches = workdays.map((s) =>
@@ -84,7 +84,7 @@ class SwitchdayMyList extends Component {
       displayDate={getHumanDate(s.work_date)}
       fromTime={s.from_time_in_24hours} tillTime={s.to_time_in_24hours}
       isHalfDay={s.is_half_day}  isWorkday={true}
-      isAlreadySwitched={s.is_already_switched} fromOpenList={false}/>
+      isAlreadySwitched={this.markAlreadySwitched(s.work_date)} fromOpenList={false}/>
   );
 
     return (

@@ -67,18 +67,24 @@ class SwitchMyDate extends Component{
     var isAlreadySwitched = this.props.isAlreadySwitched;
     var fromOpenList= this.props.fromOpenList;
     var halfDayText = "full day";
-    if ( isHalfDay ){
+    var disabled = this.state.disabled;
+    var classSpecial = "alert " + (isAlreadySwitched ? false: "alert-success");
+
+    if ( isAlreadySwitched){
+      disabled = true;
+    }
+    if ( isHalfDay ) {
       halfDayText = "half day";
     }
     if(isWorkday){
       return (
-        <div className="alert alert-success" role="alert">
+        <div className={classSpecial} role="alert">
           {displayDate} between
             {fromTime} till {tillTime} for ({halfDayText})
 
           <button type="button" className="btn btn-success pull-right"
             onClick={this.handleSwitch.bind(null, isWorkday, chosenDate, fromTime,
-              tillTime, isHalfDay, fromOpenList)} disabled={this.state.disabled}>
+              tillTime, isHalfDay, fromOpenList)} disabled={disabled}>
             <span className="glyphicon glyphicon-transfer" aria-hidden="true"></span>
           </button>
         </div>
@@ -86,11 +92,11 @@ class SwitchMyDate extends Component{
     }
     else{
       return (
-        <div className="alert alert-success" role="alert">
+        <div className={classSpecial} role="alert">
         {displayDate}
         <button type="button" className="btn btn-success pull-right"
           onClick={this.handleSwitch.bind(null, isWorkday, chosenDate, fromTime,
-            tillTime, isHalfDay, fromOpenList)} disabled={this.state.disabled}>
+            tillTime, isHalfDay, fromOpenList)} disabled={disabled}>
           <span className="glyphicon glyphicon-transfer" aria-hidden="true"></span>
         </button>
       </div>
