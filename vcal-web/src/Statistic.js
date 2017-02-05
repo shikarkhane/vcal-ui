@@ -2,27 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import {getHumanDate, isWeekend, getUserInfo} from './Utility';
-
-class StatisticElement extends Component{
-    render(){
-        var user = getUserInfo(this.props.userId)
-        if(user){
-            return (
-                <button type="button" className="list-group-item">
-                {getHumanDate(this.props.chosenDate) + ' , ' + user.name}
-                </button>
-            );
-        }
-        else{
-            return (
-                <button type="button" className="list-group-item">
-                {getHumanDate(this.props.chosenDate) + ' , Open' }
-                </button>
-        );
-        }
-    }
-}
+import {isWeekend, getUserInfo} from './Utility';
 
 class Statistic extends Component {
   constructor(props) {

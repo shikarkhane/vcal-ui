@@ -9,7 +9,7 @@ class SwitchTakeDate extends Component{
     this.state = {disabled: false};
   }
   handleSave(pIsWorkday, chosenDate, fromTime, tillTime, pIsHalfDay,
-    fromOpenList){
+    fromOpenList, standinUserId){
     this.setState({disabled: true });
     var groupId = localStorage.getItem("groupId");
     var userId = localStorage.getItem("userId");
@@ -20,25 +20,25 @@ class SwitchTakeDate extends Component{
     //to this user
     if ( fromOpenList ){
       reqwest({
-          url: conf.serverUrl + '/work-sign-up/' + groupId + "/"
+          url: conf.serverUrl + '/on-switch-work-sign-up/' + groupId + "/"
         , type: 'json'
         , method: 'post'
         , contentType: 'application/json'
         , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
-            is_workday: isWorkday, is_taken: true})
+            is_workday: isWorkday, standinUserid: standinUserId})
         , success: function (resp) {
-            //console.log(resp);
+          console.log(resp);
           }
       });
       reqwest({
-          url: conf.serverUrl + '/switchday/' + groupId + '/user/' + userId + '/'
+        url: conf.serverUrl + '/switchday/' + groupId + '/standinuser/' + standinUserId + '/'
         , type: 'json'
         , method: 'delete'
         , contentType: 'application/json'
         , data: JSON.stringify({ chosen_date: chosenDate})
         , success: function (resp) {
-            //console.log(resp);
-          }
+          console.log(resp);
+        }
       });
     }
     else{
@@ -65,9 +65,10 @@ class SwitchTakeDate extends Component{
     var fromTime = this.props.fromTime;
     var tillTime = this.props.tillTime;
     var isHalfDay = this.props.isHalfDay;
-    var isAlreadySwitched = this.props.isAlreadySwitched;
     var fromOpenList= this.props.fromOpenList;
+    var standinUserId = this.props.standinUserId;
     var halfDayText = "full day";
+
     if ( isHalfDay ){
       halfDayText = "half day";
     }
@@ -75,7 +76,7 @@ class SwitchTakeDate extends Component{
       return (
         <button type="button" className={isChosen}
           onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
-            tillTime, isHalfDay, fromOpenList)} disabled={this.state.disabled}>
+            tillTime, isHalfDay, fromOpenList, standinUserId)} disabled={this.state.disabled}>
           {displayDate} between
             {fromTime} till {tillTime} for ({halfDayText})
         </button>
@@ -85,7 +86,7 @@ class SwitchTakeDate extends Component{
       return (
         <button type="button" className={isChosen}
           onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
-            tillTime, isHalfDay, fromOpenList)} disabled={this.state.disabled}>
+            tillTime, isHalfDay, fromOpenList, standinUserId)} disabled={this.state.disabled}>
           {displayDate}
         </button>
     );

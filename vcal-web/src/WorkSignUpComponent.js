@@ -15,7 +15,6 @@ class PickDate extends Component{
     var groupId = localStorage.getItem("groupId");
     var userId = localStorage.getItem("userId");
     var isWorkday = (pIsWorkday === '1');
-    var isTaken = true;
 
     reqwest({
         url: conf.serverUrl + '/work-sign-up/' + groupId + "/"
@@ -23,7 +22,7 @@ class PickDate extends Component{
       , method: 'post'
       , contentType: 'application/json'
       , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
-          is_workday: isWorkday, is_taken: isTaken})
+          is_workday: isWorkday})
       , success: function (resp) {
           //console.log(resp);
         }
