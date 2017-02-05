@@ -54,7 +54,7 @@ class Member extends Component {
     return (
       <div >
         <Header />
-        <h1>Member <small>gs</small></h1>
+        <h1>Member </h1>
           <ul >
             {memberItems}
           </ul>

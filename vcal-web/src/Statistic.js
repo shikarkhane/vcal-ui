@@ -154,7 +154,7 @@ class Statistic extends Component {
       return (
             <div>
           <Header />
-          <h1>Statistic<small>gs</small></h1>
+          <h1>Statistic</h1>
           <h3>Unbooked Stand-in dates <span className="label label-default">{standinCount}</span></h3>
           <h3>Unbooked Workday dates <span className="label label-default">{workdayCount}</span></h3>
           <table className="table table-striped table-condensed table-responsive">

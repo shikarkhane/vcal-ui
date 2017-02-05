@@ -95,7 +95,7 @@ class Rule extends Component {
       <div>
         <Header />
         <form onSubmit={this.handleSave}>
-          <h1>Rule<small>gs</small></h1>
+          <h1>Rule</h1>
             <div className="form-group">
               <label className=" control-label">Stand-in days for Families with </label>
               <div className="row">

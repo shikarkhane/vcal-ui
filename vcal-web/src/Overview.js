@@ -125,7 +125,7 @@ class Overview extends Component {
 
             <div>
           <Header />
-          <h1>Overview<small>gs</small></h1>
+          <h1>Overview</h1>
               <div className="panel panel-default">
                 <div className="panel-heading">Open standin dates</div>
                 <div className="panel-body">

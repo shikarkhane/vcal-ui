@@ -8,7 +8,7 @@ class Workday extends Component {
     return (
       <div>
         <Header />
-        <h1>Workday<small>gs</small></h1>
+        <h1>Workday</h1>
         <CreateWorkday />
         <ListWorkday />
       </div>

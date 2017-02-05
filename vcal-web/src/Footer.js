@@ -4,7 +4,7 @@ class Footer extends Component {
   render() {
     return (
       <div className="page-header">
-        <h1>Footer <small>gs</small></h1>
+        <h1>Footer </h1>
       </div>
     );
   }

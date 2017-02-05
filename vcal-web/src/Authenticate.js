@@ -59,7 +59,7 @@ class Authenticate extends Component {
   render() {
     return (
       <div className="page-header">
-        <h1>Authenticate<small>gs</small></h1>
+        <h1>Authenticate</h1>
         <GoogleButton />
       </div>
     );

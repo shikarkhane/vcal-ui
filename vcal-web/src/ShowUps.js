@@ -100,7 +100,7 @@ class Showups extends Component {
     return (
       <div>
         <Header />
-        <h1>Show ups<small>gs</small></h1>
+        <h1>Show ups</h1>
 
           <div className="row">
             <div className="col-xs-12 col-lg-6">

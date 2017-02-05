@@ -8,7 +8,7 @@ class Term extends Component {
     return (
       <div>
         <Header />
-        <h1>Term<small>gs</small></h1>
+        <h1>Term</h1>
         <CreateTerm />
         <ListTerm />
       </div>

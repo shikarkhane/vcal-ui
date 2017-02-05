@@ -8,7 +8,7 @@ class Switchday extends Component {
     return (
       <div >
         <Header />
-        <h1>Switchday<small>gs</small></h1>
+        <h1>Switchday</h1>
         <SwitchdayMyList />
         <SwitchdayOpenList />
       </div>

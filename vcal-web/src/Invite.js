@@ -36,7 +36,7 @@ class Invite extends Component {
       <div>
         <Header />
         <form onSubmit={this.handleSave}>
-          <h1>Invite <small>gs</small></h1>
+          <h1>Invite </h1>
           <textarea placeholder="separate emails by comma sign (,) "
             onChange={this.changeInvitees} value={this.state.invitees} ></textarea>
           <input type="button" value="Send invites" onClick={this.handleSave}/>

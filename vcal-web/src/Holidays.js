@@ -99,7 +99,7 @@ class Holidays extends Component {
     return (
         <div>
             <Header />
-            <h1>Public Holidays <small>gs</small></h1>
+            <h1>Public Holidays </h1>
             <label htmlFor="basic-url">Enter public holidays</label>
 
             <form onSubmit={this.handleSave}>

@@ -8,7 +8,7 @@ class WorkSignUp extends Component {
     return (
       <div >
         <Header />
-        <h1>WorkSignUp<small>gs</small></h1>
+        <h1>WorkSignUp</h1>
         <WorkSignUpSummary />
         <WorkSignUpComponent />
       </div>

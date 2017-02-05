@@ -8,7 +8,7 @@ class Summon extends Component {
     return (
       <div>
         <Header />
-        <h1>Summon<small>gs</small></h1>
+        <h1>Summon</h1>
         <CreateSummon />
         <ListSummon />
       </div>
