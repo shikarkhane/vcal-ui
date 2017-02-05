@@ -38,6 +38,7 @@ class ActionButton extends Component{
   render(){
     const marginButtons = {
       marginRight: 5,
+      marginTop: 5,
     };
     if (this.props.notifyCount > 0){
       return (
