@@ -4,7 +4,7 @@ import reqwest from 'reqwest';
 import Header from './Header';
 import {getHumanDate, isWeekend, getUserInfo} from './Utility';
 
-class PickDate extends Component{
+class StatisticElement extends Component{
     render(){
         var user = getUserInfo(this.props.userId)
         if(user){
@@ -24,7 +24,7 @@ class PickDate extends Component{
     }
 }
 
-class Overview extends Component {
+class Statistic extends Component {
   constructor(props) {
    super(props);
    this.state = {openWorkday: [], openStandin: [],
@@ -92,76 +92,102 @@ class Overview extends Component {
     }
 
   render() {
-// let user uncheck a date, if its 30 days ahead
-
     const standins = this.state.openStandin;
-    const standinElements = standins
+    const standinArray = standins
             .filter(function(s) { return !isWeekend(s.standin_date); })
-            .map((s) =>
-    <PickDate key={s.standin_date+s.id} chosenDate={s.standin_date} isWorkday="0" userId="" />
+            .map((s) => (1)
       );
     const workdays = this.state.openWorkday;
-    const workdayElements = workdays
+    const workdayArray = workdays
             .filter(function(s) { return !isWeekend(s.work_date); })
-            .map((s) =>
-    <PickDate key={s.work_date+s.id} chosenDate={s.work_date} isWorkday="1" userId="" />
+            .map((s) => (1)
     );
+      var standinCount = standinArray.length;
+      var workdayCount = workdayArray.length;
+
+      // reduce booked into count by user
       const nonstandins = this.state.nonOpenStandin;
-      const nonStandinElements = nonstandins
+      const nonStandinArray = nonstandins
               .filter(function(s) { return !isWeekend(s.standin_date); })
               .map((s) =>
-          <PickDate key={s.standin_date+s.id} chosenDate={s.standin_date} isWorkday="0"
-      userId={s.standin_user_id}/>
+          (s.standin_user_id)
   );
       const nonworkdays = this.state.nonOpenWorkday;
-      const nonWorkdayElements = nonworkdays
+      const nonWorkdayArray = nonworkdays
               .filter(function(s) { return !isWeekend(s.work_date); })
               .map((s) =>
-          <PickDate key={s.work_date+s.id} chosenDate={s.work_date} isWorkday="1"
-      userId={s.standin_user_id}/>
+          (s.standin_user_id)
   );
 
-      return (
+      var userStandinStat = {}; // this will look like { '2jhjkh339-23jhjh32': 5, ...}
+      for (var i = 0; i < nonStandinArray.length; i++) {
+          userStandinStat[nonStandinArray[i]] = (userStandinStat[nonStandinArray[i]] ? null: 0 ) + 1;
+      }
+      var userWorkdayStat = {};
+      for (var i = 0; i < nonWorkdayArray.length; i++) {
+          userWorkdayStat[nonWorkdayArray[i]] = (userWorkdayStat[nonWorkdayArray[i]] ? null: 0 ) + 1;
+      }
 
+      //consolidate
+      var userStats = {}; // this will look like { '2jhjkh339-23jhjh32': [5,2] , '2jhjkh339-23jhjh32': [0,2] , ...}
+      for (var key in userStandinStat) {
+          if( userStats[key] === null || userStats[key] === undefined) {
+              userStats[key] = {"standin_count": 0, "workday_count": 0};
+          }
+          userStats[key]['standin_count'] = userStandinStat[key];
+      };
+      for (var key in userWorkdayStat) {
+          if( userStats[key] === null || userStats[key] === undefined) {
+              userStats[key] = {"standin_count": 0, "workday_count": 0};
+          }
+          userStats[key]['workday_count'] = userStandinStat[key];
+      };
+
+      var finalStats = [];
+      //convert dict to array to easy render with map
+      for( var r in userStats){
+          finalStats.push({"userId": r,
+              "standin_count": userStats[r]["standin_count"],
+              "workday_count": userStats[r]["workday_count"]
+          })
+      };
+
+      var sortedFinalStats = finalStats.sort(function(a,b) {
+          return (a.workday_count > b.workday_count) ? 1 : ((b.workday_count > a.workday_count) ? -1 : 0);
+      } );
+      const statElements = sortedFinalStats
+              .map((s) =>
+          <tr key={s.userId}>
+              <td>{(getUserInfo(s.userId)).name}</td>
+              <td>{s.standin_count}</td>
+              <td>{s.workday_count}</td>
+          </tr>
+  );
+
+
+      return (
             <div>
           <Header />
-          <h1>Overview<small>gs</small></h1>
-              <div className="panel panel-default">
-                <div className="panel-heading">Open standin dates</div>
-                <div className="panel-body">
-                  <div className="list-group">
-                    {standinElements}
-                  </div>
-                </div>
-              </div>
-              <div className="panel panel-default">
-                <div className="panel-heading">Open workday dates</div>
-                <div className="panel-body">
-                  <div className="list-group">
-                    {workdayElements}
-                  </div>
-                </div>
-              </div>
-          <div className="panel panel-default">
-          <div className="panel-heading">Booked standin dates</div>
-              <div className="panel-body">
-                  <div className="list-group">
-                  {nonStandinElements}
-                  </div>
-                  </div>
-                  </div>
-                  <div className="panel panel-default">
-                  <div className="panel-heading">Booked workday dates</div>
-              <div className="panel-body">
-                  <div className="list-group">
-                  {nonWorkdayElements}
-                  </div>
-                  </div>
-                  </div>
+          <h1>Statistic<small>gs</small></h1>
+          <h3>Unbooked Stand-in dates <span className="label label-default">{standinCount}</span></h3>
+          <h3>Unbooked Workday dates <span className="label label-default">{workdayCount}</span></h3>
+          <table className="table table-striped table-condensed table-responsive">
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Stand-in</th>
+                  <th>Workday</th>
+              </tr>
+          </thead>
+          <tbody>
 
+          {statElements}
+
+          </tbody>
+          </table>
           </div>
     );
   }
 }
 
-export default Overview;
+export default Statistic;

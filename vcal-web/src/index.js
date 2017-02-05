@@ -22,6 +22,7 @@ import MyProfile from './MyProfile';
 import Dashboard from './Dashboard';
 import Holidays from './Holidays';
 import Overview from './Overview';
+import Statistic from './Statistic';
 
 ReactDOM.render(
   <Router history={hashHistory}>
@@ -42,6 +43,7 @@ ReactDOM.render(
     <Route path="/dashboard" component={Dashboard}></Route>
     <Route path="/holidays" component={Holidays}></Route>
     <Route path="/overview" component={Overview}></Route>
+    <Route path="/statistic" component={Statistic}></Route>
   </Router>
   , document.getElementById('root')
 );
