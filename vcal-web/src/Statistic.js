@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import {isWeekend, getUserInfo} from './Utility';
+import {isNonWorkingDay, getUserInfo} from './Utility';
 
 class Statistic extends Component {
   constructor(props) {
@@ -74,12 +74,12 @@ class Statistic extends Component {
   render() {
     const standins = this.state.openStandin;
     const standinArray = standins
-            .filter(function(s) { return !isWeekend(s.standin_date); })
+            .filter(function(s) { return !isNonWorkingDay(s.standin_date); })
             .map((s) => (1)
       );
     const workdays = this.state.openWorkday;
     const workdayArray = workdays
-            .filter(function(s) { return !isWeekend(s.work_date); })
+            .filter(function(s) { return !isNonWorkingDay(s.work_date); })
             .map((s) => (1)
     );
       var standinCount = standinArray.length;
@@ -88,13 +88,13 @@ class Statistic extends Component {
       // reduce booked into count by user
       const nonstandins = this.state.nonOpenStandin;
       const nonStandinArray = nonstandins
-              .filter(function(s) { return !isWeekend(s.standin_date); })
+              .filter(function(s) { return !isNonWorkingDay(s.standin_date); })
               .map((s) =>
           (s.standin_user_id)
   );
       const nonworkdays = this.state.nonOpenWorkday;
       const nonWorkdayArray = nonworkdays
-              .filter(function(s) { return !isWeekend(s.work_date); })
+              .filter(function(s) { return !isNonWorkingDay(s.work_date); })
               .map((s) =>
           (s.standin_user_id)
   );

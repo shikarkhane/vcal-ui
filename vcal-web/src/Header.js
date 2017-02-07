@@ -27,6 +27,7 @@ class Header extends Component {
     this.setState({termName: termName});
 
     this.getMyUserInfo();
+    this.getAllHolidays();
   }
 
   getMyUserInfo(){
@@ -39,6 +40,23 @@ class Header extends Component {
       , success: function (resp) {
         localStorage.setItem("role", resp.role);
         localStorage.setItem("isActive", resp.is_active);
+      }
+    });
+  }
+  getAllHolidays(){
+    var groupId = localStorage.getItem("groupId");
+    reqwest({
+        url: conf.serverUrl + '/holiday/' + groupId + '/'
+      , type: 'json'
+      , method: 'get'
+      , contentType: 'application/json'
+      , success: function (resp) {
+        //console.log(resp);
+        var holidays = [];
+        for (var i = 0; i < resp.length; i++) {
+          holidays.push(resp[i]['holiday_date']);
+        }
+        localStorage.setItem("holidays", JSON.stringify(holidays));
       }
     });
   }
