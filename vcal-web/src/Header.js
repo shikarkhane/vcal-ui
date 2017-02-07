@@ -12,7 +12,7 @@ class Header extends Component {
    var groupName = localStorage.getItem("groupName");
    var termName = localStorage.getItem("termName");
 
-   if ( Number(localStorage.getItem("role")) !== 1){
+   if ( Number(localStorage.getItem("role")) === 1){
      if (! groupName){
         hashHistory.push('/mygroup');
         return;
