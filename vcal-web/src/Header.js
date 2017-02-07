@@ -1,5 +1,7 @@
+import { conf } from './Config';
 import React, { Component } from 'react';
 import { hashHistory, Link } from 'react-router';
+import reqwest from 'reqwest';
 
 class Header extends Component {
   constructor(props) {
@@ -23,8 +25,23 @@ class Header extends Component {
 
     this.setState({groupName: groupName });
     this.setState({termName: termName});
+
+    this.getMyUserInfo();
   }
 
+  getMyUserInfo(){
+    var userId = localStorage.getItem("userId");
+    reqwest({
+      url: conf.serverUrl + '/user/' + userId + '/'
+      , type: 'json'
+      , method: 'get'
+      , contentType: 'application/json'
+      , success: function (resp) {
+        localStorage.setItem("role", resp.role);
+        localStorage.setItem("isActive", resp.is_active);
+      }
+    });
+  }
   render() {
     const marginButtons = {
       marginRight: 5,
