@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import {getHumanDate}from './Utility';
+import {getHumanDate, makeId}from './Utility';
 
 class HolidayElement extends Component{
     constructor(props) {
@@ -84,7 +84,7 @@ class Holidays extends Component {
       , success: function (resp) {
           //console.log(resp);
             var hds = self.state.holidayDates;
-            hds.push(holidayDate);
+            hds.unshift({"holiday_date": holidayDate, "id": makeId()});
             self.setState({holidayDates: hds});
         }
     });

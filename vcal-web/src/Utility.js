@@ -1,3 +1,12 @@
+var _makeId = function() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for( var i=0; i < 5; i++ )
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
 var _getDayOfWeek = function(day){
   var weekday=new Array(7);
   weekday[0]="Sunday";
@@ -70,3 +79,4 @@ export const getHumanDate = _getHumanDate;
 export const isNonWorkingDay = _isNonWorkingDay;
 export const getDateFormat = _getDateFormat;
 export const getUserInfo = _getUserInfo;
+export const makeId = _makeId;

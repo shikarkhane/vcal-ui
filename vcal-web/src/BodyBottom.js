@@ -63,7 +63,7 @@ class ActionButton extends Component{
 }
 class BodyBottom extends Component {
   render() {
-    if ( Number(localStorage.getItem("role")) > 1){
+    if ( Number(localStorage.getItem("role")) === 1){
       return (
         <div>
           <AdminUserAction />

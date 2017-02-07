@@ -1,6 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import {makeId}from './Utility';
 
 class CreateWorkday extends Component {
   constructor(props) {
@@ -30,20 +31,24 @@ class CreateWorkday extends Component {
   }
   handleSave(e){
     e.preventDefault();
+      var self = this;
       this.setState({createDisabled: true });
     var groupId = localStorage.getItem("groupId");
     var creatorId = localStorage.getItem("userId");
     var workDate = Math.floor(((new Date(this.state.workDate)).getTime())/1000);
+      var jsonBody = { created_by_id: creatorId, work_date: workDate,
+          from_time: this.state.fromTime, to_time: this.state.tillTime,
+          standin_user_id: "", is_half_day: this.state.halfDay, id: makeId()};
+
     reqwest({
         url: conf.serverUrl + '/workday/' + groupId + '/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
-      , data: JSON.stringify({ created_by_id: creatorId, work_date: workDate,
-          from_time: this.state.fromTime, to_time: this.state.tillTime,
-        standin_user_id: "", is_half_day: this.state.halfDay})
+      , data: JSON.stringify(jsonBody)
       , success: function (resp) {
           //console.log(resp);
+            self.props.onUpdate(jsonBody);
         }
     });
   }

@@ -45,29 +45,8 @@ class WorkdayElement extends Component{
 
 
 class ListWorkday extends Component {
-  constructor(props) {
-   super(props);
-   this.state = {workdays: []};
- }
- componentDidMount() {
-      this.getWorkdays();
-  }
-  getWorkdays(){
-    var self = this;
-    var groupId = localStorage.getItem("groupId");
-    reqwest({
-        url: conf.serverUrl + '/workday/' + groupId + '/'
-      , type: 'json'
-      , method: 'get'
-      , contentType: 'application/json'
-      , success: function (resp) {
-          self.setState({workdays: resp});
-        }
-    });
-  }
-
   render() {
-    const wds = this.state.workdays;
+    const wds = this.props.data;
     const workdayButtons = wds.map((wd) =>
     <WorkdayElement key={wd.work_date+wd.id} workdayId={wd.id}
       date={getHumanDate(wd.work_date)}
