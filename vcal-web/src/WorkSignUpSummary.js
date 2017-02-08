@@ -1,7 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import {getHumanDate} from './Utility';
+import {getHumanDate, makeId} from './Utility';
 
 class MySignUps extends Component{
     constructor(props) {
@@ -9,9 +9,18 @@ class MySignUps extends Component{
         this.handleDeleteSignup = this.handleDeleteSignup.bind(this);
         this.state = {disabled: false};
     }
-  handleDeleteSignup(signupId, isWorkday){
+  handleDeleteSignup(signupId, isWorkday, chosenDate, fromTime, tillTime){
       this.setState({disabled: true });
-    if (isWorkday){
+      var self = this;
+
+      var jsonBody = {standin_date: chosenDate, id: makeId()};
+      if( isWorkday){
+          jsonBody = {work_date: chosenDate, from_time_in_24hours: this.props.fromTime,
+              to_time_in_24hours: this.props.tillTime, id : makeId()};
+      }
+
+
+      if (isWorkday){
       reqwest({
           url: conf.serverUrl + '/workday/' + signupId + '/'
         , type: 'json'
@@ -19,6 +28,7 @@ class MySignUps extends Component{
         , contentType: 'application/json'
         , success: function (resp) {
             //console.log(resp);
+              self.props.onRemove(jsonBody, isWorkday);
           }
       });
     }
@@ -30,6 +40,7 @@ class MySignUps extends Component{
         , contentType: 'application/json'
         , success: function (resp) {
             //console.log(resp);
+              self.props.onRemove(jsonBody, isWorkday);
           }
       });
     }
@@ -38,11 +49,14 @@ class MySignUps extends Component{
   render(){
     var signupId = this.props.signupId;
     var isWorkday = this.props.isWorkday;
+      var chosenDate = this.props.chosenDate;
+      var fromTime = this.props.fromTime;
+      var tillTime = this.props.tillTime;
     return (
       <div className="alert alert-success" role="alert">
         {this.props.textToDisplay}
           <button type="button" className="btn btn-warning pull-right" disabled={this.state.disabled}
-              onClick={this.handleDeleteSignup.bind(null, signupId, isWorkday)} >
+              onClick={this.handleDeleteSignup.bind(null, signupId, isWorkday, chosenDate, fromTime, tillTime)} >
                 <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
           </button>
       </div>
@@ -50,53 +64,21 @@ class MySignUps extends Component{
   }
 }
 class WorkSignUpSummary extends Component {
-  constructor(props) {
-   super(props);
-   this.state = { myWorkday:[], myStandin:[]};
- }
- componentDidMount() {
-      this.getMyWorkday();
-      this.getMyStandin();
-  }
-  getMyWorkday(){
-    var self = this;
-    var groupId = localStorage.getItem("groupId");
-    var userId = localStorage.getItem("userId");
-    reqwest({
-        url: conf.serverUrl + '/myworkday/' + groupId + '/user/' + userId + '/'
-      , type: 'json'
-      , method: 'get'
-      , contentType: 'application/json'
-      , success: function (resp) {
-          self.setState({myWorkday: resp});
-        }
-    });
-  }
-  getMyStandin(){
-    var self = this;
-    var groupId = localStorage.getItem("groupId");
-    var userId = localStorage.getItem("userId");
-    reqwest({
-        url: conf.serverUrl + '/mystandin/' + groupId + '/user/' + userId + '/'
-      , type: 'json'
-      , method: 'get'
-      , contentType: 'application/json'
-      , success: function (resp) {
-          self.setState({myStandin: resp});
-        }
-    });
-  }
   render() {
-    const standins = this.state.myStandin;
+    const standins = this.props.myStandin;
     const standinLabels = standins.map((s) =>
     <MySignUps key={s.standin_date+s.id} textToDisplay={getHumanDate(s.standin_date)}
-      isWorkday={false} signupId={s.id}/>
+      isWorkday={false} signupId={s.id}
+      onRemove={this.props.onRemove} chosenDate={s.standin_date}/>
       );
-      const workdays = this.state.myWorkday;
+      const workdays = this.props.myWorkday;
       const workdayLabels = workdays.map((s) =>
       <MySignUps key={s.work_date+s.id} textToDisplay={getHumanDate(s.work_date) + 'between'
         +  s.from_time_in_24hours + 'till' + s.to_time_in_24hours}
-        isWorkday={true} signupId={s.id}/>
+        isWorkday={true} signupId={s.id}
+      onRemove={this.props.onRemove}
+      chosenDate={s.work_date}
+      fromTime={s.from_time_in_24hours} tillTime={s.to_time_in_24hours}/>
     );
 
     return (

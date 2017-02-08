@@ -1,6 +1,4 @@
-import { conf } from './Config';
 import React, { Component } from 'react';
-import reqwest from 'reqwest';
 import {getHumanDate}from './Utility';
 
 class TermElement extends Component{

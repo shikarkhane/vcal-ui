@@ -20,25 +20,27 @@ class Switchday extends Component {
     this.getMySwitchday();
   }
   onSwitch(newElement, isWorkday){
+      var _data;
     if ( isWorkday){
-      var _data = this.state.openWorkday;
+      _data = this.state.openWorkday;
       _data.unshift(newElement);
       this.setState({ openWorkday : _data});
     }
     else {
-      var _data = this.state.openStandin;
+      _data = this.state.openStandin;
       _data.unshift(newElement);
       this.setState({ openStandin : _data});
     }
   }
   onTake(newElement, isWorkday){
+      var _data
     if ( isWorkday){
-      var _data = this.state.myWorkday;
+      _data = this.state.myWorkday;
       _data.unshift(newElement);
       this.setState({ myWorkday : _data});
     }
     else {
-      var _data = this.state.myStandin;
+      _data = this.state.myStandin;
       _data.unshift(newElement);
       this.setState({ myStandin : _data});
     }

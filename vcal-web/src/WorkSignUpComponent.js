@@ -1,7 +1,8 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import {getHumanDate, isNonWorkingDay} from './Utility';
+import {getHumanDate, isNonWorkingDay, makeId} from './Utility';
+
 
 
 class PickDate extends Component{
@@ -11,10 +12,18 @@ class PickDate extends Component{
         this.state = {disabled: false};
     }
   handleSave(pIsWorkday, chosenDate){
+      var self = this;
       this.setState({disabled: true });
     var groupId = localStorage.getItem("groupId");
     var userId = localStorage.getItem("userId");
-    var isWorkday = (pIsWorkday === '1');
+    var isWorkday = pIsWorkday;
+
+      var jsonBody = {standin_date: chosenDate, id: makeId()};
+      if( isWorkday){
+          jsonBody = {work_date: chosenDate, from_time_in_24hours: this.props.fromTime,
+              to_time_in_24hours: this.props.tillTime, id : makeId()};
+      }
+
 
     reqwest({
         url: conf.serverUrl + '/work-sign-up/' + groupId + "/"
@@ -25,6 +34,7 @@ class PickDate extends Component{
           is_workday: isWorkday})
       , success: function (resp) {
           //console.log(resp);
+            self.props.onTake(jsonBody, isWorkday);
         }
     });
   }
@@ -43,54 +53,23 @@ class PickDate extends Component{
 }
 
 class WorkSignUpComponent extends Component {
-  constructor(props) {
-   super(props);
-   this.state = {openWorkday: [], openStandin: []};
- }
- componentDidMount() {
-      this.getOpenWorkday();
-      this.getOpenStandin();
-  }
-  getOpenWorkday(){
-    var self = this;
-    var groupId = localStorage.getItem("groupId");
-    reqwest({
-        url: conf.serverUrl + '/openworkday/' + groupId + '/'
-      , type: 'json'
-      , method: 'get'
-      , contentType: 'application/json'
-      , success: function (resp) {
-          self.setState({openWorkday: resp});
-        }
-    });
-  }
-  getOpenStandin(){
-    var self = this;
-    var groupId = localStorage.getItem("groupId");
-    reqwest({
-        url: conf.serverUrl + '/openstandin/' + groupId + '/'
-      , type: 'json'
-      , method: 'get'
-      , contentType: 'application/json'
-      , success: function (resp) {
-          self.setState({openStandin: resp});
-        }
-    });
-  }
   render() {
 // let user uncheck a date, if its 30 days ahead
 
-    const standins = this.state.openStandin;
+    const standins = this.props.openStandin;
     const standinElements = standins
             .filter(function(s) { return !isNonWorkingDay(s.standin_date); })
             .map((s) =>
-    <PickDate key={s.standin_date+s.id} chosenDate={s.standin_date} isWorkday="0" />
+    <PickDate key={s.standin_date+s.id} chosenDate={s.standin_date} isWorkday={false}
+      onTake={this.props.onTake}/>
       );
-    const workdays = this.state.openWorkday;
+    const workdays = this.props.openWorkday;
     const workdayElements = workdays
             .filter(function(s) { return !isNonWorkingDay(s.work_date); })
             .map((s) =>
-    <PickDate key={s.work_date+s.id} chosenDate={s.work_date} isWorkday="1" />
+    <PickDate key={s.work_date+s.id} chosenDate={s.work_date} isWorkday={true}
+      onTake={this.props.onTake}
+      fromTime={s.from_time_in_24hours} tillTime={s.to_time_in_24hours}/>
     );
     return (
             <div>

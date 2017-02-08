@@ -1,6 +1,4 @@
-import { conf } from './Config';
 import React, { Component } from 'react';
-import reqwest from 'reqwest';
 import SwitchTakeDate from './SwitchTakeDate';
 import {getHumanDate}from './Utility';
 
