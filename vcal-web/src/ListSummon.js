@@ -39,28 +39,9 @@ class SummonElement extends Component{
 }
 
 class ListSummon extends Component {
-  constructor(props) {
-   super(props);
-   this.state = {summons: []};
- }
- componentDidMount() {
-      this.getSummons();
-  }
-  getSummons(){
-    var self = this;
-    var groupId = localStorage.getItem("groupId");
-    reqwest({
-        url: conf.serverUrl + '/summon/' + groupId + '/'
-      , type: 'json'
-      , method: 'get'
-      , contentType: 'application/json'
-      , success: function (resp) {
-          self.setState({summons: resp});
-        }
-    });
-  }
+
   render() {
-    const smons = this.state.summons;
+    const smons = this.props.data;
     const summonButtons = smons.map((smon) =>
     <SummonElement key={smon.work_date+smon.id} summonId={smon.id}
       date={getHumanDate(smon.work_date)}

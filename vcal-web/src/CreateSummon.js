@@ -1,7 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import { hashHistory } from 'react-router';
+import {makeId}from './Utility';
 
 class CreateSummon extends Component {
   constructor(props) {
@@ -27,20 +27,22 @@ class CreateSummon extends Component {
   }
   handleSave(e){
     e.preventDefault();
+    var self = this;
       this.setState({createDisabled: true });
     var groupId = localStorage.getItem("groupId");
     var creatorId = localStorage.getItem("userId");
     var workDate = Math.floor(((new Date(this.state.workDate)).getTime())/1000);
+    var jsonBody = { created_by_id: creatorId, work_date: workDate,
+        from_time: this.state.fromTime, to_time: this.state.tillTime, id: makeId()};
     reqwest({
         url: conf.serverUrl + '/summon/' + groupId + '/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
-      , data: JSON.stringify({ created_by_id: creatorId, work_date: workDate,
-          from_time: this.state.fromTime, to_time: this.state.tillTime})
+      , data: JSON.stringify(jsonBody)
       , success: function (resp) {
           //console.log(resp);
-          hashHistory.push('/summon');
+          self.props.onUpdate(jsonBody);
         }
     });
   }

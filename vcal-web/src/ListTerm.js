@@ -50,30 +50,8 @@ class TermElement extends Component{
 }
 
 class ListTerm extends Component {
-  constructor(props) {
-   super(props);
-   // todo: get list of active terms in the group
-   this.state = {terms: []};
- }
- componentDidMount() {
-      this.getTerms();
-  }
-  getTerms(){
-    var self = this;
-    var groupId = localStorage.getItem("groupId");
-     // todo: get list of terms for given group id
-     reqwest({
-         url: conf.serverUrl + '/term_details/' + groupId + '/'
-         , type: 'json'
-         , contentType: 'application/json'
-       , method: 'get'
-       , success: function (resp) {
-           self.setState({terms: resp});
-         }
-     });
-  }
   render() {
-    const tms = this.state.terms;
+    const tms = this.props.data;
     const termButtons = tms.map((tm) =>
     <TermElement key={tm.id} termId={tm.id} termName={tm.name}
       startDate={getHumanDate(tm.start_date)} endDate={getHumanDate(tm.end_date)}

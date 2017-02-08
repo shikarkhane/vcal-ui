@@ -1,6 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import {makeId}from './Utility';
 
 class CreateSummon extends Component {
   constructor(props) {
@@ -38,12 +39,19 @@ class CreateSummon extends Component {
 
   handleSave(e){
     e.preventDefault();
+    var self = this;
       this.setState({createDisabled: true });
     var startDt = Math.floor(((new Date(this.state.startDate)).getTime())/1000);
     var endDt = Math.floor(((new Date(this.state.endDate)).getTime())/1000);
 
     var groupId = localStorage.getItem("groupId");
     //var creatorId = localStorage.getItem("userId");
+    var fspread = {kid_1: this.state.kid1, kid_2: this.state.kid2,
+      kid_3: this.state.kid3};
+    var jsonBody = { group_id: groupId,
+        term_name: this.state.termName, start_date: startDt,
+        end_date: endDt,
+         family_spread: JSON.stringify(fspread), id: makeId()};
     reqwest({
         url: conf.serverUrl + '/term/'
       , type: 'json'
@@ -56,6 +64,7 @@ class CreateSummon extends Component {
              kid_3: this.state.kid3}})
       , success: function (resp) {
           //console.log(resp);
+          self.props.onUpdate(jsonBody);
         }
     });
       reqwest({
@@ -67,6 +76,7 @@ class CreateSummon extends Component {
               start_date: startDt,  end_date: endDt})
           , success: function (resp) {
               //console.log(resp);
+
           }
       });
 
