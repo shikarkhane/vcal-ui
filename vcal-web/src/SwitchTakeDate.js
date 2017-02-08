@@ -18,7 +18,7 @@ class SwitchTakeDate extends Component{
     var isWorkday = pIsWorkday;
     var isHalfDay = pIsHalfDay;
 
-    var jsonBody = { switch_date: chosenDate, standin_user_id: userId,
+    var jsonBody = { standin_date: chosenDate, standin_user_id: userId,
       id: makeId() };
     if ( isWorkday){
       jsonBody = { work_date: chosenDate, standin_user_id: userId,
