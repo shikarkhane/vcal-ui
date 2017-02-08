@@ -5,74 +5,26 @@ import SwitchTakeDate from './SwitchTakeDate';
 import {getHumanDate}from './Utility';
 
 class SwitchdayOpenList extends Component {
-  constructor(props) {
-   super(props);
-   this.state = { openWorkday:[], openStandin:[], mySwitchday:[]};
- }
- componentDidMount() {
-      this.getOpenSwitchWorkday();
-      this.getOpenSwitchStandin();
-      this.getMySwitchday();
-  }
-  getMySwitchday(){
-    var self = this;
-    var groupId = localStorage.getItem("groupId");
-    var userId = localStorage.getItem("userId");
-    reqwest({
-        url: conf.serverUrl + '/switchday/' + groupId  + '/user/' + userId + '/'
-      , type: 'json'
-      , method: 'get'
-      , contentType: 'application/json'
-      , success: function (resp) {
-          self.setState({mySwitchday: resp});
-        }
-    });
-  }
-  getOpenSwitchWorkday(){
-    var self = this;
-    var groupId = localStorage.getItem("groupId");
-    reqwest({
-        url: conf.serverUrl + '/switchday/' + groupId + '/type/1/'
-      , type: 'json'
-      , method: 'get'
-      , contentType: 'application/json'
-      , success: function (resp) {
-          self.setState({openWorkday: resp});
-        }
-    });
-  }
-  getOpenSwitchStandin(){
-    var self = this;
-    var groupId = localStorage.getItem("groupId");
-    reqwest({
-        url: conf.serverUrl + '/switchday/' + groupId + '/type/0/'
-      , type: 'json'
-      , method: 'get'
-      , contentType: 'application/json'
-      , success: function (resp) {
-          self.setState({openStandin: resp});
-        }
-    });
-  }
 
   render() {
     // todo intersect with mySwitchday and exclude from open list
-    const standins = this.state.openStandin;
+    const standins = this.props.openStandin;
     const standinSwitches = standins.map((s) =>
     <SwitchTakeDate key={s.switch_date+s.id}
       chosenDate={s.switch_date} standinUserId={s.standin_user_id}
       displayDate={getHumanDate(s.switch_date)}
       fromTime="0800" tillTime="1600" isHalfDay={false}
       isWorkday={false} isAlreadySwitched={false}
-      fromOpenList={true}/>
+      onTake={this.props.onTake}/>
     );
-    const workdays = this.state.openWorkday;
+    const workdays = this.props.openWorkday;
     const workdaySwitches = workdays.map((s) =>
     <SwitchTakeDate key={s.switch_date+s.id} chosenDate={s.switch_date} standinUserId={s.standin_user_id}
       displayDate={getHumanDate(s.switch_date)}
       fromTime={s.from_time_in_24hours} tillTime={s.to_time_in_24hours}
       isHalfDay={s.is_half_day}  isWorkday={true}
-      isAlreadySwitched={false} fromOpenList={true}/>
+      isAlreadySwitched={false}
+      onTake={this.props.onTake}/>
   );
 
     return (

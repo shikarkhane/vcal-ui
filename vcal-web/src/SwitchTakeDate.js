@@ -1,6 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
+import {makeId}from './Utility';
 
 class SwitchTakeDate extends Component{
   constructor(props) {
@@ -9,16 +10,22 @@ class SwitchTakeDate extends Component{
     this.state = {disabled: false};
   }
   handleSave(pIsWorkday, chosenDate, fromTime, tillTime, pIsHalfDay,
-    fromOpenList, standinUserId){
+    standinUserId){
     this.setState({disabled: true });
+    var self = this;
     var groupId = localStorage.getItem("groupId");
     var userId = localStorage.getItem("userId");
     var isWorkday = pIsWorkday;
     var isHalfDay = pIsHalfDay;
 
-    //if switch is from open list, delete switchday and assign workday/standin
-    //to this user
-    if ( fromOpenList ){
+    var jsonBody = { switch_date: chosenDate, standin_user_id: userId,
+      id: makeId() };
+    if ( isWorkday){
+      jsonBody = { work_date: chosenDate, standin_user_id: userId,
+        from_time_in_24hours: fromTime, to_time_in_24hours: tillTime,
+        is_half_day: isHalfDay, id: makeId() };
+    }
+
       reqwest({
           url: conf.serverUrl + '/on-switch-work-sign-up/' + groupId + "/"
         , type: 'json'
@@ -37,24 +44,10 @@ class SwitchTakeDate extends Component{
         , contentType: 'application/json'
         , data: JSON.stringify({ chosen_date: chosenDate})
         , success: function (resp) {
-          console.log(resp);
+          self.props.onTake(jsonBody, isWorkday);
         }
       });
-    }
-    else{
-      reqwest({
-          url: conf.serverUrl + '/switchday/' + groupId + '/user/' + userId + '/'
-        , type: 'json'
-        , method: 'post'
-        , contentType: 'application/json'
-        , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
-            is_workday: isWorkday, from_time: fromTime, to_time: tillTime,
-          is_half_day: isHalfDay})
-        , success: function (resp) {
-            //console.log(resp);
-          }
-      });
-    }
+
   }
 
   render(){
@@ -65,7 +58,6 @@ class SwitchTakeDate extends Component{
     var fromTime = this.props.fromTime;
     var tillTime = this.props.tillTime;
     var isHalfDay = this.props.isHalfDay;
-    var fromOpenList= this.props.fromOpenList;
     var standinUserId = this.props.standinUserId;
     var halfDayText = "full day";
 
@@ -76,7 +68,7 @@ class SwitchTakeDate extends Component{
       return (
         <button type="button" className={isChosen}
           onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
-            tillTime, isHalfDay, fromOpenList, standinUserId)} disabled={this.state.disabled}>
+            tillTime, isHalfDay, standinUserId)} disabled={this.state.disabled}>
           {displayDate} between
             {fromTime} till {tillTime} for ({halfDayText})
         </button>
@@ -86,7 +78,7 @@ class SwitchTakeDate extends Component{
       return (
         <button type="button" className={isChosen}
           onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
-            tillTime, isHalfDay, fromOpenList, standinUserId)} disabled={this.state.disabled}>
+            tillTime, isHalfDay, standinUserId)} disabled={this.state.disabled}>
           {displayDate}
         </button>
     );
