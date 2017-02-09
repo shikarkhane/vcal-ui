@@ -10,13 +10,14 @@ class SwitchTakeDate extends Component{
     this.state = {disabled: false};
   }
   handleSave(pIsWorkday, chosenDate, fromTime, tillTime, pIsHalfDay,
-    standinUserId){
+    standinUserId, dbId){
     this.setState({disabled: true });
     var self = this;
     var groupId = localStorage.getItem("groupId");
     var userId = localStorage.getItem("userId");
     var isWorkday = pIsWorkday;
     var isHalfDay = pIsHalfDay;
+
 
     var jsonBody = { standin_date: chosenDate, standin_user_id: userId,
       id: makeId() };
@@ -44,7 +45,11 @@ class SwitchTakeDate extends Component{
         , contentType: 'application/json'
         , data: JSON.stringify({ chosen_date: chosenDate})
         , success: function (resp) {
-          self.props.onTake(jsonBody, isWorkday);
+          if (resp.status === 'ok'){
+            jsonBody.id = dbId;
+            self.props.onTake(jsonBody, isWorkday);
+          }
+
         }
       });
 
@@ -60,6 +65,7 @@ class SwitchTakeDate extends Component{
     var isHalfDay = this.props.isHalfDay;
     var standinUserId = this.props.standinUserId;
     var halfDayText = "full day";
+    var dbId = this.props.dbId;
 
     if ( isHalfDay ){
       halfDayText = "half day";
@@ -68,7 +74,7 @@ class SwitchTakeDate extends Component{
       return (
         <button type="button" className={isChosen}
           onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
-            tillTime, isHalfDay, standinUserId)} disabled={this.state.disabled}>
+            tillTime, isHalfDay, standinUserId, dbId)} disabled={this.state.disabled}>
           {displayDate} between
             {fromTime} till {tillTime} for ({halfDayText})
         </button>
@@ -78,7 +84,7 @@ class SwitchTakeDate extends Component{
       return (
         <button type="button" className={isChosen}
           onClick={this.handleSave.bind(null, isWorkday, chosenDate, fromTime,
-            tillTime, isHalfDay, standinUserId)} disabled={this.state.disabled}>
+            tillTime, isHalfDay, standinUserId, dbId)} disabled={this.state.disabled}>
           {displayDate}
         </button>
     );

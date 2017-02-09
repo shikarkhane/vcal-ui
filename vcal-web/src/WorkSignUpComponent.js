@@ -34,7 +34,10 @@ class PickDate extends Component{
           is_workday: isWorkday})
       , success: function (resp) {
           //console.log(resp);
+          if (resp.status === 'ok'){
+            jsonBody.id = resp.id;
             self.props.onTake(jsonBody, isWorkday);
+          }
         }
     });
   }

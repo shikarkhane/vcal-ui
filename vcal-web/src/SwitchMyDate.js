@@ -20,7 +20,7 @@ class SwitchMyDate extends Component{
     var jsonBody = { switch_date: chosenDate, standin_user_id: userId,
       id: makeId() };
     if ( isWorkday){
-      jsonBody = { work_date: chosenDate, standin_user_id: userId,
+      jsonBody = { switch_date: chosenDate, standin_user_id: userId,
         from_time_in_24hours: fromTime, to_time_in_24hours: tillTime,
         is_half_day: isHalfDay, id: makeId() };
     }
@@ -35,7 +35,12 @@ class SwitchMyDate extends Component{
           is_half_day: isHalfDay})
         , success: function (resp) {
             //console.log(resp);
+          if (resp.status === 'ok'){
+            jsonBody.id = resp.id;
             self.props.onSwitch(jsonBody, isWorkday);
+          }
+
+
           }
       });
 

@@ -64,7 +64,11 @@ class CreateSummon extends Component {
              kid_3: this.state.kid3}})
       , success: function (resp) {
           //console.log(resp);
-          self.props.onUpdate(jsonBody);
+            if (resp.status === 'ok'){
+                jsonBody.id = resp.id;
+                self.props.onUpdate(jsonBody);
+
+            }
         }
     });
       reqwest({

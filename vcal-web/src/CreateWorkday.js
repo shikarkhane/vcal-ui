@@ -48,7 +48,11 @@ class CreateWorkday extends Component {
       , data: JSON.stringify(jsonBody)
       , success: function (resp) {
           //console.log(resp);
-            self.props.onUpdate(jsonBody);
+            if (resp.status === 'ok'){
+                jsonBody.id = resp.id;
+                self.props.onUpdate(jsonBody);
+
+            }
         }
     });
   }
