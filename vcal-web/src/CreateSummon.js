@@ -94,7 +94,7 @@ class CreateSummon extends Component {
               transitionName="feedback"
               transitionAppear={true}
               transitionAppearTimeout={1000}
-      transitionEnterTimeout={300}
+      transitionEnterTimeout={1000}
       transitionLeaveTimeout={300} >
                   {display}
           </ReactCSSTransitionGroup>
