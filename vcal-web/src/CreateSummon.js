@@ -36,13 +36,14 @@ class CreateSummon extends Component {
     var creatorId = localStorage.getItem("userId");
     var workDate = Math.floor(((new Date(this.state.workDate)).getTime())/1000);
     var jsonBody = { created_by_id: creatorId, work_date: workDate,
-        from_time: this.state.fromTime, to_time: this.state.tillTime, id: makeId()};
+        from_time_in_24hours: this.state.fromTime, to_time_in_24hours: this.state.tillTime, id: makeId()};
     reqwest({
         url: conf.serverUrl + '/summon/' + groupId + '/'
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
-      , data: JSON.stringify(jsonBody)
+      , data: JSON.stringify({ created_by_id: creatorId, work_date: workDate,
+            from_time: this.state.fromTime, to_time: this.state.tillTime})
       , success: function (resp) {
           //console.log(resp);
             if (resp.status === 'ok'){
@@ -92,9 +93,9 @@ class CreateSummon extends Component {
           <ReactCSSTransitionGroup
               transitionName="feedback"
               transitionAppear={true}
-              transitionAppearTimeout={500}
-              transitionEnterTimeout={1000}
-              transitionLeaveTimeout={300}>
+              transitionAppearTimeout={1000}
+      transitionEnterTimeout={300}
+      transitionLeaveTimeout={300} >
                   {display}
           </ReactCSSTransitionGroup>
       </form>
