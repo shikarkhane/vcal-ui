@@ -2,12 +2,15 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import {makeId}from './Utility';
+import Feedback from './Feedback';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class CreateSummon extends Component {
   constructor(props) {
    super(props);
    this.state = {workDate: "", fromTime: "",
-       tillTime: "", createDisabled: false};
+       tillTime: "", createDisabled: false,
+   feedbackMessage:""};
 
    this.changeDate = this.changeDate.bind(this);
    this.changeFromTime = this.changeFromTime.bind(this);
@@ -45,12 +48,16 @@ class CreateSummon extends Component {
             if (resp.status === 'ok'){
                 jsonBody.id = resp.id;
                 self.props.onUpdate(jsonBody);
-
+                self.setState({feedbackMessage : resp.status});
             }
         }
     });
   }
   render() {
+      var display = null;
+      if ( (this.state.feedbackMessage).length > 0 ){
+          display = <Feedback message={this.state.feedbackMessage} classes="alert alert-success" />;
+      }
     return (
       <form className="form-horizontal" onSubmit={this.handleSave}>
         <div className="form-group">
@@ -82,6 +89,14 @@ class CreateSummon extends Component {
                 Create </button>
           </div>
         </div>
+          <ReactCSSTransitionGroup
+              transitionName="feedback"
+              transitionAppear={true}
+              transitionAppearTimeout={500}
+              transitionEnterTimeout={1000}
+              transitionLeaveTimeout={300}>
+                  {display}
+          </ReactCSSTransitionGroup>
       </form>
     );
   }
