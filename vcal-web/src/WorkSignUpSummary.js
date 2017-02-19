@@ -1,7 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import {getHumanDate, makeId, isWith30DaysFromNow} from './Utility';
+import {getHumanDate, makeId, isWith30DaysFromNow, isFutureDate} from './Utility';
 
 class MySignUps extends Component{
     constructor(props) {
@@ -74,13 +74,17 @@ class MySignUps extends Component{
 class WorkSignUpSummary extends Component {
   render() {
     const standins = this.props.myStandin;
-    const standinLabels = standins.map((s) =>
+    const standinLabels = standins
+            .filter(function(s) { return isFutureDate(s.standin_date); })
+            .map((s) =>
     <MySignUps key={s.standin_date+s.id} textToDisplay={getHumanDate(s.standin_date)}
       isWorkday={false} signupId={s.id}
       onRemove={this.props.onRemove} chosenDate={s.standin_date}/>
       );
       const workdays = this.props.myWorkday;
-      const workdayLabels = workdays.map((s) =>
+      const workdayLabels = workdays
+              .filter(function(s) { return isFutureDate(s.work_date); })
+              .map((s) =>
       <MySignUps key={s.work_date+s.id} textToDisplay={getHumanDate(s.work_date) + 'between'
         +  s.from_time_in_24hours + 'till' + s.to_time_in_24hours}
         isWorkday={true} signupId={s.id}

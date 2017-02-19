@@ -1,7 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import {getHumanDate, isNonWorkingDay, makeId} from './Utility';
+import {getHumanDate, isNonWorkingDay, makeId, isFutureDate} from './Utility';
 
 
 
@@ -62,6 +62,7 @@ class WorkSignUpComponent extends Component {
     const standins = this.props.openStandin;
     const standinElements = standins
             .filter(function(s) { return !isNonWorkingDay(s.standin_date); })
+            .filter(function(s) { return isFutureDate(s.standin_date); })
             .map((s) =>
     <PickDate key={s.standin_date+s.id} chosenDate={s.standin_date} isWorkday={false}
       onTake={this.props.onTake}/>
@@ -69,6 +70,7 @@ class WorkSignUpComponent extends Component {
     const workdays = this.props.openWorkday;
     const workdayElements = workdays
             .filter(function(s) { return !isNonWorkingDay(s.work_date); })
+            .filter(function(s) { return isFutureDate(s.work_date); })
             .map((s) =>
     <PickDate key={s.work_date+s.id} chosenDate={s.work_date} isWorkday={true}
       onTake={this.props.onTake}

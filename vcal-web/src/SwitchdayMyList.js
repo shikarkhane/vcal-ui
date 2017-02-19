@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SwitchMyDate from './SwitchMyDate';
-import {getHumanDate}from './Utility';
+import {getHumanDate, isFutureDate}from './Utility';
 
 class SwitchdayMyList extends Component {
   markAlreadySwitched(chosenDate){
@@ -17,7 +17,9 @@ class SwitchdayMyList extends Component {
 
     // todo intersect with mySwitchday and mark check boxs
     const standins = this.props.myStandin;
-    const standinSwitches = standins.map((s) =>
+    const standinSwitches = standins
+            .filter(function(s) { return isFutureDate(s.standin_date); })
+            .map((s) =>
     <SwitchMyDate key={s.id}
       chosenDate={s.standin_date}
       displayDate={getHumanDate(s.standin_date)}
@@ -26,7 +28,9 @@ class SwitchdayMyList extends Component {
       onSwitch={this.props.onSwitch}/>
     );
     const workdays = this.props.myWorkday;
-    const workdaySwitches = workdays.map((s) =>
+    const workdaySwitches = workdays
+            .filter(function(s) { return isFutureDate(s.work_date); })
+            .map((s) =>
     <SwitchMyDate key={s.id}
       chosenDate={s.work_date}
       displayDate={getHumanDate(s.work_date)}

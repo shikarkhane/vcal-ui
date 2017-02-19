@@ -30,6 +30,17 @@ var _isWith30DaysFromNow = function(dt){
     return (false);
   }
 };
+
+var _isFutureDate = function(dt){
+  var now = ((new Date()).valueOf())/1000;
+  if (dt < now){
+    return (false);
+  }
+  else{
+    return (true);
+  }
+};
+
 const _getDateFormat = function(epochDate){
   var date = new Date( epochDate*1000);
   var mon = date.getMonth()+1;
@@ -91,3 +102,4 @@ export const getDateFormat = _getDateFormat;
 export const getUserInfo = _getUserInfo;
 export const makeId = _makeId;
 export const isWith30DaysFromNow = _isWith30DaysFromNow;
+export const isFutureDate = _isFutureDate;

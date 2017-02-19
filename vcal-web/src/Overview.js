@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import {getHumanDate, isNonWorkingDay, getUserInfo} from './Utility';
+import {getHumanDate, isNonWorkingDay, getUserInfo, isFutureDate} from './Utility';
 
 class PickDate extends Component{
     render(){
@@ -97,18 +97,21 @@ class Overview extends Component {
     const standins = this.state.openStandin;
     const standinElements = standins
             .filter(function(s) { return !isNonWorkingDay(s.standin_date); })
+            .filter(function(s) { return isFutureDate(s.standin_date); })
             .map((s) =>
     <PickDate key={s.standin_date+s.id} chosenDate={s.standin_date} isWorkday="0" userId="" />
       );
     const workdays = this.state.openWorkday;
     const workdayElements = workdays
             .filter(function(s) { return !isNonWorkingDay(s.work_date); })
+            .filter(function(s) { return isFutureDate(s.work_date); })
             .map((s) =>
     <PickDate key={s.work_date+s.id} chosenDate={s.work_date} isWorkday="1" userId="" />
     );
       const nonstandins = this.state.nonOpenStandin;
       const nonStandinElements = nonstandins
               .filter(function(s) { return !isNonWorkingDay(s.standin_date); })
+              .filter(function(s) { return isFutureDate(s.standin_date); })
               .map((s) =>
           <PickDate key={s.standin_date+s.id} chosenDate={s.standin_date} isWorkday="0"
       userId={s.standin_user_id}/>
@@ -116,6 +119,7 @@ class Overview extends Component {
       const nonworkdays = this.state.nonOpenWorkday;
       const nonWorkdayElements = nonworkdays
               .filter(function(s) { return !isNonWorkingDay(s.work_date); })
+              .filter(function(s) { return isFutureDate(s.work_date); })
               .map((s) =>
           <PickDate key={s.work_date+s.id} chosenDate={s.work_date} isWorkday="1"
       userId={s.standin_user_id}/>

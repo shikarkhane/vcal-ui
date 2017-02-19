@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import SwitchTakeDate from './SwitchTakeDate';
-import {getHumanDate}from './Utility';
+import {getHumanDate, isFutureDate}from './Utility';
 
 class SwitchdayOpenList extends Component {
 
   render() {
     // todo intersect with mySwitchday and exclude from open list
     const standins = this.props.openStandin;
-    const standinSwitches = standins.map((s) =>
+    const standinSwitches = standins
+            .filter(function(s) { return isFutureDate(s.switch_date); })
+            .map((s) =>
     <SwitchTakeDate key={s.switch_date+s.id} dbId={s.id}
       chosenDate={s.switch_date} standinUserId={s.standin_user_id}
       displayDate={getHumanDate(s.switch_date)}
@@ -16,7 +18,9 @@ class SwitchdayOpenList extends Component {
       onTake={this.props.onTake}/>
     );
     const workdays = this.props.openWorkday;
-    const workdaySwitches = workdays.map((s) =>
+    const workdaySwitches = workdays
+            .filter(function(s) { return isFutureDate(s.switch_date); })
+            .map((s) =>
     <SwitchTakeDate key={s.switch_date+s.id} dbId={s.id}
     chosenDate={s.switch_date} standinUserId={s.standin_user_id}
       displayDate={getHumanDate(s.switch_date)}

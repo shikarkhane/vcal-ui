@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import {getHumanDate, makeId}from './Utility';
+import {getHumanDate, makeId, isFutureDate}from './Utility';
 
 class HolidayElement extends Component{
     constructor(props) {
@@ -91,7 +91,9 @@ class Holidays extends Component {
   }
   render() {
       const hds = this.state.holidayDates;
-      const holidayButtons = hds.map((hd) =>
+      const holidayButtons = hds
+              .filter(function(s) { return isFutureDate(s.holiday_date); })
+              .map((hd) =>
           <HolidayElement key={hd.holiday_date +hd.id} holidayId={hd.id}
       date={getHumanDate(hd.holiday_date)}/>
   );
