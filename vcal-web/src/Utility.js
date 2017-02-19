@@ -20,6 +20,16 @@ var _getDayOfWeek = function(day){
   return ( weekday[day]);
 };
 
+var _isWith30DaysFromNow = function(dt){
+  var now = new Date();
+  var days30FromNow = ((now.setDate(now.getDate() + 30)).valueOf())/1000;
+  if (dt < days30FromNow){
+    return (true);
+  }
+  else{
+    return (false);
+  }
+};
 const _getDateFormat = function(epochDate){
   var date = new Date( epochDate*1000);
   var mon = date.getMonth()+1;
@@ -80,3 +90,4 @@ export const isNonWorkingDay = _isNonWorkingDay;
 export const getDateFormat = _getDateFormat;
 export const getUserInfo = _getUserInfo;
 export const makeId = _makeId;
+export const isWith30DaysFromNow = _isWith30DaysFromNow;

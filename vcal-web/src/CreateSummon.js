@@ -49,7 +49,7 @@ class CreateSummon extends Component {
             if (resp.status === 'ok'){
                 jsonBody.id = resp.id;
                 self.props.onUpdate(jsonBody);
-                self.setState({feedbackMessage : resp.status});
+                self.setState({feedbackMessage : resp.message});
             }
         }
     });
@@ -94,8 +94,9 @@ class CreateSummon extends Component {
               transitionName="feedback"
               transitionAppear={true}
               transitionAppearTimeout={1000}
-      transitionEnterTimeout={1000}
-      transitionLeaveTimeout={300} >
+              transitionEnterTimeout={1000}
+              transitionLeave={true}
+              transitionLeaveTimeout={300} >
                   {display}
           </ReactCSSTransitionGroup>
       </form>

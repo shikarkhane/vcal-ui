@@ -1,15 +1,22 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import {getHumanDate, makeId} from './Utility';
+import {getHumanDate, makeId, isWith30DaysFromNow} from './Utility';
 
 class MySignUps extends Component{
     constructor(props) {
         super(props);
         this.handleDeleteSignup = this.handleDeleteSignup.bind(this);
-        this.state = {disabled: false};
+
+        if (isWith30DaysFromNow(this.props.chosenDate)){
+            this.state = {disabled: true};
+        }
+        else{
+            this.state = {disabled: false};
+        }
+
     }
-  handleDeleteSignup(signupId, isWorkday, chosenDate, fromTime, tillTime){
+  handleDeleteSignup(signupId, isWorkday, chosenDate){
       this.setState({disabled: true });
       var self = this;
 
@@ -52,6 +59,7 @@ class MySignUps extends Component{
       var chosenDate = this.props.chosenDate;
       var fromTime = this.props.fromTime;
       var tillTime = this.props.tillTime;
+
     return (
       <div className="alert alert-success" role="alert">
         {this.props.textToDisplay}
