@@ -26,9 +26,33 @@ class Header extends Component {
     this.setState({groupName: groupName });
     this.setState({termName: termName});
 
+     this.isRuleSet();
     this.getMyUserInfo();
     this.getAllHolidays();
   }
+    isRuleSet(){
+        var groupId = localStorage.getItem("groupId");
+        var termId = localStorage.getItem("termId");
+
+        // todo: get list of terms for given group id
+        reqwest({
+            url: conf.serverUrl + '/rule/' + groupId + '/term/' + termId + '/'
+            , type: 'json'
+            , contentType: 'application/json'
+            , method: 'get'
+            , success: function (resp) {
+                var x = JSON.parse(resp.definition)
+
+                if( (Number(x.standin[0]) + Number(x.standin[1]) + Number(x.standin[2])
+                + Number(x.workday[0]) + Number(x.workday[1]) + Number(x.workday[2]) ) > 0){
+                    localStorage.setItem("isRuleSet", true);
+                }
+                else{
+                    localStorage.setItem("isRuleSet", false);
+                }
+            }
+        });
+    }
 
   getMyUserInfo(){
     var userId = localStorage.getItem("userId");
