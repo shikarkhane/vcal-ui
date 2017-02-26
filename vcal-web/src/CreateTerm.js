@@ -113,21 +113,21 @@ class CreateSummon extends Component {
         <div className="form-group">
           <label className="col-sm-2 control-label">Count of Families with </label>
           <div className="row">
-              <div className="col-xs-3 col-md-3">
+              <div className="col-xs-4 col-md-4">
                 <div className="input-group">
                     <span className="input-group-addon" id="basic-addon1">1 kid</span>
                     <input type="number"  placeholder="1 kid"  className="form-control"
                     onChange={this.changeKid1} value={this.state.kid1} aria-describedby="basic-addon1"/>
                 </div>
             </div>
-              <div className="col-xs-3 col-md-3">
+              <div className="col-xs-4 col-md-4">
                 <div className="input-group">
                     <span className="input-group-addon" id="basic-addon2">2 kids</span>
                     <input type="number"  placeholder="2 kids"  className="form-control"
                     onChange={this.changeKid2} value={this.state.kid2} aria-describedby="basic-addon2"/>
                 </div>
             </div>
-              <div className="col-xs-3 col-md-3">
+              <div className="col-xs-4 col-md-4">
                 <div className="input-group">
                     <span className="input-group-addon" id="basic-addon3">3 kids</span>
                     <input type="number"  placeholder="3 kids"  className="form-control"
