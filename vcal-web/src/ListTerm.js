@@ -27,10 +27,12 @@ class TermElement extends Component{
 
   }
   changeStartDate(e){
-    this.setState({startDate: e.target.value*1000 });
+    var sd = Math.floor(((new Date(e.target.value)).getTime())/1000);
+    this.setState({startDate: sd });
   }
   changeEndDate(e){
-    this.setState({endDate: e.target.value*1000 });
+    var ed = Math.floor(((new Date(e.target.value)).getTime())/1000);
+    this.setState({endDate: ed });
   }
   changeKid1(e){
     this.setState({kid1: e.target.value });
@@ -48,19 +50,19 @@ class TermElement extends Component{
     var currentMode = this.state.editMode;
 
     var groupId = localStorage.getItem("groupId");
-    var startDt = Math.floor(((new Date(this.state.startDate)).getTime())/1000);
-    var endDt = Math.floor(((new Date(this.state.endDate)).getTime())/1000);
+    var startDt = (new Date(this.state.startDate)).getTime();
+    var endDt = (new Date(this.state.endDate)).getTime();
 
 
     if ( currentMode ){
       // currentMode=True means update and save changes for the term
       reqwest({
-        url: conf.serverUrl + '/term/'
+        url: conf.serverUrl + '/term/' + this.props.termId + '/'
         , type: 'json'
-        , method: 'post'
+        , method: 'put'
         , contentType: 'application/json'
-        , data: JSON.stringify({ group_id: groupId,
-          term_name: this.state.termName, start_date: startDt,
+        , data: JSON.stringify({
+          start_date: startDt,
           end_date: endDt,
           family_spread: {kid_1: this.state.kid1, kid_2: this.state.kid2,
             kid_3: this.state.kid3}})
