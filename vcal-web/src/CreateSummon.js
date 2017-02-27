@@ -3,14 +3,13 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import {makeId}from './Utility';
 import Feedback from './Feedback';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class CreateSummon extends Component {
   constructor(props) {
    super(props);
    this.state = {workDate: "", fromTime: "",
        tillTime: "", createDisabled: false,
-   feedbackMessage:""};
+   feedbackMessage:"", displayAlert: false};
 
    this.changeDate = this.changeDate.bind(this);
    this.changeFromTime = this.changeFromTime.bind(this);
@@ -50,17 +49,17 @@ class CreateSummon extends Component {
                 jsonBody.id = resp.id;
                 self.props.onUpdate(jsonBody);
                 self.setState({feedbackMessage : resp.message});
+                self.setState({displayAlert: true});
             }
         }
     });
   }
   render() {
-      var display = null;
-      if ( (this.state.feedbackMessage).length > 0 ){
-          display = <Feedback message={this.state.feedbackMessage} classes="alert alert-success" />;
-      }
     return (
       <form className="form-horizontal" onSubmit={this.handleSave}>
+
+        <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
+
         <div className="form-group">
           <label htmlFor="inputDate1" className="col-sm-2 control-label">Date:</label>
           <div className="col-sm-10">
@@ -90,15 +89,6 @@ class CreateSummon extends Component {
                 Create </button>
           </div>
         </div>
-          <ReactCSSTransitionGroup
-              transitionName="feedback"
-              transitionAppear={true}
-              transitionAppearTimeout={1000}
-              transitionEnterTimeout={1000}
-              transitionLeave={true}
-              transitionLeaveTimeout={300} >
-                  {display}
-          </ReactCSSTransitionGroup>
       </form>
     );
   }
