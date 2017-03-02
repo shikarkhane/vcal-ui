@@ -2,6 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
+import Feedback from './Feedback';
 
 class Rule extends Component {
 
@@ -9,7 +10,8 @@ class Rule extends Component {
      super(props);
      // todo: get list of active terms in the group
      this.state = {standinKid1: 0, standinKid2:0, standinKid3:0,
-     workdayKid1:0, workdayKid2:0, workdayKid3:0};
+     workdayKid1:0, workdayKid2:0, workdayKid3:0,
+         feedbackMessage:"", displayAlert: false};
 
      this.changeStandinKid1 = this.changeStandinKid1.bind(this);
      this.changeStandinKid2 = this.changeStandinKid2.bind(this);
@@ -21,6 +23,7 @@ class Rule extends Component {
      this.handleSave = this.handleSave.bind(this);
    }
   handleSave(){
+      var self = this;
     var groupId = localStorage.getItem("groupId");
     var termId = localStorage.getItem("termId");
     var standinKid1 = this.state.standinKid1;
@@ -39,7 +42,8 @@ class Rule extends Component {
            definition: {standin: [standinKid1, standinKid2, standinKid3],
              workday: [workdayKid1, workdayKid2, workdayKid3]}})
       , success: function (resp) {
-          //console.log(resp);
+            self.setState({feedbackMessage : resp.message});
+            self.setState({displayAlert: true});
         }
     });
   }
@@ -95,6 +99,7 @@ class Rule extends Component {
       <div>
         <Header />
         <form onSubmit={this.handleSave}>
+        <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
           <h1>Rule</h1>
             <div className="form-group">
               <label className=" control-label">Stand-in days for Families with </label>

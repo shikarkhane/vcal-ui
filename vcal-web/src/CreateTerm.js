@@ -2,11 +2,13 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import {makeId}from './Utility';
+import Feedback from './Feedback';
 
 class CreateSummon extends Component {
   constructor(props) {
    super(props);
-   this.state = {createDisabled: false, termName: ''};
+   this.state = {createDisabled: false, termName: '',
+       feedbackMessage:"", displayAlert: false};
 
    this.changeTerm = this.changeTerm.bind(this);
    this.changeStartDate = this.changeStartDate.bind(this);
@@ -67,6 +69,8 @@ class CreateSummon extends Component {
             if (resp.status === 'ok'){
                 jsonBody.id = resp.id;
                 self.props.onUpdate(jsonBody);
+                self.setState({feedbackMessage : resp.message});
+                self.setState({displayAlert: true});
 
             }
         }
@@ -88,6 +92,8 @@ class CreateSummon extends Component {
   render() {
     return (
       <form className="form-horizontal" onSubmit={this.handleSave}>
+        <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
+
         <div className="form-group">
           <label htmlFor="inputName1" className="col-sm-2 control-label">Name</label>
           <div className="col-sm-10">

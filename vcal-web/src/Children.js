@@ -2,11 +2,13 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
+import Feedback from './Feedback';
 
 class Children extends Component {
   constructor(props) {
      super(props);
-     this.state = {childCount: 1};
+     this.state = {childCount: 1,
+         feedbackMessage:"", displayAlert: false};
       this.changeChildrenCount = this.changeChildrenCount.bind(this);
       this.handleSave = this.handleSave.bind(this);
    }
@@ -34,6 +36,7 @@ class Children extends Component {
     }
 
   handleSave(){
+      var self = this;
     var termId = localStorage.getItem("termId");
     reqwest({
         url: conf.serverUrl + '/children/' + termId + '/'
@@ -43,6 +46,8 @@ class Children extends Component {
       , data: JSON.stringify({child_count: this.state.childCount})
       , success: function (resp) {
           //console.log(resp);
+            self.setState({feedbackMessage : resp.message});
+            self.setState({displayAlert: true});
         }
     });
   }
@@ -52,6 +57,8 @@ class Children extends Component {
       <div>
         <Header />
         <h1>Children <small>VT2016</small></h1>
+        <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
+
         <label htmlFor="basic-url">How many of your kids will attend dagis in {termName} term?</label>
         <div className="input-group">
             <span className="input-group-addon" id="basic-addon3">Kid count</span>
