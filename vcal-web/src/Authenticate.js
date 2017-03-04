@@ -5,7 +5,7 @@ import {hashHistory} from 'react-router';
 import reqwest from 'reqwest';
 
 class GoogleButton extends Component{
-  handleUserSave(){
+  handleAuthenticatedUser(){
     var profileObj = JSON.parse(localStorage.getItem("profileObj"));
     var tokenId = localStorage.getItem("tokenId");
 
@@ -33,15 +33,24 @@ class GoogleButton extends Component{
         }
     });
   }
+  isUserDomainApproved(email){
+    if ( email.split('@')[1] === 'gomorronsol.net'){
+      return true;
+    }
+    else{
+      return false;
+    }
+    return false;
+  }
   render(){
     var self = this;
     const responseGoogle = (response) => {
       //console.log(response);
-      if (response.type !== "tokenFailed"){
+      if (this.isUserDomainApproved(response.profileObj.email)){
         localStorage.setItem("tokenId", response.tokenId);
         localStorage.setItem("profileObj", JSON.stringify(response.profileObj));
         localStorage.setItem("is_auth", 1);
-        self.handleUserSave();
+        self.handleAuthenticatedUser();
       }
     }
 
