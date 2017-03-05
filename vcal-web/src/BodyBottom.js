@@ -3,6 +3,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 class AdminUserAction extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {isRuleSet: false};
+  }
+  componentDidMount() {
+    var isRuleSet = localStorage.getItem("isRuleSet") === '1' ? true : false;
+    this.setState({isRuleSet: isRuleSet})
+  }
   render(){
     //<ActionButton actionLinkName="invite" actionLabel="Invite" notifyCount="0"/>
     //<ActionButton actionLinkName="member" actionLabel="Member" notifyCount="0"/>
@@ -10,26 +18,35 @@ class AdminUserAction extends Component{
     return (
       <div>
         <h3>Admin actions</h3>
-          <ActionButton actionLinkName="overview" actionLabel="Overview" notifyCount="0"/>
-          <ActionButton actionLinkName="statistic" actionLabel="Statistic" notifyCount="0"/>
-          <ActionButton actionLinkName="summon" actionLabel="Summon" notifyCount="0"/>
-          <ActionButton actionLinkName="workday" actionLabel="Work day" notifyCount="0"/>
-          <ActionButton actionLinkName="term" actionLabel="Term" notifyCount="0"/>
-          <ActionButton actionLinkName="showups" actionLabel="Show-ups" notifyCount="0"/>
-          <ActionButton actionLinkName="rule" actionLabel="Rule" notifyCount="0"/>
-          <ActionButton actionLinkName="holidays" actionLabel="Holidays" notifyCount="0"/>
+          <ActionButton actionLinkName="overview" actionLabel="Overview" notifyCount="0" disabled={!this.state.isRuleSet}/>
+          <ActionButton actionLinkName="statistic" actionLabel="Statistic" notifyCount="0" disabled={!this.state.isRuleSet}/>
+          <ActionButton actionLinkName="summon" actionLabel="Summon" notifyCount="0" disabled={!this.state.isRuleSet}/>
+          <ActionButton actionLinkName="workday" actionLabel="Work day" notifyCount="0" disabled={!this.state.isRuleSet}/>
+          <ActionButton actionLinkName="term" actionLabel="Term" notifyCount="0" disabled={false}/>
+          <ActionButton actionLinkName="showups" actionLabel="Show-ups" notifyCount="0" disabled={!this.state.isRuleSet}/>
+          <ActionButton actionLinkName="rule" actionLabel="Rule" notifyCount="0" disabled={false}/>
+          <ActionButton actionLinkName="holidays" actionLabel="Holidays" notifyCount="0" disabled={false}/>
       </div>
     );
   }
 }
 class RegularUserAction extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {isRuleSet: false};
+  }
+  componentDidMount() {
+    var isRuleSet = localStorage.getItem("isRuleSet") === '1' ? true : false;
+
+    this.setState({isRuleSet: isRuleSet})
+  }
   render(){
     return (
       <div>
         <h3>Actions</h3>
-          <ActionButton actionLinkName="children" actionLabel="Children" notifyCount="0"/>
-          <ActionButton actionLinkName="worksignup" actionLabel="Sign-up" notifyCount="0"/>
-          <ActionButton actionLinkName="switchday" actionLabel="Switch day" notifyCount="0"/>
+          <ActionButton actionLinkName="children" actionLabel="Children" notifyCount="0" disabled={false}/>
+          <ActionButton actionLinkName="worksignup" actionLabel="Sign-up" notifyCount="0" disabled={!this.state.isRuleSet}/>
+          <ActionButton actionLinkName="switchday" actionLabel="Switch day" notifyCount="0" disabled={!this.state.isRuleSet}/>
       </div>
     );
   }
@@ -41,13 +58,12 @@ class ActionButton extends Component{
       marginRight: 5,
       marginTop: 5,
     };
-    if (this.props.notifyCount > 0){
+
+    if (this.props.disabled){
       return (
-        <Link to={'/{this.props.actionLinkName}'}>
-          <button className="btn btn-primary btn-lg" type="button" style={marginButtons}>
-            {this.props.actionLabel} <span className="badge">{this.props.notifyCount}</span>
+          <button className="btn btn-lg" type="button" style={marginButtons} disabled>
+            {this.props.actionLabel}
           </button>
-        </Link>
       );
     }
     else{

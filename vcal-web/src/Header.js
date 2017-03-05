@@ -48,11 +48,11 @@ class Header extends Component {
 
                 if( (Number(x.standin[0]) + Number(x.standin[1]) + Number(x.standin[2])
                 + Number(x.workday[0]) + Number(x.workday[1]) + Number(x.workday[2]) ) > 0){
-                    localStorage.setItem("isRuleSet", true);
+                    localStorage.setItem("isRuleSet", 1);
                     self.setState({isRuleSet: true});
                 }
                 else{
-                    localStorage.setItem("isRuleSet", false);
+                    localStorage.setItem("isRuleSet", 0);
                     self.setState({isRuleSet: false});
                 }
             }
