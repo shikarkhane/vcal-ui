@@ -58,6 +58,7 @@ class GoogleButton extends Component{
       <GoogleLogin
         clientId={conf.googleClientId}
         buttonText="Login"
+        hostedDomain="gomorronsol.net"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
       />
