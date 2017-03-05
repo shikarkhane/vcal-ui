@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import AlertContainer from 'react-alert';
 
 class Feedback extends Component {
@@ -21,14 +22,14 @@ class Feedback extends Component {
     }
     showAlert(){
         this.msg.show(this.props.message, {
-                time: 2000,
+                time: 5000,
                 type: 'success',
                 icon: <img src="./logo.svg" />
         });
     }
     render() {
         return (
-            <AlertContainer ref={(a) => this.msg = a} {...this.alertOptions} />
+            <AlertContainer key={(new Date()).valueOf()} ref={(a) => this.msg = a} {...this.alertOptions} />
         );
     }
 }

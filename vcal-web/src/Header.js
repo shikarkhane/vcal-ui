@@ -2,11 +2,13 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import { hashHistory, Link } from 'react-router';
 import reqwest from 'reqwest';
+import Feedback from './Feedback';
 
 class Header extends Component {
   constructor(props) {
    super(props);
-   this.state = {groupName:"", termName: ""};
+   this.state = {groupName:"", termName: "",
+   isRuleSet: true, feedbackMessage:"Rule is not set by admin. Signups and switch would not work."};
  }
  componentDidMount() {
    var groupName = localStorage.getItem("groupName");
@@ -33,6 +35,7 @@ class Header extends Component {
     isRuleSet(){
         var groupId = localStorage.getItem("groupId");
         var termId = localStorage.getItem("termId");
+        var self = this;
 
         // todo: get list of terms for given group id
         reqwest({
@@ -46,9 +49,11 @@ class Header extends Component {
                 if( (Number(x.standin[0]) + Number(x.standin[1]) + Number(x.standin[2])
                 + Number(x.workday[0]) + Number(x.workday[1]) + Number(x.workday[2]) ) > 0){
                     localStorage.setItem("isRuleSet", true);
+                    self.setState({isRuleSet: true});
                 }
                 else{
                     localStorage.setItem("isRuleSet", false);
+                    self.setState({isRuleSet: false});
                 }
             }
         });
@@ -96,6 +101,8 @@ class Header extends Component {
     var profileImgUrl =  profileObj.imageUrl;
     return (
       <div className="page-header clearfix">
+          <Feedback displayAlert={!this.state.isRuleSet} message={this.state.feedbackMessage} />
+
         <div className="pull-left">
           <Link to={'/'}>
             <button type="button" className="btn btn-default btn-lg">
