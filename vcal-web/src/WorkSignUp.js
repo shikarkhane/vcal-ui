@@ -4,6 +4,7 @@ import reqwest from 'reqwest';
 import WorkSignUpComponent from './WorkSignUpComponent';
 import WorkSignUpSummary from './WorkSignUpSummary';
 import Header from './Header';
+import { Link } from 'react-router';
 
 class WorkSignUp extends Component {
   constructor(props) {
@@ -104,6 +105,11 @@ class WorkSignUp extends Component {
       <div >
         <Header />
         <h1>WorkSignUp</h1>
+        <Link to={'/switchday' }>
+            <button className="btn btn-primary btn-lg pull-right" type="button" >
+            Switch dates
+      </button>
+        </Link>
         <WorkSignUpSummary myStandin={this.state.myStandin}
     myWorkday={this.state.myWorkday} onRemove={this.onRemove.bind(this)}/>
         <WorkSignUpComponent openStandin={this.state.openStandin}

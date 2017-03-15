@@ -46,6 +46,7 @@ class Children extends Component {
       , data: JSON.stringify({child_count: this.state.childCount})
       , success: function (resp) {
           //console.log(resp);
+            localStorage.setItem("childrenCount", self.state.childCount);
             self.setState({feedbackMessage : resp.message});
             self.setState({displayAlert: true});
         }

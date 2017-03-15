@@ -13,8 +13,9 @@ class Header extends Component {
  componentDidMount() {
    var groupName = localStorage.getItem("groupName");
    var termName = localStorage.getItem("termName");
+     var childrenCount = localStorage.getItem("childrenCount");
 
-   if ( Number(localStorage.getItem("role")) > 1){
+   if ( Number(localStorage.getItem("role")) === 1){
      if (! groupName){
         hashHistory.push('/mygroup');
         return;
@@ -23,12 +24,17 @@ class Header extends Component {
         hashHistory.push('/myterm');
         return;
      }
+       if (! childrenCount) {
+           hashHistory.push('/children');
+           return;
+       }
    }
 
     this.setState({groupName: groupName });
     this.setState({termName: termName});
 
      this.isRuleSet();
+     this.getChildrenCount();
     this.getMyUserInfo();
     this.getAllHolidays();
   }
@@ -57,6 +63,25 @@ class Header extends Component {
                 else{
                     localStorage.setItem("isRuleSet", 0);
                     self.setState({isRuleSet: false});
+                }
+            }
+        });
+    }
+    getChildrenCount(){
+        var self = this;
+        var termId = localStorage.getItem("termId");
+        reqwest({
+            url: conf.serverUrl + '/children/' + termId + '/'
+            , type: 'json'
+            , contentType: 'application/json'
+            , method: 'get'
+            , success: function (resp) {
+                // if empty response, remove child count cookie
+                if ( Object.keys(resp).length === 0 && resp.constructor === Object ){
+                    localStorage.removeItem("childrenCount");
+                }
+                if(resp.length >0){
+                    localStorage.setItem("childrenCount", resp[0].child_count);
                 }
             }
         });

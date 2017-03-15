@@ -44,9 +44,7 @@ class RegularUserAction extends Component{
     return (
       <div>
         <h3>Actions</h3>
-          <ActionButton actionLinkName="children" actionLabel="Children" notifyCount="0" disabled={false}/>
           <ActionButton actionLinkName="worksignup" actionLabel="Sign-up" notifyCount="0" disabled={!this.state.isRuleSet}/>
-          <ActionButton actionLinkName="switchday" actionLabel="Switch day" notifyCount="0" disabled={!this.state.isRuleSet}/>
       </div>
     );
   }
@@ -79,19 +77,12 @@ class ActionButton extends Component{
 }
 class BodyBottom extends Component {
   render() {
-    if ( Number(localStorage.getItem("role")) === 1){
       return (
         <div>
           <AdminUserAction />
           <RegularUserAction />
         </div>
       );
-    }
-    else{
-      return (
-        <RegularUserAction />
-      );
-    }
   }
 }
 
