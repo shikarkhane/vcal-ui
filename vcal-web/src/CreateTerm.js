@@ -8,6 +8,8 @@ class CreateSummon extends Component {
   constructor(props) {
    super(props);
    this.state = {createDisabled: false, termName: '',
+       startDate: '', endDate: '',
+       kid1: 0, kid2: 0, kid3: 0,
        feedbackMessage:"", displayAlert: false};
 
    this.changeTerm = this.changeTerm.bind(this);
@@ -51,7 +53,7 @@ class CreateSummon extends Component {
     var fspread = {kid_1: this.state.kid1, kid_2: this.state.kid2,
       kid_3: this.state.kid3};
     var jsonBody = { group_id: groupId,
-        term_name: this.state.termName, start_date: startDt,
+        name: this.state.termName, start_date: startDt,
         end_date: endDt,
          family_spread: JSON.stringify(fspread), id: makeId()};
     reqwest({

@@ -82,6 +82,10 @@ class Rule extends Component {
          , contentType: 'application/json'
        , method: 'get'
        , success: function (resp) {
+             if ( Object.keys(resp).length === 0 && resp.constructor === Object ){
+                 return 0;
+             }
+
               var x = JSON.parse(resp.definition)
               self.setState({
                 standinKid1: x.standin[0],

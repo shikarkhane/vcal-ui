@@ -14,7 +14,7 @@ class Header extends Component {
    var groupName = localStorage.getItem("groupName");
    var termName = localStorage.getItem("termName");
 
-   if ( Number(localStorage.getItem("role")) === 1){
+   if ( Number(localStorage.getItem("role")) > 1){
      if (! groupName){
         hashHistory.push('/mygroup');
         return;
@@ -44,6 +44,9 @@ class Header extends Component {
             , contentType: 'application/json'
             , method: 'get'
             , success: function (resp) {
+                if ( Object.keys(resp).length === 0 && resp.constructor === Object ){
+                    return 0;
+                }
                 var x = JSON.parse(resp.definition)
 
                 if( (Number(x.standin[0]) + Number(x.standin[1]) + Number(x.standin[2])
