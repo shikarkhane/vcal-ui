@@ -15,7 +15,7 @@ class Header extends Component {
    var termName = localStorage.getItem("termName");
      var childrenCount = localStorage.getItem("childrenCount");
 
-   if ( Number(localStorage.getItem("role")) === 1){
+   if ( Number(localStorage.getItem("role")) > 1){
      if (! groupName){
         hashHistory.push('/mygroup');
         return;
@@ -34,10 +34,28 @@ class Header extends Component {
     this.setState({termName: termName});
 
      this.isRuleSet();
+     this.refreshDefaultTerm();
      this.getChildrenCount();
     this.getMyUserInfo();
     this.getAllHolidays();
   }
+    refreshDefaultTerm(){
+        var self = this;
+        var groupId = localStorage.getItem("groupId");
+        reqwest({
+            url: conf.serverUrl + '/group/' + groupId + '/'
+            , type: 'json'
+            , contentType: 'application/json'
+            , method: 'get'
+            , success: function (resp) {
+                // if empty response, remove child count cookie
+                if ( Object.keys(resp).length === 0 && resp.constructor === Object ){
+                    return 0;
+                }
+                localStorage.setItem("defaultTermId", resp.default_term_id);
+            }
+        });
+    }
     isRuleSet(){
         var groupId = localStorage.getItem("groupId");
         var termId = localStorage.getItem("termId");

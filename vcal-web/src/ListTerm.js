@@ -24,6 +24,7 @@ class TermElement extends Component{
     this.changeKid3 = this.changeKid3.bind(this);
 
     this.handleEditTerm = this.handleEditTerm.bind(this);
+    this.handleSetDefaultTerm = this.handleSetDefaultTerm.bind(this);
 
   }
   changeStartDate(e){
@@ -44,7 +45,26 @@ class TermElement extends Component{
     this.setState({kid3: e.target.value });
   }
 
+  handleSetDefaultTerm(e){
+    e.preventDefault();
 
+    var groupId = localStorage.getItem("groupId");
+
+    reqwest({
+      url: conf.serverUrl + '/group/' + groupId + '/'
+      , type: 'json'
+      , method: 'put'
+      , contentType: 'application/json'
+      , data: JSON.stringify({ default_term_id : this.props.termId})
+      , success: function (resp) {
+        //console.log(resp);
+        if (resp.status === 'ok'){
+          console.log('term set as default');
+
+        }
+      }
+    });
+  }
   handleEditTerm(e){
     e.preventDefault();
     var currentMode = this.state.editMode;
@@ -138,7 +158,13 @@ class TermElement extends Component{
         <div className="panel-footer">Total kids
           <span className="badge">{totalKids}</span>
             <div className="form-group">
-              <div className="col-sm-offset-2 col-sm-10">
+            <div className="col-sm-offset-4 col-sm-10">
+            <button className="btn btn-success pull-right"
+              onClick={this.handleSetDefaultTerm.bind(null)}>
+            Make default</button>
+            </div>
+
+        <div className="col-sm-offset-2 col-sm-10">
                 <button type="submit" className="btn btn-default pull-right">
         {buttonText}</button>
               </div>

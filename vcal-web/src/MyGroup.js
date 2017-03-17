@@ -5,21 +5,23 @@ import Header from './Header';
 import { hashHistory } from 'react-router';
 
 class GroupElement extends Component{
-  handleChooseGroup(groupId, groupName){
+  handleChooseGroup(groupId, groupName, defaultTermId){
     localStorage.setItem("groupId", groupId);
     localStorage.setItem("groupName", groupName);
+      localStorage.setItem("defaultTermId", defaultTermId);
     hashHistory.push('/');
   }
   render(){
     var groupId = this.props.groupId;
     var groupName = this.props.groupName;
+      var defaultTermId = this.props.defaultTermId;
     const marginButtons = {
       marginRight: 5,
     };
 
     return (
       <button className="btn btn-primary btn-lg" type="button" style={marginButtons}
-         onClick={this.handleChooseGroup.bind(null, groupId, groupName)}>
+         onClick={this.handleChooseGroup.bind(null, groupId, groupName, defaultTermId)}>
         {this.props.groupName}
       </button>
     );
@@ -50,7 +52,7 @@ class MyGroup extends Component {
   render() {
     const grps = this.state.groups;
     const groupButtons = grps.map((grp) =>
-    <GroupElement key={grp.id} groupId={grp.id} groupName={grp.name} />
+    <GroupElement key={grp.id} groupId={grp.id} groupName={grp.name} defaultTermId={grp.default_term_id}/>
   );
 
     return (
