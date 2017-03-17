@@ -17,7 +17,7 @@ class StandinElement extends Component{
     var workDate = Math.floor(((new Date(chosenDate)).getTime())/1000);
 
     reqwest({
-        url: conf.serverUrl + '/show-ups/' + groupId + "/date/" + workDate + "/"
+        url: conf.serverUrl + '/no-show-ups/' + groupId + "/date/" + workDate + "/"
       , type: 'json'
       , method: 'post'
       , contentType: 'application/json'
@@ -72,7 +72,7 @@ class NoNoShowUps extends Component {
     var workDate = Math.floor(((new Date(this.state.chosenDate)).getTime())/1000);
 
     reqwest({
-        url: conf.serverUrl + '/show-ups/' + groupId + "/date/" + workDate + "/"
+        url: conf.serverUrl + '/no-show-ups/' + groupId + "/date/" + workDate + "/"
       , type: 'json'
       , method: 'get'
       , contentType: 'application/json'
