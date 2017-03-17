@@ -11,7 +11,7 @@ import MyTerm from './MyTerm';
 import Summon from './Summon';
 import Workday from './Workday';
 import Term from './Term';
-import ShowUps from './ShowUps';
+import NoShowUps from './NoShowUps';
 import Invite from './Invite';
 import Member from './Member';
 import Rule from './Rule';
@@ -32,7 +32,7 @@ ReactDOM.render(
     <Route path="/summon" component={Summon}></Route>
     <Route path="/workday" component={Workday}></Route>
     <Route path="/term" component={Term}></Route>
-    <Route path="/showups" component={ShowUps}></Route>
+    <Route path="/NoShowUps" component={NoShowUps}></Route>
     <Route path="/invite" component={Invite}></Route>
     <Route path="/member" component={Member}></Route>
     <Route path="/rule" component={Rule}></Route>

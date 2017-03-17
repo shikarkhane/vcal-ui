@@ -49,7 +49,7 @@ class StandinElement extends Component{
     }
   }
 }
-class Showups extends Component {
+class NoNoShowUps extends Component {
   constructor(props) {
    super(props);
    //set todays date
@@ -100,8 +100,8 @@ class Showups extends Component {
     return (
       <div>
         <Header />
-        <h1>Show ups</h1>
-
+        <h1>No ShowUps</h1>
+        <h3>Only mark those who didn't show up for work</h3>
           <div className="row">
             <div className="col-xs-12 col-lg-6">
                 <div className="input-group">
@@ -136,4 +136,4 @@ class Showups extends Component {
   }
 }
 
-export default Showups;
+export default NoNoShowUps;
