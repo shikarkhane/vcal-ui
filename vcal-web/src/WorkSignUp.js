@@ -5,11 +5,13 @@ import WorkSignUpComponent from './WorkSignUpComponent';
 import WorkSignUpSummary from './WorkSignUpSummary';
 import Header from './Header';
 import { Link } from 'react-router';
+import MyDatePicker from './CustomCalendar';
 
 class WorkSignUp extends Component {
   constructor(props) {
     super(props);
-    this.state = { myWorkday:[], myStandin:[], openWorkday: [], openStandin: []};
+    this.state = { myWorkday:[], myStandin:[], openWorkday: [], openStandin: [],
+    dictOpenWorkday: {}, dictOpenStandin: {}};
   }
   componentDidMount() {
     this.getMyWorkday();
@@ -54,6 +56,7 @@ class WorkSignUp extends Component {
       , contentType: 'application/json'
       , success: function (resp) {
         self.setState({openWorkday: resp});
+        self.setState({dictOpenWorkday: self.getDictOfDatesWorkday(resp)});
       }
     });
   }
@@ -67,6 +70,7 @@ class WorkSignUp extends Component {
       , contentType: 'application/json'
       , success: function (resp) {
         self.setState({openStandin: resp});
+        self.setState({dictOpenStandin: self.getDictOfDatesStandin(resp)});
       }
     });
   }
@@ -99,12 +103,23 @@ class WorkSignUp extends Component {
       }
     });
   }
-
+  getDictOfDatesStandin(response_array){
+    // this function returns a dictionary of key=standin_date timestamp and a value=1
+    var result = new Map(response_array.map((i) => [i.standin_date, 1]));
+    return result;
+  }
+  getDictOfDatesWorkday(response_array){
+    // this function returns a dictionary of key=work_date timestamp and a value=1
+    var result = new Map(response_array.map((i) => [i.work_date, 1]));
+    return result;
+  }
   render() {
     return (
       <div >
         <Header />
         <h1>WorkSignUp</h1>
+            <MyDatePicker openDates={this.state.dictOpenStandin} />
+            <MyDatePicker openDates={this.state.dictOpenWorkday} />
         <Link to={'/switchday' }>
             <button className="btn btn-primary btn-lg pull-right" type="button" >
             Switch dates
