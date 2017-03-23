@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import 'react-dates/lib/css/_datepicker.css';
 import { SingleDatePicker } from 'react-dates';
+import moment from 'moment';
 
 class MyDatePicker extends Component{
     constructor(props) {
@@ -15,8 +16,7 @@ class MyDatePicker extends Component{
         this.isDayBlocked = this.isDayBlocked.bind(this);
     }
     isDayBlocked(day){
-        var tempDay = day.clone();
-        if( this.props.openDates.get(tempDay.unix()) == 1 ){
+        if( this.props.openDates.get((day.clone()).utc().startOf('day').unix()) == 1 ){
             return false;
         }
         else{

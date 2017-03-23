@@ -119,7 +119,7 @@ class WorkSignUp extends Component {
         <Header />
         <h1>WorkSignUp</h1>
             <MyDatePicker openDates={this.state.dictOpenStandin} />
-            <MyDatePicker openDates={this.state.dictOpenWorkday} />
+
         <Link to={'/switchday' }>
             <button className="btn btn-primary btn-lg pull-right" type="button" >
             Switch dates
@@ -129,6 +129,7 @@ class WorkSignUp extends Component {
     myWorkday={this.state.myWorkday} onRemove={this.onRemove.bind(this)}/>
         <WorkSignUpComponent openStandin={this.state.openStandin}
     openWorkday={this.state.openWorkday}  onTake={this.onTake.bind(this)}/>
+
       </div>
     );
   }
