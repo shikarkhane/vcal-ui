@@ -10,7 +10,7 @@ class MyDatePicker extends Component{
 
         var chosenDate = null;
         if ( this.props.chosenDate ){
-            chosenDate = this.props.chosenDate;
+            chosenDate = moment(this.props.chosenDate);
         }
         this.state = { date: chosenDate};
         this.isDayBlocked = this.isDayBlocked.bind(this);
