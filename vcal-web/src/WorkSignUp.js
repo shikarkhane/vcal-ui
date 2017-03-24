@@ -129,7 +129,7 @@ class WorkSignUp extends Component {
             .filter(function(s) { return isFutureDate(s.standin_date); })
             .map((s) =>
         <MyDatePicker key={s.standin_date+s.id} chosenDate={s.standin_date}
-    openDates={this.state.dictOpenStandin} isWorkday={false}/>
+    openDates={this.state.dictOpenStandin} isWorkday={false} signupId={s.id}/>
   );
     const workdays = this.state.openWorkday;
     const workdayElements = workdays
@@ -137,7 +137,7 @@ class WorkSignUp extends Component {
             .filter(function(s) { return isFutureDate(s.work_date); })
             .map((s) =>
         <MyDatePicker key={s.work_date+s.id} chosenDate={s.work_date}
-    openDates={this.state.dictOpenWorkday}  isWorkday={true}/>
+    openDates={this.state.dictOpenWorkday}  isWorkday={true} signupId={s.id}/>
   );
 
     //create new date columns based on rule set
@@ -152,12 +152,12 @@ class WorkSignUp extends Component {
     const standinFromRule = standinRange
             .map((s) =>
         <MyDatePicker key={'standin' + s} openDates={this.state.dictOpenStandin}
-    isWorkday={false}/>
+    isWorkday={false} signupId={null}/>
       );
     const workdayFromRule = workdayRange
             .map((s) =>
         <MyDatePicker key={'workday' + s} openDates={this.state.dictOpenWorkday}
-    isWorkday={true}/>
+    isWorkday={true} signupId={null}/>
       );
 
 
