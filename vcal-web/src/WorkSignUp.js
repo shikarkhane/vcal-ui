@@ -128,14 +128,16 @@ class WorkSignUp extends Component {
             .filter(function(s) { return !isNonWorkingDay(s.standin_date); })
             .filter(function(s) { return isFutureDate(s.standin_date); })
             .map((s) =>
-        <MyDatePicker key={s.standin_date+s.id} chosenDate={s.standin_date} openDates={this.state.dictOpenStandin} />
+        <MyDatePicker key={s.standin_date+s.id} chosenDate={s.standin_date}
+    openDates={this.state.dictOpenStandin} isWorkday={false}/>
   );
     const workdays = this.state.openWorkday;
     const workdayElements = workdays
             .filter(function(s) { return !isNonWorkingDay(s.work_date); })
             .filter(function(s) { return isFutureDate(s.work_date); })
             .map((s) =>
-        <MyDatePicker key={s.work_date+s.id} chosenDate={s.work_date} openDates={this.state.dictOpenWorkday} />
+        <MyDatePicker key={s.work_date+s.id} chosenDate={s.work_date}
+    openDates={this.state.dictOpenWorkday}  isWorkday={true}/>
   );
 
     //create new date columns based on rule set
@@ -149,11 +151,13 @@ class WorkSignUp extends Component {
 
     const standinFromRule = standinRange
             .map((s) =>
-        <MyDatePicker key={'standin' + s} openDates={this.state.dictOpenStandin} />
+        <MyDatePicker key={'standin' + s} openDates={this.state.dictOpenStandin}
+    isWorkday={false}/>
       );
     const workdayFromRule = workdayRange
             .map((s) =>
-        <MyDatePicker key={'workday' + s} openDates={this.state.dictOpenWorkday} />
+        <MyDatePicker key={'workday' + s} openDates={this.state.dictOpenWorkday}
+    isWorkday={true}/>
       );
 
 
@@ -162,8 +166,6 @@ class WorkSignUp extends Component {
       <div >
         <Header />
         <h1>WorkSignUp</h1>
-            <MyDatePicker chosenDate="2017-03-23" openDates={this.state.dictOpenStandin} />
-
         <Link to={'/switchday' }>
             <button className="btn btn-primary btn-lg pull-right" type="button" >
             Switch dates
