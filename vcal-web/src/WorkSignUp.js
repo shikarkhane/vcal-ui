@@ -143,10 +143,10 @@ class WorkSignUp extends Component {
     //create new date columns based on rule set
     const range = n => Array.from({length: n}, (value, key) => key);
 
-    var n = this.getStandinRule();
+    var n = this.getStandinRule() - standinElements.length;
     const standinRange = range(n);
 
-    var y = this.getWorkdayRule();
+    var y = this.getWorkdayRule() - workdayElements.length;
     const workdayRange = range(y);
 
     const standinFromRule = standinRange

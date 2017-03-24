@@ -4,6 +4,7 @@ import reqwest from 'reqwest';
 import 'react-dates/lib/css/_datepicker.css';
 import { SingleDatePicker } from 'react-dates';
 import moment from 'moment';
+import {getHumanDate, isNonWorkingDay, makeId, isFutureDate} from './Utility';
 
 class MyDatePicker extends Component{
     constructor(props) {
@@ -11,13 +12,17 @@ class MyDatePicker extends Component{
 
         var chosenDate = null;
         if ( this.props.chosenDate ){
-            chosenDate = moment(this.props.chosenDate);
+            chosenDate = moment(Number(this.props.chosenDate)*1000);
         }
         this.state = { date: chosenDate};
         this.isDayBlocked = this.isDayBlocked.bind(this);
     }
     isDayBlocked(day){
-        if( this.props.openDates.get((day.clone()).utc().startOf('day').unix()) == 1 ){
+        var epoch = (day.clone()).utc().startOf('day').unix();
+        if( (this.props.openDates.get(epoch) == 1) &&
+            (!isNonWorkingDay(epoch)) &&
+            (isFutureDate(epoch))
+        ){
             return false;
         }
         else{
