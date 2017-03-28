@@ -52,6 +52,10 @@ class GoogleButton extends Component{
         localStorage.setItem("is_auth", 1);
         self.handleAuthenticatedUser();
       }
+      else{
+        localStorage.clear();
+        hashHistory.push('/');
+      }
     }
 
     return (

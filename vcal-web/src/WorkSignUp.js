@@ -131,7 +131,7 @@ class WorkSignUp extends Component {
         <MyDatePicker key={s.standin_date+s.id} chosenDate={s.standin_date}
     openDates={this.state.dictOpenStandin} isWorkday={false} signupId={s.id}/>
   );
-    const workdays = this.state.openWorkday;
+    const workdays = this.state.myWorkday;
     const workdayElements = workdays
             .filter(function(s) { return !isNonWorkingDay(s.work_date); })
             .filter(function(s) { return isFutureDate(s.work_date); })

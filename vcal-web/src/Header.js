@@ -7,7 +7,7 @@ import Feedback from './Feedback';
 class Header extends Component {
   constructor(props) {
    super(props);
-   this.state = {groupName:"", termName: "",
+   this.state = {groupName:"", termName: "", terms: [],
    isRuleSet: true, feedbackMessage:"Rule is not set by admin. Signups and switch would not work."};
  }
  componentDidMount() {
@@ -53,6 +53,20 @@ class Header extends Component {
                     return 0;
                 }
                 localStorage.setItem("defaultTermId", resp.default_term_id);
+            }
+        });
+    }
+    getTerms(){
+        var self = this;
+        var groupId = localStorage.getItem("groupId");
+        // todo: get list of terms for given group id
+        reqwest({
+            url: conf.serverUrl + '/term_details/' + groupId + '/'
+            , type: 'json'
+            , contentType: 'application/json'
+            , method: 'get'
+            , success: function (resp) {
+                self.setState({terms: resp});
             }
         });
     }
