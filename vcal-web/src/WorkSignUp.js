@@ -165,7 +165,8 @@ class WorkSignUp extends Component {
     return (
       <div >
         <Header />
-        <h1>WorkSignUp</h1>
+        <h1>Work Sign-Up</h1>
+        <h4>Fill empty dates below to fullfill your obligations for the term</h4>
         <Link to={'/switchday' }>
             <button className="btn btn-primary btn-lg pull-right" type="button" >
             Switch dates

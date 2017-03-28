@@ -120,7 +120,9 @@ class Switchday extends Component {
     return (
       <div >
         <Header />
-        <h1>Switchday</h1>
+        <h1>Switch day</h1>
+            <h5>You can offer a date to be exchanged by pressing the green button.</h5>
+          <h5>Untill someone else picks your date, you are still responsible standin for that date.</h5>
         <SwitchdayMyList mySwitchday={this.state.mySwitchday}
           myStandin={this.state.myStandin}
           myWorkday={this.state.myWorkday} onSwitch={this.onSwitch.bind(this)}/>
