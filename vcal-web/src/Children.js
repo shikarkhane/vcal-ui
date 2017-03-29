@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
 import Feedback from './Feedback';
+import { hashHistory } from 'react-router';
 
 class Children extends Component {
   constructor(props) {
@@ -49,6 +50,8 @@ class Children extends Component {
             localStorage.setItem("childrenCount", self.state.childCount);
             self.setState({feedbackMessage : resp.message});
             self.setState({displayAlert: true});
+
+            hashHistory.push('/');
         }
     });
   }

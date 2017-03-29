@@ -13,7 +13,7 @@ class GoogleButton extends Component{
         url: conf.serverUrl + '/user/'
       , type: 'json'
       , method: 'post'
-      , contentType: 'application/json's
+      , contentType: 'application/json'
       , data: JSON.stringify({
         name: profileObj.name, givenName: profileObj.givenName,
         familyName: profileObj.familyName, email: profileObj.email,
@@ -54,6 +54,7 @@ class GoogleButton extends Component{
           localStorage.setItem("groupId", g.id);
           localStorage.setItem("groupName", g.name);
           localStorage.setItem("defaultTermId", g.default_term_id);
+          localStorage.setItem("termId", g.default_term_id);
 
           reqwest({
             url: conf.serverUrl + '/term_details/' + g.id + '/'

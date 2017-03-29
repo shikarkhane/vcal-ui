@@ -17,6 +17,7 @@ class Header extends Component {
      var groupName = localStorage.getItem("groupName");
      var defaultTermId = localStorage.getItem("defaultTermId");
      var termName = localStorage.getItem("termName");
+     var termId = localStorage.getItem("termId");
      var childrenCount = localStorage.getItem("childrenCount");
      var allTerms = localStorage.getItem("allTerms");
 
@@ -34,7 +35,7 @@ class Header extends Component {
                termName = f.name;
            }
        }
-       if (! termName) {
+       if (! termId) {
            hashHistory.push('/myterm');
            return;
        }
