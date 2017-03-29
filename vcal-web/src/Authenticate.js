@@ -13,7 +13,7 @@ class GoogleButton extends Component{
         url: conf.serverUrl + '/user/'
       , type: 'json'
       , method: 'post'
-      , contentType: 'application/json'
+      , contentType: 'application/json's
       , data: JSON.stringify({
         name: profileObj.name, givenName: profileObj.givenName,
         familyName: profileObj.familyName, email: profileObj.email,
@@ -53,6 +53,17 @@ class GoogleButton extends Component{
         if (g){
           localStorage.setItem("groupId", g.id);
           localStorage.setItem("groupName", g.name);
+          localStorage.setItem("defaultTermId", g.default_term_id);
+
+          reqwest({
+            url: conf.serverUrl + '/term_details/' + g.id + '/'
+            , type: 'json'
+            , contentType: 'application/json'
+            , method: 'get'
+            , success: function (resp) {
+              localStorage.setItem("allTerms", JSON.stringify(resp));
+            }
+          });
         }
       }
     });

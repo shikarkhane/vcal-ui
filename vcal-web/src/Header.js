@@ -7,9 +7,9 @@ import Feedback from './Feedback';
 class Header extends Component {
   constructor(props) {
    super(props);
-   this.state = {groupName: localStorage.getItem("groupName"), termName: "", terms: [],
+   this.state = {groupName: localStorage.getItem("groupName"), termName: "",
    isRuleSet: true, feedbackMessage:"Rule is not set by admin. Signups and switch would not work."};
-      this.checksAndGets();
+
  }
  componentDidMount() {
      this.checksAndGets();
@@ -25,6 +25,8 @@ class Header extends Component {
         hashHistory.push('/mygroup');
         return;
      }
+       this.setState({groupName: groupName });
+
        if (defaultTermId && allTerms){
            var terms = JSON.parse(allTerms);
            var f = (terms.find(x => x.id === defaultTermId));
@@ -36,14 +38,15 @@ class Header extends Component {
            hashHistory.push('/myterm');
            return;
        }
+
+       this.setState({termName: termName});
+
        if (! childrenCount) {
            hashHistory.push('/children');
            return;
        }
    }
 
-    this.setState({groupName: groupName });
-    this.setState({termName: termName});
 
   }
 
@@ -82,7 +85,6 @@ class Header extends Component {
             , contentType: 'application/json'
             , method: 'get'
             , success: function (resp) {
-                self.setState({terms: resp});
                 localStorage.setItem("allTerms", JSON.stringify(resp));
             }
         });
