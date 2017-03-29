@@ -10,6 +10,7 @@ class WorkSignUp extends Component {
   constructor(props) {
     super(props);
     this.state = { myWorkday:[], myStandin:[], openWorkday: [], openStandin: [],
+      openSwitchWorkday: [], openSwitchStandin : [],
     dictOpenWorkday: {}, dictOpenStandin: {},
       ruleSet : { "standin": [0,0,0], "workday": [0,0,0]}, childrenCount: 0};
 
@@ -59,6 +60,33 @@ class WorkSignUp extends Component {
       , success: function (resp) {
         self.setState({openStandin: resp});
         self.setState({dictOpenStandin: self.getDictOfDatesStandin(resp)});
+      }
+    });
+  }
+
+  getOpenSwitchWorkday(){
+    var self = this;
+    var groupId = localStorage.getItem("groupId");
+    reqwest({
+      url: conf.serverUrl + '/switchday/' + groupId + '/type/1/'
+      , type: 'json'
+      , method: 'get'
+      , contentType: 'application/json'
+      , success: function (resp) {
+        self.setState({openSwitchWorkday: resp});
+      }
+    });
+  }
+  getOpenSwitchStandin(){
+    var self = this;
+    var groupId = localStorage.getItem("groupId");
+    reqwest({
+      url: conf.serverUrl + '/switchday/' + groupId + '/type/0/'
+      , type: 'json'
+      , method: 'get'
+      , contentType: 'application/json'
+      , success: function (resp) {
+        self.setState({openSwitchStandin: resp});
       }
     });
   }
