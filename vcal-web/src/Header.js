@@ -7,23 +7,35 @@ import Feedback from './Feedback';
 class Header extends Component {
   constructor(props) {
    super(props);
-   this.state = {groupName:"", termName: "", terms: [],
+   this.state = {groupName: localStorage.getItem("groupName"), termName: "", terms: [],
    isRuleSet: true, feedbackMessage:"Rule is not set by admin. Signups and switch would not work."};
+      this.checksAndGets();
  }
  componentDidMount() {
-   var groupName = localStorage.getItem("groupName");
-   var termName = localStorage.getItem("termName");
-     var childrenCount = localStorage.getItem("childrenCount");
+     this.checksAndGets();
 
-   if ( Number(localStorage.getItem("role")) > 1){
+     var groupName = localStorage.getItem("groupName");
+     var defaultTermId = localStorage.getItem("defaultTermId");
+     var termName = localStorage.getItem("termName");
+     var childrenCount = localStorage.getItem("childrenCount");
+     var allTerms = localStorage.getItem("allTerms");
+
+   if ( Number(localStorage.getItem("role")) == 1){
      if (! groupName){
         hashHistory.push('/mygroup');
         return;
      }
-     if (! termName) {
-        hashHistory.push('/myterm');
-        return;
-     }
+       if (defaultTermId && allTerms){
+           var terms = JSON.parse(allTerms);
+           var f = (terms.find(x => x.id === defaultTermId));
+           if (f){
+               termName = f.name;
+           }
+       }
+       if (! termName) {
+           hashHistory.push('/myterm');
+           return;
+       }
        if (! childrenCount) {
            hashHistory.push('/children');
            return;
@@ -33,12 +45,16 @@ class Header extends Component {
     this.setState({groupName: groupName });
     this.setState({termName: termName});
 
-     this.isRuleSet();
-     this.refreshDefaultTerm();
-     this.getChildrenCount();
-    this.getMyUserInfo();
-    this.getAllHolidays();
   }
+
+    checksAndGets(){
+        this.isRuleSet();
+        this.refreshDefaultTerm();
+        this.getChildrenCount();
+        this.getMyUserInfo();
+        this.getAllHolidays();
+        this.getTerms();
+    }
     refreshDefaultTerm(){
         var self = this;
         var groupId = localStorage.getItem("groupId");
@@ -67,6 +83,7 @@ class Header extends Component {
             , method: 'get'
             , success: function (resp) {
                 self.setState({terms: resp});
+                localStorage.setItem("allTerms", JSON.stringify(resp));
             }
         });
     }

@@ -57,10 +57,10 @@ class Children extends Component {
     return (
       <div>
         <Header />
-        <h1>Children <small>VT2016</small></h1>
+        <h1>Children </h1>
         <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
 
-        <label htmlFor="basic-url">How many of your kids will attend dagis in {termName} term?</label>
+        <label htmlFor="basic-url">How many of your kids will attend day care in {termName} term?</label>
         <div className="input-group">
             <span className="input-group-addon" id="basic-addon3">Kid count</span>
               <input type="number" className="form-control" id="basic-url" aria-describedby="basic-addon3"

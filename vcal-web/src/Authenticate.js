@@ -42,11 +42,27 @@ class GoogleButton extends Component{
     }
     return false;
   }
+  setGroupCookieToGomorronsol(){
+    reqwest({
+      url: conf.serverUrl + '/group/'
+      , type: 'json'
+      , contentType: 'application/json'
+      , method: 'get'
+      , success: function (resp) {
+          var g = (resp.find(x => x.domain === "gomorronsol.net"));
+        if (g){
+          localStorage.setItem("groupId", g.id);
+          localStorage.setItem("groupName", g.name);
+        }
+      }
+    });
+  }
   render(){
     var self = this;
     const responseGoogle = (response) => {
       //console.log(response);
       if (this.isUserDomainApproved(response.profileObj.email)){
+        this.setGroupCookieToGomorronsol();
         localStorage.setItem("tokenId", response.tokenId);
         localStorage.setItem("profileObj", JSON.stringify(response.profileObj));
         localStorage.setItem("is_auth", 1);
