@@ -5,6 +5,7 @@ import Header from './Header';
 import { Link } from 'react-router';
 import MyDatePicker from './CustomCalendar';
 import {getHumanDate, isNonWorkingDay, makeId, isFutureDate} from './Utility';
+import Feedback from './Feedback';
 
 class WorkSignUp extends Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class WorkSignUp extends Component {
     this.state = { myWorkday:[], myStandin:[], openWorkday: [], openStandin: [],
       openSwitchWorkday: [], openSwitchStandin : [],
       dictOpenWorkday: new Map(), dictOpenStandin: new Map(),
-      ruleSet : { "standin": [0,0,0], "workday": [0,0,0]}, childrenCount: 0};
+      ruleSet : { "standin": [0,0,0], "workday": [0,0,0]}, childrenCount: 0,
+      feedbackMessage:"", displayAlert: false};
 
     this.getStandinRule = this.getStandinRule.bind(this);
     this.getWorkdayRule = this.getWorkdayRule.bind(this);
@@ -39,6 +41,10 @@ class WorkSignUp extends Component {
   }
   getWorkdayRule(){
     return this.state.ruleSet.workday[this.state.childrenCount - 1];
+  }
+
+  onUpdate(displayAlert, message){
+    this.setState({ displayAlert : displayAlert, feedbackMessage: message});
   }
 
   getOpenWorkday(){
@@ -197,7 +203,8 @@ class WorkSignUp extends Component {
             .filter(function(s) { return isFutureDate(s.standin_date); })
             .map((s) =>
         <MyDatePicker key={s.standin_date+s.id} chosenDate={s.standin_date}
-    openDates={this.state.dictOpenStandin} isWorkday={false} signupId={s.id} />
+    openDates={this.state.dictOpenStandin} isWorkday={false} signupId={s.id}
+    onUpdate={this.onUpdate.bind(this)} />
   );
     const workdays = this.state.myWorkday;
     const workdayElements = workdays
@@ -205,7 +212,8 @@ class WorkSignUp extends Component {
             .filter(function(s) { return isFutureDate(s.work_date); })
             .map((s) =>
         <MyDatePicker key={s.work_date+s.id} chosenDate={s.work_date}
-    openDates={this.state.dictOpenWorkday}  isWorkday={true} signupId={s.id}  />
+    openDates={this.state.dictOpenWorkday}  isWorkday={true} signupId={s.id}
+    onUpdate={this.onUpdate.bind(this)} />
   );
 
     //create new date columns based on rule set
@@ -220,12 +228,14 @@ class WorkSignUp extends Component {
     const standinFromRule = standinRange
             .map((s) =>
         <MyDatePicker key={'standin' + s} openDates={this.state.dictOpenStandin}
-    isWorkday={false} signupId={null}  />
+    isWorkday={false} signupId={null}
+    onUpdate={this.onUpdate.bind(this)} />
   );
     const workdayFromRule = workdayRange
             .map((s) =>
         <MyDatePicker key={'workday' + s} openDates={this.state.dictOpenWorkday}
-    isWorkday={true} signupId={null} />
+    isWorkday={true} signupId={null}
+    onUpdate={this.onUpdate.bind(this)} />
   );
 
 
@@ -235,6 +245,7 @@ class WorkSignUp extends Component {
         <Header />
         <h1>Work Sign-Up</h1>
     <h4>Fill empty dates below to fullfill your obligations for the term</h4>
+    <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
     <Link to={'/switchday' }>
         <button className="btn btn-primary btn-lg pull-right" type="button" >
         Switch dates

@@ -16,6 +16,7 @@ class MyDatePicker extends Component{
         }
         this.state = { date: chosenDate, signupId: this.props.signupId,
         displayText: ""};
+
         this.isDayBlocked = this.isDayBlocked.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleDeleteSignup = this.handleDeleteSignup.bind(this);
@@ -28,6 +29,7 @@ class MyDatePicker extends Component{
                 (isFutureDate(epoch))
             ){
                 this.setState({displaytext: this.props.openDates.get(epoch).get('displayText') });
+
             }
         }
     }
@@ -49,6 +51,7 @@ class MyDatePicker extends Component{
         }
     }
     handleDeleteSignup(){
+        var self = this;
         var isWorkday = this.props.isWorkday;
         var signupId = this.state.signupId;
 
@@ -60,6 +63,7 @@ class MyDatePicker extends Component{
                 , contentType: 'application/json'
                 , success: function (resp) {
                     //console.log(resp);
+                    self.props.onUpdate(true, "Deleted");
                 }
             });
         }
@@ -71,13 +75,14 @@ class MyDatePicker extends Component{
                 , contentType: 'application/json'
                 , success: function (resp) {
                     //console.log(resp);
+                    self.props.onUpdate(true, "Deleted");
                 }
             });
         }
 
     }
     handleSwitchDaySave(chosenDate, standinUserId){
-
+        var self = this;
         var groupId = localStorage.getItem("groupId");
         var userId = localStorage.getItem("userId");
         var isWorkday = this.props.isWorkday;
@@ -101,7 +106,7 @@ class MyDatePicker extends Component{
             , data: JSON.stringify({ chosen_date: chosenDate})
             , success: function (resp) {
                 if (resp.status === 'ok'){
-                    console.log(resp);
+                    self.props.onUpdate(true, "Saved");
                 }
 
             }
@@ -117,7 +122,7 @@ class MyDatePicker extends Component{
                 this.handleDeleteSignup();
             }
             else{
-                console.log('cannot delete, its withing 30 days. ONly switch is allowed.')
+                self.props.onUpdate(true, "Cannot delete a chosen date within 30 days. Only switch is allowed.");
             }
         }
         else{
@@ -142,8 +147,8 @@ class MyDatePicker extends Component{
                     , success: function (resp) {
                         //console.log(resp);
                         if (resp.status === 'ok'){
-                            console.log(resp);
                             self.setState({signupId: resp.id});
+                            self.props.onUpdate(true, "Saved");
                         }
                     }
                 });
