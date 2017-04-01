@@ -4,7 +4,7 @@ import reqwest from 'reqwest';
 import 'react-dates/lib/css/_datepicker.css';
 import { SingleDatePicker } from 'react-dates';
 import moment from 'moment';
-import {getHumanDate, isNonWorkingDay, makeId, isFutureDate, isWith30DaysFromNow} from './Utility';
+import {isNonWorkingDay, isFutureDate, isWith30DaysFromNow} from './Utility';
 
 class MyDatePicker extends Component{
     constructor(props) {
@@ -78,7 +78,6 @@ class MyDatePicker extends Component{
     }
     handleSwitchDaySave(chosenDate, standinUserId){
 
-        var self = this;
         var groupId = localStorage.getItem("groupId");
         var userId = localStorage.getItem("userId");
         var isWorkday = this.props.isWorkday;

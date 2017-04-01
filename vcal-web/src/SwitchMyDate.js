@@ -1,7 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import {makeId, isFutureDate}from './Utility';
+import {makeId}from './Utility';
 
 class SwitchMyDate extends Component{
   constructor(props) {

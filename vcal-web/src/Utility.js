@@ -7,6 +7,17 @@ var _makeId = function() {
 
   return text;
 }
+const _isWeekend = function(epochDate){
+  var date = new Date( epochDate*1000);
+  var day = date.getDay();
+  return ((day == 6) || (day == 0))
+}
+
+const _isHoliday = function(epochDate){
+  var holidays = JSON.parse(localStorage.getItem("holidays"));
+  return (holidays.indexOf(epochDate) >= 0 );
+}
+
 var _getDayOfWeek = function(day){
   var weekday=new Array(7);
   weekday[0]="Sunday";
@@ -73,17 +84,6 @@ const _getHumanDate = function(epochDate){
 
 const _isNonWorkingDay = function(epochDate){
   return ( _isWeekend(epochDate) || _isHoliday(epochDate) );
-}
-
-const _isWeekend = function(epochDate){
-  var date = new Date( epochDate*1000);
-  var day = date.getDay();
-  return ((day == 6) || (day == 0))
-}
-
-const _isHoliday = function(epochDate){
-  var holidays = JSON.parse(localStorage.getItem("holidays"));
-  return (holidays.indexOf(epochDate) >= 0 );
 }
 
 var _getUserInfo = function(userId){

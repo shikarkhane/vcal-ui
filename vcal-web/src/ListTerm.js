@@ -110,9 +110,6 @@ class TermElement extends Component{
     this.setState({editMode: !currentMode});
   }
   render(){
-    var termId = this.props.termId;
-    var termName = this.props.termName;
-    var fs = JSON.parse(this.props.familySpread);
     const totalKids = this.state.kid1 *1 + this.state.kid2 *2 + this.state.kid3 *3;
 
     var buttonText = "Edit";
