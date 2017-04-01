@@ -127,7 +127,7 @@ class WorkSignUp extends Component {
       }
     });
   }
-  getDef(isWorkday, isSwitchDay, isHalfDay, from, to){
+  getDef(isWorkday, isSwitchDay, isHalfDay, from, to, switchUserId){
     function isHalfDayText(isHalfDay){
       var text = "Full-day";
       if ( isHalfDay ){
@@ -139,6 +139,7 @@ class WorkSignUp extends Component {
     var o = new Map;
     o.set("exists", true);
     o.set("isSwitchDay", isSwitchDay);
+    o.set("existingSwitchUserId", switchUserId);
     if ( isWorkday ) {
       o.set("displayText", isHalfDayText(isHalfDay) + ' from '
           + from + ' till ' + to);
@@ -151,22 +152,22 @@ class WorkSignUp extends Component {
   appendToDictOfDatesStandin(response_array){
     // this function returns a dictionary of key=standin_date timestamp and a value=0
     response_array.map((i) => (this.state.dictOpenStandin.set(i.standin_date,
-        this.getDef(false, false, null, null, null))));
+        this.getDef(false, false, null, null, null, null))));
   }
   appendToDictOfDatesWorkday(response_array){
     // this function returns a dictionary of key=work_date timestamp and a value=1
     response_array.map((i) => (this.state.dictOpenWorkday.set(i.work_date,
-        this.getDef(true, false, i.is_half_day, i.from_time_in_24hours, i.to_time_in_24hours))));
+        this.getDef(true, false, i.is_half_day, i.from_time_in_24hours, i.to_time_in_24hours, null))));
   }
   appendSwitchDaysToDictOfDatesStandin(response_array){
     // this function appends to existing
     response_array.map((i) => (this.state.dictOpenStandin.set(i.switch_date,
-        this.getDef(false, true, null, null, null))));
+        this.getDef(false, true, null, null, null, i.standin_user_id))));
   }
   appendSwitchDaysToDictOfDatesWorkday(response_array){
     // this function appends to existing
     response_array.map((i) => (this.state.dictOpenWorkday.set(i.switch_date,
-        this.getDef(true, true, i.is_half_day, i.from_time_in_24hours, i.to_time_in_24hours))));
+        this.getDef(true, true, i.is_half_day, i.from_time_in_24hours, i.to_time_in_24hours, i.standin_user_id))));
   }
   getRule(){
     var self = this;

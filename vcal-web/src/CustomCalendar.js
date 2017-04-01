@@ -76,9 +76,41 @@ class MyDatePicker extends Component{
         }
 
     }
-    handleSave(date){
-        this.showText(date);
+    handleSwitchDaySave(chosenDate, standinUserId){
 
+        var self = this;
+        var groupId = localStorage.getItem("groupId");
+        var userId = localStorage.getItem("userId");
+        var isWorkday = this.props.isWorkday;
+
+        reqwest({
+            url: conf.serverUrl + '/on-switch-work-sign-up/' + groupId + "/"
+            , type: 'json'
+            , method: 'post'
+            , contentType: 'application/json'
+            , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
+                is_workday: isWorkday, standinUserId: standinUserId})
+            , success: function (resp) {
+                console.log(resp);
+            }
+        });
+        reqwest({
+            url: conf.serverUrl + '/switchday/' + groupId + '/standinuser/' + standinUserId + '/'
+            , type: 'json'
+            , method: 'delete'
+            , contentType: 'application/json'
+            , data: JSON.stringify({ chosen_date: chosenDate})
+            , success: function (resp) {
+                if (resp.status === 'ok'){
+                    console.log(resp);
+                }
+
+            }
+        });
+
+    }
+
+    handleSave(date){
         var self = this;
         if ( date === null ){
             this.handleDeleteSignup();
@@ -89,21 +121,29 @@ class MyDatePicker extends Component{
             var isWorkday = this.props.isWorkday;
             var chosenDate = (date.clone()).utc().startOf('day').unix();
 
-            reqwest({
-                url: conf.serverUrl + '/work-sign-up/' + groupId + "/"
-                , type: 'json'
-                , method: 'post'
-                , contentType: 'application/json'
-                , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
-                    is_workday: isWorkday})
-                , success: function (resp) {
-                    //console.log(resp);
-                    if (resp.status === 'ok'){
-                        console.log(resp);
-                        self.setState({signupId: resp.id});
+            var t = this.props.openDates.get(chosenDate);
+            // if it was a switch day, handle it differently
+            if (t.get('isSwitchDay') === true){
+                self.handleSwitchDaySave(chosenDate, t.get('existingSwitchUserId'));
+            }
+            else{
+                reqwest({
+                    url: conf.serverUrl + '/work-sign-up/' + groupId + "/"
+                    , type: 'json'
+                    , method: 'post'
+                    , contentType: 'application/json'
+                    , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
+                        is_workday: isWorkday})
+                    , success: function (resp) {
+                        //console.log(resp);
+                        if (resp.status === 'ok'){
+                            console.log(resp);
+                            self.setState({signupId: resp.id});
+                        }
                     }
-                }
-            });
+                });
+            }
+
         }
     }
     render(){
