@@ -11,11 +11,15 @@ class WorkSignUp extends Component {
     super(props);
     this.state = { myWorkday:[], myStandin:[], openWorkday: [], openStandin: [],
       openSwitchWorkday: [], openSwitchStandin : [],
-    dictOpenWorkday: {}, dictOpenStandin: {},
+      dictOpenWorkday: new Map(), dictOpenStandin: new Map(),
       ruleSet : { "standin": [0,0,0], "workday": [0,0,0]}, childrenCount: 0};
 
     this.getStandinRule = this.getStandinRule.bind(this);
     this.getWorkdayRule = this.getWorkdayRule.bind(this);
+    this.appendToDictOfDatesStandin = this.appendToDictOfDatesStandin.bind(this);
+    this.appendToDictOfDatesWorkday = this.appendToDictOfDatesWorkday.bind(this);
+    this.appendSwitchDaysToDictOfDatesStandin = this.appendSwitchDaysToDictOfDatesStandin.bind(this);
+    this.appendSwitchDaysToDictOfDatesWorkday = this.appendSwitchDaysToDictOfDatesWorkday.bind(this);
     this.getRule = this.getRule.bind(this);
   }
   componentDidMount() {
@@ -24,6 +28,8 @@ class WorkSignUp extends Component {
     this.getMyStandin();
     this.getOpenWorkday();
     this.getOpenStandin();
+    this.getOpenSwitchStandin();
+    this.getOpenSwitchWorkday();
 
     this.setState({childrenCount: localStorage.getItem("childrenCount")});
 
@@ -45,7 +51,7 @@ class WorkSignUp extends Component {
       , contentType: 'application/json'
       , success: function (resp) {
         self.setState({openWorkday: resp});
-        self.setState({dictOpenWorkday: self.getDictOfDatesWorkday(resp)});
+        self.appendToDictOfDatesWorkday(resp);
       }
     });
   }
@@ -59,7 +65,7 @@ class WorkSignUp extends Component {
       , contentType: 'application/json'
       , success: function (resp) {
         self.setState({openStandin: resp});
-        self.setState({dictOpenStandin: self.getDictOfDatesStandin(resp)});
+        self.appendToDictOfDatesStandin(resp);
       }
     });
   }
@@ -74,6 +80,7 @@ class WorkSignUp extends Component {
       , contentType: 'application/json'
       , success: function (resp) {
         self.setState({openSwitchWorkday: resp});
+        self.appendSwitchDaysToDictOfDatesWorkday(resp);
       }
     });
   }
@@ -87,6 +94,7 @@ class WorkSignUp extends Component {
       , contentType: 'application/json'
       , success: function (resp) {
         self.setState({openSwitchStandin: resp});
+        self.appendSwitchDaysToDictOfDatesStandin(resp);
       }
     });
   }
@@ -119,15 +127,21 @@ class WorkSignUp extends Component {
       }
     });
   }
-  getDictOfDatesStandin(response_array){
+  appendToDictOfDatesStandin(response_array){
     // this function returns a dictionary of key=standin_date timestamp and a value=1
-    var result = new Map(response_array.map((i) => [i.standin_date, 1]));
-    return result;
+    response_array.map((i) => (this.state.dictOpenStandin.set(i.standin_date, 1)));
   }
-  getDictOfDatesWorkday(response_array){
+  appendToDictOfDatesWorkday(response_array){
     // this function returns a dictionary of key=work_date timestamp and a value=1
-    var result = new Map(response_array.map((i) => [i.work_date, 1]));
-    return result;
+    response_array.map((i) => (this.state.dictOpenWorkday.set(i.work_date, 1)));
+  }
+  appendSwitchDaysToDictOfDatesStandin(response_array){
+    // this function appends to existing
+    response_array.map((i) => (this.state.dictOpenStandin.set(i.switch_date, 1)));
+  }
+  appendSwitchDaysToDictOfDatesWorkday(response_array){
+    // this function appends to existing
+    response_array.map((i) => (this.state.dictOpenWorkday.set(i.switch_date, 1)));
   }
   getRule(){
     var self = this;
@@ -181,45 +195,45 @@ class WorkSignUp extends Component {
             .map((s) =>
         <MyDatePicker key={'standin' + s} openDates={this.state.dictOpenStandin}
     isWorkday={false} signupId={null}/>
-      );
+  );
     const workdayFromRule = workdayRange
             .map((s) =>
         <MyDatePicker key={'workday' + s} openDates={this.state.dictOpenWorkday}
     isWorkday={true} signupId={null}/>
-      );
+  );
 
 
 
     return (
-      <div >
+        <div >
         <Header />
         <h1>Work Sign-Up</h1>
-        <h4>Fill empty dates below to fullfill your obligations for the term</h4>
-        <Link to={'/switchday' }>
-            <button className="btn btn-primary btn-lg pull-right" type="button" >
-            Switch dates
-      </button>
-        </Link>
+    <h4>Fill empty dates below to fullfill your obligations for the term</h4>
+    <Link to={'/switchday' }>
+        <button className="btn btn-primary btn-lg pull-right" type="button" >
+        Switch dates
+    </button>
+    </Link>
 
     <div className="panel panel-default">
         <div className="panel-heading">Standin dates</div>
     <div className="panel-body">
         <div className="list-group">
         {standinElements}
-        {standinFromRule}
-        </div>
-        </div>
-        </div>
-        <div className="panel panel-default">
+    {standinFromRule}
+  </div>
+    </div>
+    </div>
+    <div className="panel panel-default">
         <div className="panel-heading">Workday dates</div>
     <div className="panel-body">
         <div className="list-group">
         {workdayElements}
     {workdayFromRule}
-        </div>
-        </div>
-        </div>      </div>
-    );
+  </div>
+    </div>
+    </div>      </div>
+  );
   }
 }
 
