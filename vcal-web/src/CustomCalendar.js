@@ -14,18 +14,35 @@ class MyDatePicker extends Component{
         if ( this.props.chosenDate ){
             chosenDate = moment(Number(this.props.chosenDate)*1000);
         }
-        this.state = { date: chosenDate, signupId: this.props.signupId};
+        this.state = { date: chosenDate, signupId: this.props.signupId,
+        displayText: ""};
         this.isDayBlocked = this.isDayBlocked.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleDeleteSignup = this.handleDeleteSignup.bind(this);
     }
+    showText(day){
+        var epoch = (day.clone()).utc().startOf('day').unix();
+        if ( this.props.openDates.get(epoch) ){
+            if( (this.props.openDates.get(epoch).get('exists') === true) &&
+                (!isNonWorkingDay(epoch)) &&
+                (isFutureDate(epoch))
+            ){
+                this.setState({displaytext: this.props.openDates.get(epoch).get('displayText') });
+            }
+        }
+    }
     isDayBlocked(day){
         var epoch = (day.clone()).utc().startOf('day').unix();
-        if( (this.props.openDates.get(epoch) == 1) &&
-            (!isNonWorkingDay(epoch)) &&
-            (isFutureDate(epoch))
-        ){
-            return false;
+        if ( this.props.openDates.get(epoch) ){
+            if( (this.props.openDates.get(epoch).get('exists') === true) &&
+                (!isNonWorkingDay(epoch)) &&
+                (isFutureDate(epoch))
+            ){
+                return false;
+            }
+            else{
+                return true;
+            }
         }
         else{
             return true;
@@ -60,6 +77,8 @@ class MyDatePicker extends Component{
 
     }
     handleSave(date){
+        this.showText(date);
+
         var self = this;
         if ( date === null ){
             this.handleDeleteSignup();
@@ -89,19 +108,22 @@ class MyDatePicker extends Component{
     }
     render(){
         return(
-            <SingleDatePicker
-        date={this.state.date}
-        focused={this.state.focused}
-        onDateChange={(date) => {
-            this.setState({ date });
-            this.handleSave(date);
-        }}
-        onFocusChange={({ focused }) => { this.setState({ focused }); }}
-        showClearDate
-        reopenPickerOnClearDate
-        displayFormat="MMM D"
-        isDayBlocked={this.isDayBlocked}
-        />
+            <li className="list-group-item">
+                        <SingleDatePicker
+                    date={this.state.date}
+                    focused={this.state.focused}
+                    onDateChange={(date) => {
+                        this.setState({ date });
+                        this.handleSave(date);
+                    }}
+                    onFocusChange={({ focused }) => {this.setState({ focused });}}
+                    showClearDate
+                    reopenPickerOnClearDate
+                    displayFormat="MMM D"
+                    isDayBlocked={this.isDayBlocked}
+                    />
+        {this.state.displayText}
+        </li>
 
         )
     }

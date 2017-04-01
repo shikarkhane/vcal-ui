@@ -127,21 +127,46 @@ class WorkSignUp extends Component {
       }
     });
   }
+  getDef(isWorkday, isSwitchDay, isHalfDay, from, to){
+    function isHalfDayText(isHalfDay){
+      var text = "Full-day";
+      if ( isHalfDay ){
+        text = "Half-day";
+      }
+      return text;
+    };
+
+    var o = new Map;
+    o.set("exists", true);
+    o.set("isSwitchDay", isSwitchDay);
+    if ( isWorkday ) {
+      o.set("displayText", isHalfDayText(isHalfDay) + ' from '
+          + from + ' till ' + to);
+    }
+    else{
+      o.set("displayText", 'Full-day from 0830 till 1630.');
+    }
+    return o;
+  }
   appendToDictOfDatesStandin(response_array){
-    // this function returns a dictionary of key=standin_date timestamp and a value=1
-    response_array.map((i) => (this.state.dictOpenStandin.set(i.standin_date, 1)));
+    // this function returns a dictionary of key=standin_date timestamp and a value=0
+    response_array.map((i) => (this.state.dictOpenStandin.set(i.standin_date,
+        this.getDef(false, false, null, null, null))));
   }
   appendToDictOfDatesWorkday(response_array){
     // this function returns a dictionary of key=work_date timestamp and a value=1
-    response_array.map((i) => (this.state.dictOpenWorkday.set(i.work_date, 1)));
+    response_array.map((i) => (this.state.dictOpenWorkday.set(i.work_date,
+        this.getDef(true, false, i.is_half_day, i.from_time_in_24hours, i.to_time_in_24hours))));
   }
   appendSwitchDaysToDictOfDatesStandin(response_array){
     // this function appends to existing
-    response_array.map((i) => (this.state.dictOpenStandin.set(i.switch_date, 1)));
+    response_array.map((i) => (this.state.dictOpenStandin.set(i.switch_date,
+        this.getDef(false, true, null, null, null))));
   }
   appendSwitchDaysToDictOfDatesWorkday(response_array){
     // this function appends to existing
-    response_array.map((i) => (this.state.dictOpenWorkday.set(i.switch_date, 1)));
+    response_array.map((i) => (this.state.dictOpenWorkday.set(i.switch_date,
+        this.getDef(true, true, i.is_half_day, i.from_time_in_24hours, i.to_time_in_24hours))));
   }
   getRule(){
     var self = this;
@@ -171,7 +196,7 @@ class WorkSignUp extends Component {
             .filter(function(s) { return isFutureDate(s.standin_date); })
             .map((s) =>
         <MyDatePicker key={s.standin_date+s.id} chosenDate={s.standin_date}
-    openDates={this.state.dictOpenStandin} isWorkday={false} signupId={s.id}/>
+    openDates={this.state.dictOpenStandin} isWorkday={false} signupId={s.id} />
   );
     const workdays = this.state.myWorkday;
     const workdayElements = workdays
@@ -179,7 +204,7 @@ class WorkSignUp extends Component {
             .filter(function(s) { return isFutureDate(s.work_date); })
             .map((s) =>
         <MyDatePicker key={s.work_date+s.id} chosenDate={s.work_date}
-    openDates={this.state.dictOpenWorkday}  isWorkday={true} signupId={s.id}/>
+    openDates={this.state.dictOpenWorkday}  isWorkday={true} signupId={s.id}  />
   );
 
     //create new date columns based on rule set
@@ -194,12 +219,12 @@ class WorkSignUp extends Component {
     const standinFromRule = standinRange
             .map((s) =>
         <MyDatePicker key={'standin' + s} openDates={this.state.dictOpenStandin}
-    isWorkday={false} signupId={null}/>
+    isWorkday={false} signupId={null}  />
   );
     const workdayFromRule = workdayRange
             .map((s) =>
         <MyDatePicker key={'workday' + s} openDates={this.state.dictOpenWorkday}
-    isWorkday={true} signupId={null}/>
+    isWorkday={true} signupId={null} />
   );
 
 
