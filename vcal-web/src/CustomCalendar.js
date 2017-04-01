@@ -4,7 +4,7 @@ import reqwest from 'reqwest';
 import 'react-dates/lib/css/_datepicker.css';
 import { SingleDatePicker } from 'react-dates';
 import moment from 'moment';
-import {getHumanDate, isNonWorkingDay, makeId, isFutureDate} from './Utility';
+import {getHumanDate, isNonWorkingDay, makeId, isFutureDate, isWith30DaysFromNow} from './Utility';
 
 class MyDatePicker extends Component{
     constructor(props) {
@@ -113,7 +113,13 @@ class MyDatePicker extends Component{
     handleSave(date){
         var self = this;
         if ( date === null ){
-            this.handleDeleteSignup();
+            var deletedDate = (this.state.date.clone()).utc().startOf('day').unix();
+            if ( ! isWith30DaysFromNow(deletedDate)){
+                this.handleDeleteSignup();
+            }
+            else{
+                console.log('cannot delete, its withing 30 days. ONly switch is allowed.')
+            }
         }
         else{
             var groupId = localStorage.getItem("groupId");
@@ -161,6 +167,7 @@ class MyDatePicker extends Component{
                     reopenPickerOnClearDate
                     displayFormat="MMM D"
                     isDayBlocked={this.isDayBlocked}
+
                     />
         {this.state.displayText}
         </li>
