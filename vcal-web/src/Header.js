@@ -7,7 +7,7 @@ import Feedback from './Feedback';
 class Header extends Component {
   constructor(props) {
    super(props);
-   this.state = {groupName: localStorage.getItem("groupName"), termName: "",
+   this.state = {groupName: localStorage.getItem("groupName"), termName: localStorage.getItem("termName"),
    isRuleSet: true, feedbackMessage:"Rule is not set by admin. Signups and switch would not work."};
 
  }
