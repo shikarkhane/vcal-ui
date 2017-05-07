@@ -18,6 +18,7 @@ class MyDatePicker extends Component{
         displayText: ""};
 
         this.isDayBlocked = this.isDayBlocked.bind(this);
+        this.showText = this.showText.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleDeleteSignup = this.handleDeleteSignup.bind(this);
     }
@@ -29,6 +30,7 @@ class MyDatePicker extends Component{
                 (isFutureDate(epoch))
             ){
                 this.setState({displaytext: this.props.openDates.get(epoch).get('displayText') });
+                //console.log(epoch);
 
             }
         }
@@ -116,6 +118,7 @@ class MyDatePicker extends Component{
 
     handleSave(date){
         var self = this;
+
         // when clear date is clicked
         if ( date === null ){
             var deletedDate = (this.state.date.clone()).utc().startOf('day').unix();
@@ -130,14 +133,16 @@ class MyDatePicker extends Component{
 
         }
         else{
-            // if user chose another date while there exists a date in the date-picker
-            var deletedDate = (this.state.date.clone()).utc().startOf('day').unix();
-            if ( ! isWith30DaysFromNow(deletedDate)){
-                this.handleDeleteSignup();
-            }
-            else{
-                self.props.onUpdate(true, "Cannot delete a chosen date within 30 days. Only switch is allowed.");
-                return false;
+            if ( this.state.date ){
+                // if user chose another date while there exists a date in the date-picker
+                var deletedDate = (this.state.date.clone()).utc().startOf('day').unix();
+                if ( ! isWith30DaysFromNow(deletedDate)){
+                    this.handleDeleteSignup();
+                }
+                else{
+                    self.props.onUpdate(true, "Cannot delete a chosen date within 30 days. Only switch is allowed.");
+                    return false;
+                }
             }
 
             var groupId = localStorage.getItem("groupId");
@@ -188,7 +193,6 @@ class MyDatePicker extends Component{
                     showClearDate
                     displayFormat="MMM D"
                     isDayBlocked={this.isDayBlocked}
-
                     />
         {this.state.displayText}
         </li>
