@@ -5,7 +5,6 @@ class Landing extends Component {
   render() {
     return (
       <div className="page-header">
-        <h1>landing </h1>
         <Authenticate />
       </div>
     );

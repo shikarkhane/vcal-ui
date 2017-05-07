@@ -4,7 +4,6 @@ class BodyMiddle extends Component {
   render() {
     return (
       <div className="page-header">
-        <h1>Body middle</h1>
       </div>
     );
   }

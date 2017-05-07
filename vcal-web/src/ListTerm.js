@@ -1,7 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import {getHumanDate, getDateFormat}from './Utility';
+import {getHumanDate, getDateFormat} from './Utility';
 
 class TermElement extends Component{
   constructor(props) {

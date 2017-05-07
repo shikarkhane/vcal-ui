@@ -116,16 +116,30 @@ class MyDatePicker extends Component{
 
     handleSave(date){
         var self = this;
+        // when clear date is clicked
         if ( date === null ){
+            var deletedDate = (this.state.date.clone()).utc().startOf('day').unix();
+            if ( ! isWith30DaysFromNow(deletedDate)){
+                this.handleDeleteSignup();
+                return true;
+            }
+            else{
+                self.props.onUpdate(true, "Cannot delete a chosen date within 30 days. Only switch is allowed.");
+                return false;
+            }
+
+        }
+        else{
+            // if user chose another date while there exists a date in the date-picker
             var deletedDate = (this.state.date.clone()).utc().startOf('day').unix();
             if ( ! isWith30DaysFromNow(deletedDate)){
                 this.handleDeleteSignup();
             }
             else{
                 self.props.onUpdate(true, "Cannot delete a chosen date within 30 days. Only switch is allowed.");
+                return false;
             }
-        }
-        else{
+
             var groupId = localStorage.getItem("groupId");
             var userId = localStorage.getItem("userId");
             var isWorkday = this.props.isWorkday;
@@ -154,6 +168,7 @@ class MyDatePicker extends Component{
                 });
             }
 
+            return true;
         }
     }
     render(){
@@ -163,12 +178,14 @@ class MyDatePicker extends Component{
                     date={this.state.date}
                     focused={this.state.focused}
                     onDateChange={(date) => {
-                        this.setState({ date });
-                        this.handleSave(date);
+                        // clear the date if its not within 30 days
+                        if(this.handleSave(date)){
+                            this.setState({ date });
+                        }
+
                     }}
                     onFocusChange={({ focused }) => {this.setState({ focused });}}
                     showClearDate
-                    reopenPickerOnClearDate
                     displayFormat="MMM D"
                     isDayBlocked={this.isDayBlocked}
 
