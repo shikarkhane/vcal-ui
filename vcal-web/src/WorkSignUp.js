@@ -201,7 +201,7 @@ class WorkSignUp extends Component {
   getRule(){
     var self = this;
     var groupId = localStorage.getItem("groupId");
-    var termId = localStorage.getItem("defaultTermId");
+    var termId = localStorage.getItem("termId");
 
     // todo: get list of terms for given group id
     reqwest({
