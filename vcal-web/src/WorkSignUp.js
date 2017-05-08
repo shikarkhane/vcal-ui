@@ -133,6 +133,17 @@ class WorkSignUp extends Component {
       }
     });
   }
+  isInChosenTerm(date){
+    var termId = localStorage.getItem("termId");
+    var terms = JSON.parse(localStorage.getItem("allTerms"));
+    var f = (terms.find(x => x.id === termId));
+    if (f){
+      if( date >= f.start_date && date <= f.end_date){
+       return true;
+      }
+    }
+    return false;
+  }
   getDef(isWorkday, isSwitchDay, isHalfDay, from, to, switchUserId){
     function isHalfDayText(isHalfDay){
       var text = "Full-day";
@@ -156,23 +167,35 @@ class WorkSignUp extends Component {
     return o;
   }
   appendToDictOfDatesStandin(response_array){
+    var self = this;
     // this function returns a dictionary of key=standin_date timestamp and a value=0
-    response_array.map((i) => (this.state.dictOpenStandin.set(i.standin_date,
+    response_array
+        .filter(function(s) { return self.isInChosenTerm(s.standin_date); })
+        .map((i) => (this.state.dictOpenStandin.set(i.standin_date,
         this.getDef(false, false, null, null, null, null))));
   }
   appendToDictOfDatesWorkday(response_array){
+    var self = this;
     // this function returns a dictionary of key=work_date timestamp and a value=1
-    response_array.map((i) => (this.state.dictOpenWorkday.set(i.work_date,
+    response_array
+        .filter(function(s) { return self.isInChosenTerm(s.work_date); })
+        .map((i) => (this.state.dictOpenWorkday.set(i.work_date,
         this.getDef(true, false, i.is_half_day, i.from_time_in_24hours, i.to_time_in_24hours, null))));
   }
   appendSwitchDaysToDictOfDatesStandin(response_array){
+    var self = this;
     // this function appends to existing
-    response_array.map((i) => (this.state.dictOpenStandin.set(i.switch_date,
+    response_array
+        .filter(function(s) { return self.isInChosenTerm(s.switch_date); })
+        .map((i) => (this.state.dictOpenStandin.set(i.switch_date,
         this.getDef(false, true, null, null, null, i.standin_user_id))));
   }
   appendSwitchDaysToDictOfDatesWorkday(response_array){
+    var self = this;
     // this function appends to existing
-    response_array.map((i) => (this.state.dictOpenWorkday.set(i.switch_date,
+    response_array
+        .filter(function(s) { return self.isInChosenTerm(s.switch_date); })
+        .map((i) => (this.state.dictOpenWorkday.set(i.switch_date,
         this.getDef(true, true, i.is_half_day, i.from_time_in_24hours, i.to_time_in_24hours, i.standin_user_id))));
   }
   getRule(){
@@ -196,9 +219,11 @@ class WorkSignUp extends Component {
     });
   }
   render() {
+    var self = this;
     // days already selected by user
     const standins = this.state.myStandin;
     const standinElements = standins
+            .filter(function(s) { return self.isInChosenTerm(s.standin_date); })
             .filter(function(s) { return !isNonWorkingDay(s.standin_date); })
             .filter(function(s) { return isFutureDate(s.standin_date); })
             .map((s) =>
@@ -208,6 +233,7 @@ class WorkSignUp extends Component {
   );
     const workdays = this.state.myWorkday;
     const workdayElements = workdays
+            .filter(function(s) { return self.isInChosenTerm(s.work_date); })
             .filter(function(s) { return !isNonWorkingDay(s.work_date); })
             .filter(function(s) { return isFutureDate(s.work_date); })
             .map((s) =>
