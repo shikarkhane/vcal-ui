@@ -166,6 +166,23 @@ class WorkSignUp extends Component {
     }
     return o;
   }
+    getText(isWorkday, isHalfDay, from, to){
+        function isHalfDayText(isHalfDay){
+            var text = "Full-day";
+            if ( isHalfDay ){
+                text = "Half-day";
+            }
+            return text;
+        };
+
+        if ( isWorkday ) {
+            return isHalfDayText(isHalfDay) + ' from '
+                + from + ' till ' + to;
+        }
+        else{
+            return 'Full-day from 0830 till 1630';
+        }
+    }
   appendToDictOfDatesStandin(response_array){
     var self = this;
     // this function returns a dictionary of key=standin_date timestamp and a value=0
@@ -229,7 +246,8 @@ class WorkSignUp extends Component {
             .map((s) =>
         <MyDatePicker key={s.standin_date+s.id} chosenDate={s.standin_date}
     openDates={this.state.dictOpenStandin} isWorkday={false} signupId={s.id}
-    onUpdate={this.onUpdate.bind(this)} />
+    onUpdate={this.onUpdate.bind(this)}
+    displayText={this.getText(false, false, s.from_time_in_24hours, s.to_time_in_24hours)}/>
   );
     const workdays = this.state.myWorkday;
     const workdayElements = workdays
@@ -239,7 +257,8 @@ class WorkSignUp extends Component {
             .map((s) =>
         <MyDatePicker key={s.work_date+s.id} chosenDate={s.work_date}
     openDates={this.state.dictOpenWorkday}  isWorkday={true} signupId={s.id}
-    onUpdate={this.onUpdate.bind(this)} />
+    onUpdate={this.onUpdate.bind(this)}
+    displayText={this.getText(true, s.is_half_day, s.from_time_in_24hours, s.to_time_in_24hours, null)}/>
   );
 
     //create new date columns based on rule set
@@ -255,13 +274,15 @@ class WorkSignUp extends Component {
             .map((s) =>
         <MyDatePicker key={'standin' + s} openDates={this.state.dictOpenStandin}
     isWorkday={false} signupId={null}
-    onUpdate={this.onUpdate.bind(this)} />
+    onUpdate={this.onUpdate.bind(this)}
+    displayText=""/>
   );
     const workdayFromRule = workdayRange
             .map((s) =>
         <MyDatePicker key={'workday' + s} openDates={this.state.dictOpenWorkday}
     isWorkday={true} signupId={null}
-    onUpdate={this.onUpdate.bind(this)} />
+    onUpdate={this.onUpdate.bind(this)}
+    displayText=""/>
   );
 
 

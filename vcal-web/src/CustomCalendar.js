@@ -11,26 +11,30 @@ class MyDatePicker extends Component{
         super(props);
 
         var chosenDate = null;
+        var displayText = "Choose a date!"
         if ( this.props.chosenDate ){
             chosenDate = moment(Number(this.props.chosenDate)*1000);
+            displayText = this.props.displayText;
         }
         this.state = { date: chosenDate, signupId: this.props.signupId,
-        displayText: ""};
+        displayText: displayText};
 
         this.isDayBlocked = this.isDayBlocked.bind(this);
         this.showText = this.showText.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleDeleteSignup = this.handleDeleteSignup.bind(this);
     }
-    showText(day){
-        var epoch = (day.clone()).utc().startOf('day').unix();
+    clearText(){
+        this.setState({displayText: "Choose a date!" });
+    }
+    showText(epoch){
         if ( this.props.openDates.get(epoch) ){
             if( (this.props.openDates.get(epoch).get('exists') === true) &&
                 (!isNonWorkingDay(epoch)) &&
                 (isFutureDate(epoch))
             ){
-                this.setState({displaytext: this.props.openDates.get(epoch).get('displayText') });
-                //console.log(epoch);
+                this.setState({displayText: this.props.openDates.get(epoch).get('displayText') });
+                console.log(epoch);
 
             }
         }
@@ -124,6 +128,7 @@ class MyDatePicker extends Component{
             var deletedDate = (this.state.date.clone()).utc().startOf('day').unix();
             if ( ! isWith30DaysFromNow(deletedDate)){
                 this.handleDeleteSignup();
+                this.clearText();
                 return true;
             }
             else{
@@ -149,6 +154,8 @@ class MyDatePicker extends Component{
             var userId = localStorage.getItem("userId");
             var isWorkday = this.props.isWorkday;
             var chosenDate = (date.clone()).utc().startOf('day').unix();
+
+            this.showText(chosenDate);
 
             var t = this.props.openDates.get(chosenDate);
             // if it was a switch day, handle it differently
@@ -194,7 +201,7 @@ class MyDatePicker extends Component{
                     displayFormat="MMM D"
                     isDayBlocked={this.isDayBlocked}
                     />
-        {this.state.displayText}
+        <span className="badge">{this.state.displayText}</span>
         </li>
 
         )
