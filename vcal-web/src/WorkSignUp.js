@@ -246,8 +246,8 @@ class WorkSignUp extends Component {
             .map((s) =>
         <MyDatePicker key={s.standin_date+s.id} chosenDate={s.standin_date}
     openDates={this.state.dictOpenStandin} isWorkday={false} signupId={s.id}
-    onUpdate={this.onUpdate.bind(this)}
-    displayText={this.getText(false, false, s.from_time_in_24hours, s.to_time_in_24hours)}/>
+    onUpdate={this.onUpdate.bind(this)} isHalfDay={false}
+      displayText={this.getText(false, false, s.from_time_in_24hours, s.to_time_in_24hours)}/>
   );
     const workdays = this.state.myWorkday;
     const workdayElements = workdays
@@ -257,7 +257,7 @@ class WorkSignUp extends Component {
             .map((s) =>
         <MyDatePicker key={s.work_date+s.id} chosenDate={s.work_date}
     openDates={this.state.dictOpenWorkday}  isWorkday={true} signupId={s.id}
-    onUpdate={this.onUpdate.bind(this)}
+    onUpdate={this.onUpdate.bind(this)} isHalfDay={s.is_half_day}
     displayText={this.getText(true, s.is_half_day, s.from_time_in_24hours, s.to_time_in_24hours, null)}/>
   );
 
@@ -273,15 +273,15 @@ class WorkSignUp extends Component {
     const standinFromRule = standinRange
             .map((s) =>
         <MyDatePicker key={'standin' + s} openDates={this.state.dictOpenStandin}
-    isWorkday={false} signupId={null}
-    onUpdate={this.onUpdate.bind(this)}
+    isWorkday={false} signupId={null} isHalfDay={false}
+      onUpdate={this.onUpdate.bind(this)}
     displayText=""/>
   );
     const workdayFromRule = workdayRange
             .map((s) =>
         <MyDatePicker key={'workday' + s} openDates={this.state.dictOpenWorkday}
-    isWorkday={true} signupId={null}
-    onUpdate={this.onUpdate.bind(this)}
+    isWorkday={true} signupId={null} isHalfDay={false}
+      onUpdate={this.onUpdate.bind(this)}
     displayText=""/>
   );
 
@@ -293,12 +293,6 @@ class WorkSignUp extends Component {
         <h1>Work Sign-Up</h1>
     <h4>Fill empty dates below to fullfill your obligations for the term</h4>
     <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
-    <Link to={'/switchday' }>
-        <button className="btn btn-primary btn-lg pull-right" type="button" >
-        Switch dates
-    </button>
-    </Link>
-
     <div className="panel panel-default">
         <div className="panel-heading">Standin dates</div>
     <div className="panel-body">

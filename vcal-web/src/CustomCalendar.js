@@ -11,21 +11,53 @@ class MyDatePicker extends Component{
         super(props);
 
         var chosenDate = null;
-        var displayText = "Choose a date!"
+        var displayText = "Choose a date!";
+        var disabledByte = true;
+
         if ( this.props.chosenDate ){
             chosenDate = moment(Number(this.props.chosenDate)*1000);
             displayText = this.props.displayText;
+            disabledByte = false;
         }
         this.state = { date: chosenDate, signupId: this.props.signupId,
-        displayText: displayText};
+        displayText: displayText, disabledByte: disabledByte, disabledDate:false};
 
         this.isDayBlocked = this.isDayBlocked.bind(this);
         this.showText = this.showText.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleDeleteSignup = this.handleDeleteSignup.bind(this);
+        this.handleSwitchDate = this.handleSwitchDate.bind(this);
     }
     clearText(){
         this.setState({displayText: "Choose a date!" });
+    }
+    handleSwitchDate(pIsWorkday, chosenDate, fromTime, tillTime, pIsHalfDay){
+        this.setState({disabledByte: true, disabledDate: true });
+        var self = this;
+        var groupId = localStorage.getItem("groupId");
+        var userId = localStorage.getItem("userId");
+        var isWorkday = this.props.isWorkday;
+        var isHalfDay = this.props.isHalfDay;
+        var chosenDate = (this.state.date.clone()).utc().startOf('day').unix();
+
+        reqwest({
+            url: conf.serverUrl + '/switchday/' + groupId + '/user/' + userId + '/'
+            , type: 'json'
+            , method: 'post'
+            , contentType: 'application/json'
+            , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
+                is_workday: isWorkday, from_time: fromTime, to_time: tillTime,
+                is_half_day: isHalfDay})
+            , success: function (resp) {
+                //console.log(resp);
+                if (resp.status === 'ok'){
+                    console.log(resp.id);
+                }
+
+
+            }
+        });
+
     }
     showText(epoch){
         if ( this.props.openDates.get(epoch) ){
@@ -200,8 +232,15 @@ class MyDatePicker extends Component{
                     showClearDate
                     displayFormat="MMM D"
                     isDayBlocked={this.isDayBlocked}
+                    disabled={this.state.disabledDate}
                     />
-        <span className="badge">{this.state.displayText}</span>
+        <button type="button" className="btn btn-success"
+            onClick={this.handleSwitchDate} disabled={this.state.disabledByte}>
+            Byte
+            </button>
+
+
+            <span className="badge">{this.state.displayText}</span>
         </li>
 
         )
