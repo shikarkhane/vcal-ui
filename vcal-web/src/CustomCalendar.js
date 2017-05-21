@@ -70,9 +70,6 @@ class MyDatePicker extends Component{
                 byteText: "Byte",
                 byteButtonClass: "btn btn-success"});
         }
-        else{
-            this.setState({visibleByte: "hidden"});
-        }
 
         if( this.props.isSwitchDay){
             this.setState({disabledByte: true,
@@ -105,7 +102,7 @@ class MyDatePicker extends Component{
                 //console.log(resp);
                 if (resp.status === 'ok'){
                     console.log(resp.id);
-                    this.setState({switchId: resp.id});
+                    //this.setState({switchId: resp.id});
                 }
 
             }
