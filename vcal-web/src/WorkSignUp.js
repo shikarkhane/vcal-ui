@@ -320,11 +320,11 @@ class WorkSignUp extends Component {
     return (
         <div >
         <Header />
-        <h1>Work Sign-Up</h1>
-    <h4>Fill empty dates below to fullfill your obligations for the term</h4>
+        <h1>Åtagande</h1>
+    <h4>Fyll i datum nedan för att uppfylla ditt åtagande</h4>
     <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
     <div className="panel panel-default">
-        <div className="panel-heading">Standin dates</div>
+        <div className="panel-heading">Vikariedagar</div>
     <div className="panel-body">
         <div className="list-group">
         {standinElements}
@@ -333,7 +333,7 @@ class WorkSignUp extends Component {
     </div>
     </div>
     <div className="panel panel-default">
-        <div className="panel-heading">Workday dates</div>
+        <div className="panel-heading">Arbetsdagar</div>
     <div className="panel-body">
         <div className="list-group">
         {workdayElements}

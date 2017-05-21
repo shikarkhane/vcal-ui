@@ -13,22 +13,28 @@ class MyDatePicker extends Component{
         var chosenDate = null;
         var displayText = "Choose a date!";
         var disabledByte = true;
-        var disabledDate = false;
+
+        var byteButtonClass = "btn";
+        var visibleByte = "hidden";
 
         if ( this.props.chosenDate ){
             chosenDate = moment(Number(this.props.chosenDate)*1000);
             displayText = this.props.displayText;
             disabledByte = false;
+            byteButtonClass = "btn btn-success";
+            visibleByte = "visible";
         }
         if( this.props.isSwitchDay){
             disabledByte = true;
-            disabledDate = true;
+
+            byteButtonClass = "btn btn-warning";
+            visibleByte = "visible";
         }
 
         this.state = { date: chosenDate, signupId: this.props.signupId,
         displayText: displayText, disabledByte: disabledByte,
-            disabledDate:disabledDate,
-        byteText: 'Byte'};
+            byteButtonClass: byteButtonClass,
+        byteText: 'Byte', visibleByte: visibleByte};
 
         this.isDayBlocked = this.isDayBlocked.bind(this);
         this.highlightHalfDay = this.highlightHalfDay.bind(this);
@@ -39,7 +45,7 @@ class MyDatePicker extends Component{
     }
 
     calendarInfo(){
-        return "Yellow highlights are half-day.";
+        return "Halvdagar är gulmarkerade";
     }
     highlightHalfDay(day){
         var epoch = (day.clone()).utc().startOf('day').unix();
@@ -59,15 +65,27 @@ class MyDatePicker extends Component{
         }
     }
     componentWillReceiveProps(){
+        if ( this.props.chosenDate ){
+            this.setState({disabledByte: false,
+                byteText: "Byte",
+                byteButtonClass: "btn btn-success"});
+        }
+        else{
+            this.setState({visibleByte: "hidden"});
+        }
+
         if( this.props.isSwitchDay){
-            this.setState({disabledByte: true, byteText: "Byte publicerat"});
+            this.setState({disabledByte: true,
+                byteText: "Byte publicerat",
+            byteButtonClass: "btn btn-warning"});
         }
     }
     clearText(){
         this.setState({displayText: "Choose a date!" });
     }
     handleSwitchDate(){
-        this.setState({disabledByte: true, disabledDate: true, byteText: "Byte publicerat" });
+        this.setState({disabledByte: true, byteText: "Byte publicerat",
+            byteButtonClass: "btn btn-warning" });
         var self = this;
         var groupId = localStorage.getItem("groupId");
         var userId = localStorage.getItem("userId");
@@ -194,6 +212,7 @@ class MyDatePicker extends Component{
         if ( date === null ){
             var deletedDate = (this.state.date.clone()).utc().startOf('day').unix();
             if ( ! isWith30DaysFromNow(deletedDate)){
+                self.setState({visibleByte : "hidden"});
                 this.handleDeleteSignup();
                 this.clearText();
                 return true;
@@ -216,6 +235,9 @@ class MyDatePicker extends Component{
                     return false;
                 }
             }
+
+            this.setState({disabledByte: false, visibleByte : "visible", byteText: "Byte",
+                byteButtonClass: "btn btn-success"});
 
             var groupId = localStorage.getItem("groupId");
             var userId = localStorage.getItem("userId");
@@ -251,6 +273,11 @@ class MyDatePicker extends Component{
         }
     }
     render(){
+        const visibilityStyle = {
+            visibility: this.state.visibleByte
+        };
+
+
         return(
             <li className="list-group-item">
                         <SingleDatePicker
@@ -267,12 +294,12 @@ class MyDatePicker extends Component{
                     showClearDate
                     displayFormat="MMM D"
                     isDayBlocked={this.isDayBlocked}
-                    disabled={this.state.disabledDate}
         renderCalendarInfo={this.calendarInfo}
         isDayHighlighted={this.highlightHalfDay}
             />
-        <button type="button" className="btn btn-success"
-            onClick={this.handleSwitchDate} disabled={this.state.disabledByte}>
+        <button type="button" className={this.state.byteButtonClass}
+            onClick={this.handleSwitchDate} disabled={this.state.disabledByte}
+    style={visibilityStyle} >
         {this.state.byteText}
             </button>
 
