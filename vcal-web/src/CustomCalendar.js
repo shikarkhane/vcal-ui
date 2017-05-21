@@ -33,7 +33,7 @@ class MyDatePicker extends Component{
 
         this.state = { date: chosenDate, signupId: this.props.signupId,
         displayText: displayText, disabledByte: disabledByte,
-            byteButtonClass: byteButtonClass,
+            byteButtonClass: byteButtonClass, switchId: this.props.switchId,
         byteText: 'Byte', visibleByte: visibleByte};
 
         this.isDayBlocked = this.isDayBlocked.bind(this);
@@ -105,6 +105,7 @@ class MyDatePicker extends Component{
                 //console.log(resp);
                 if (resp.status === 'ok'){
                     console.log(resp.id);
+                    this.setState({switchId: resp.id});
                 }
 
             }
@@ -144,6 +145,7 @@ class MyDatePicker extends Component{
         var self = this;
         var isWorkday = this.props.isWorkday;
         var signupId = this.state.signupId;
+        var switchId = this.state.switchId;
 
         if (isWorkday){
             reqwest({
@@ -168,6 +170,11 @@ class MyDatePicker extends Component{
                     self.props.onUpdate(true, "Deleted");
                 }
             });
+        }
+
+        if( this.props.isSwitchDay){
+            //todo add serverside api and call here to delete switchday
+            console.log("delete switch day based on switch id");
         }
 
     }
@@ -218,7 +225,7 @@ class MyDatePicker extends Component{
                 return true;
             }
             else{
-                self.props.onUpdate(true, "Cannot delete a chosen date within 30 days. Only switch is allowed.");
+                self.props.onUpdate(true, "Endast byte är möjligt eftersom datumet är inom 30 dagar");
                 return false;
             }
 
@@ -231,7 +238,7 @@ class MyDatePicker extends Component{
                     this.handleDeleteSignup();
                 }
                 else{
-                    self.props.onUpdate(true, "Cannot delete a chosen date within 30 days. Only switch is allowed.");
+                    self.props.onUpdate(true, "Endast byte är möjligt eftersom datumet är inom 30 dagar");
                     return false;
                 }
             }
