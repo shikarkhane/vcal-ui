@@ -13,26 +13,61 @@ class MyDatePicker extends Component{
         var chosenDate = null;
         var displayText = "Choose a date!";
         var disabledByte = true;
+        var disabledDate = false;
 
         if ( this.props.chosenDate ){
             chosenDate = moment(Number(this.props.chosenDate)*1000);
             displayText = this.props.displayText;
             disabledByte = false;
         }
+        if( this.props.isSwitchDay){
+            disabledByte = true;
+            disabledDate = true;
+        }
+
         this.state = { date: chosenDate, signupId: this.props.signupId,
-        displayText: displayText, disabledByte: disabledByte, disabledDate:false};
+        displayText: displayText, disabledByte: disabledByte,
+            disabledDate:disabledDate,
+        byteText: 'Byte'};
 
         this.isDayBlocked = this.isDayBlocked.bind(this);
+        this.highlightHalfDay = this.highlightHalfDay.bind(this);
         this.showText = this.showText.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleDeleteSignup = this.handleDeleteSignup.bind(this);
         this.handleSwitchDate = this.handleSwitchDate.bind(this);
     }
+
+    calendarInfo(){
+        return "Yellow highlights are half-day.";
+    }
+    highlightHalfDay(day){
+        var epoch = (day.clone()).utc().startOf('day').unix();
+        if ( this.props.openDates.get(epoch) ){
+            if( (this.props.openDates.get(epoch).get('isHalfDay') === true) &&
+                (!isNonWorkingDay(epoch)) &&
+                (isFutureDate(epoch))
+            ){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+    componentWillReceiveProps(){
+        if( this.props.isSwitchDay){
+            this.setState({disabledByte: true, byteText: "Byte publicerat"});
+        }
+    }
     clearText(){
         this.setState({displayText: "Choose a date!" });
     }
-    handleSwitchDate(pIsWorkday, chosenDate, fromTime, tillTime, pIsHalfDay){
-        this.setState({disabledByte: true, disabledDate: true });
+    handleSwitchDate(){
+        this.setState({disabledByte: true, disabledDate: true, byteText: "Byte publicerat" });
         var self = this;
         var groupId = localStorage.getItem("groupId");
         var userId = localStorage.getItem("userId");
@@ -46,14 +81,13 @@ class MyDatePicker extends Component{
             , method: 'post'
             , contentType: 'application/json'
             , data: JSON.stringify({ chosen_date: chosenDate, user_id: userId,
-                is_workday: isWorkday, from_time: fromTime, to_time: tillTime,
+                is_workday: isWorkday, from_time: "na", to_time: "na",
                 is_half_day: isHalfDay})
             , success: function (resp) {
                 //console.log(resp);
                 if (resp.status === 'ok'){
                     console.log(resp.id);
                 }
-
 
             }
         });
@@ -155,6 +189,7 @@ class MyDatePicker extends Component{
     handleSave(date){
         var self = this;
 
+        //todo : handle a already published switch when given date gets deleted.
         // when clear date is clicked
         if ( date === null ){
             var deletedDate = (this.state.date.clone()).utc().startOf('day').unix();
@@ -233,10 +268,12 @@ class MyDatePicker extends Component{
                     displayFormat="MMM D"
                     isDayBlocked={this.isDayBlocked}
                     disabled={this.state.disabledDate}
-                    />
+        renderCalendarInfo={this.calendarInfo}
+        isDayHighlighted={this.highlightHalfDay}
+            />
         <button type="button" className="btn btn-success"
             onClick={this.handleSwitchDate} disabled={this.state.disabledByte}>
-            Byte
+        {this.state.byteText}
             </button>
 
 

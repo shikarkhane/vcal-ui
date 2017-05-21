@@ -11,7 +11,7 @@ class WorkSignUp extends Component {
   constructor(props) {
     super(props);
     this.state = { myWorkday:[], myStandin:[], openWorkday: [], openStandin: [],
-      openSwitchWorkday: [], openSwitchStandin : [],
+      openSwitchWorkday: [], openSwitchStandin : [], mySwitchday: [],
       dictOpenWorkday: new Map(), dictOpenStandin: new Map(),
       ruleSet : { "standin": [0,0,0], "workday": [0,0,0]}, childrenCount: 0,
       feedbackMessage:"", displayAlert: false};
@@ -32,10 +32,36 @@ class WorkSignUp extends Component {
     this.getOpenStandin();
     this.getOpenSwitchStandin();
     this.getOpenSwitchWorkday();
+      this.getMySwitchday();
 
     this.setState({childrenCount: localStorage.getItem("childrenCount")});
 
   }
+    isMySwitchDay(chosenDate){
+        //var self = this;
+        var mySwitchDates = this.state.mySwitchday.map((x) => x.switch_date);
+        for(var i = 0; i < mySwitchDates.length; i++) {
+            if ( chosenDate === mySwitchDates[i]){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    getMySwitchday(){
+        var self = this;
+        var groupId = localStorage.getItem("groupId");
+        var userId = localStorage.getItem("userId");
+        reqwest({
+            url: conf.serverUrl + '/switchday/' + groupId  + '/user/' + userId + '/'
+            , type: 'json'
+            , method: 'get'
+            , contentType: 'application/json'
+            , success: function (resp) {
+                self.setState({mySwitchday: resp});
+            }
+        });
+    }
   getStandinRule(){
     return this.state.ruleSet.standin[this.state.childrenCount - 1];
   }
@@ -104,6 +130,9 @@ class WorkSignUp extends Component {
       }
     });
   }
+    isListedAsSwitchDay(dt){
+        return true;
+    }
 
   getMyWorkday(){
     var self = this;
@@ -156,6 +185,7 @@ class WorkSignUp extends Component {
     var o = new Map;
     o.set("exists", true);
     o.set("isSwitchDay", isSwitchDay);
+      o.set("isHalfDay", isHalfDay);
     o.set("existingSwitchUserId", switchUserId);
     if ( isWorkday ) {
       o.set("displayText", isHalfDayText(isHalfDay) + ' from '
@@ -246,7 +276,7 @@ class WorkSignUp extends Component {
             .map((s) =>
         <MyDatePicker key={s.standin_date+s.id} chosenDate={s.standin_date}
     openDates={this.state.dictOpenStandin} isWorkday={false} signupId={s.id}
-    onUpdate={this.onUpdate.bind(this)} isHalfDay={false}
+    onUpdate={this.onUpdate.bind(this)} isHalfDay={false} isSwitchDay={this.isMySwitchDay(s.standin_date)}
       displayText={this.getText(false, false, s.from_time_in_24hours, s.to_time_in_24hours)}/>
   );
     const workdays = this.state.myWorkday;
@@ -257,7 +287,7 @@ class WorkSignUp extends Component {
             .map((s) =>
         <MyDatePicker key={s.work_date+s.id} chosenDate={s.work_date}
     openDates={this.state.dictOpenWorkday}  isWorkday={true} signupId={s.id}
-    onUpdate={this.onUpdate.bind(this)} isHalfDay={s.is_half_day}
+    onUpdate={this.onUpdate.bind(this)} isHalfDay={s.is_half_day} isSwitchDay={this.isMySwitchDay(s.work_date)}
     displayText={this.getText(true, s.is_half_day, s.from_time_in_24hours, s.to_time_in_24hours, null)}/>
   );
 
@@ -273,14 +303,14 @@ class WorkSignUp extends Component {
     const standinFromRule = standinRange
             .map((s) =>
         <MyDatePicker key={'standin' + s} openDates={this.state.dictOpenStandin}
-    isWorkday={false} signupId={null} isHalfDay={false}
+    isWorkday={false} signupId={null} isHalfDay={false} isSwitchDay={false}
       onUpdate={this.onUpdate.bind(this)}
     displayText=""/>
   );
     const workdayFromRule = workdayRange
             .map((s) =>
         <MyDatePicker key={'workday' + s} openDates={this.state.dictOpenWorkday}
-    isWorkday={true} signupId={null} isHalfDay={false}
+    isWorkday={true} signupId={null} isHalfDay={false} isSwitchDay={false}
       onUpdate={this.onUpdate.bind(this)}
     displayText=""/>
   );
