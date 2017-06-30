@@ -18,21 +18,25 @@ class WorkSignUp extends Component {
 
     this.getStandinRule = this.getStandinRule.bind(this);
     this.getWorkdayRule = this.getWorkdayRule.bind(this);
+      this.refreshDates = this.refreshDates.bind(this);
     this.appendToDictOfDatesStandin = this.appendToDictOfDatesStandin.bind(this);
     this.appendToDictOfDatesWorkday = this.appendToDictOfDatesWorkday.bind(this);
     this.appendSwitchDaysToDictOfDatesStandin = this.appendSwitchDaysToDictOfDatesStandin.bind(this);
     this.appendSwitchDaysToDictOfDatesWorkday = this.appendSwitchDaysToDictOfDatesWorkday.bind(this);
     this.getRule = this.getRule.bind(this);
   }
+    refreshDates(){
+        this.getMyWorkday();
+        this.getMyStandin();
+        this.getOpenWorkday();
+        this.getOpenStandin();
+        this.getOpenSwitchStandin();
+        this.getOpenSwitchWorkday();
+        this.getMySwitchday();
+    }
   componentDidMount() {
     this.getRule();
-    this.getMyWorkday();
-    this.getMyStandin();
-    this.getOpenWorkday();
-    this.getOpenStandin();
-    this.getOpenSwitchStandin();
-    this.getOpenSwitchWorkday();
-      this.getMySwitchday();
+    this.refreshDates();
 
     this.setState({childrenCount: localStorage.getItem("childrenCount")});
 
@@ -70,7 +74,11 @@ class WorkSignUp extends Component {
   }
 
   onUpdate(displayAlert, message){
-    this.setState({ displayAlert : displayAlert, feedbackMessage: message});
+      // popup message
+      this.setState({ displayAlert : displayAlert, feedbackMessage: message});
+
+      //refresh dates
+      this.refreshDates();
   }
 
   getOpenWorkday(){
@@ -218,8 +226,13 @@ class WorkSignUp extends Component {
     // this function returns a dictionary of key=standin_date timestamp and a value=0
     response_array
         .filter(function(s) { return self.isInChosenTerm(s.standin_date); })
-        .map((i) => (this.state.dictOpenStandin.set(i.standin_date,
-        this.getDef(false, false, null, null, null, null))));
+        .map((i) => (
+        this.state.dictOpenStandin.set(
+            i.standin_date,
+            this.getDef(false, false, null, null, null, null)
+        )
+    )
+  );
   }
   appendToDictOfDatesWorkday(response_array){
     var self = this;
