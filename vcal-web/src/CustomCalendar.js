@@ -287,7 +287,7 @@ class MyDatePicker extends Component {
                         //console.log(resp);
                         if (resp.status === 'ok') {
                             self.setState({signupId: resp.id});
-                            self.props.onUpdate(true, "Saved");
+                            self.props.onUpdate(true, "Saved", chosenDate, false, false);
                         }
                     }
                 });
