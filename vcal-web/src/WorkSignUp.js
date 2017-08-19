@@ -23,8 +23,10 @@ class WorkSignUp extends Component {
         this.getStandinRule = this.getStandinRule.bind(this);
         this.getWorkdayRule = this.getWorkdayRule.bind(this);
         this.refreshDates = this.refreshDates.bind(this);
-        this.appendToDictOfDatesStandin = this.appendToDictOfDatesStandin.bind(this);
-        this.appendToDictOfDatesWorkday = this.appendToDictOfDatesWorkday.bind(this);
+        this.appendOpenStandinDatesMetadata = this.appendOpenStandinDatesMetadata.bind(this);
+        this.appendOpenWorkdayDatesMetadata = this.appendOpenWorkdayDatesMetadata.bind(this);
+        this.appendOpenStandinDates = this.appendOpenStandinDates.bind(this);
+        this.appendOpenWorkdayDates = this.appendOpenWorkdayDates.bind(this);
         this.appendSwitchDaysToDictOfDatesStandin = this.appendSwitchDaysToDictOfDatesStandin.bind(this);
         this.appendSwitchDaysToDictOfDatesWorkday = this.appendSwitchDaysToDictOfDatesWorkday.bind(this);
         this.getRule = this.getRule.bind(this);
@@ -61,11 +63,18 @@ class WorkSignUp extends Component {
         return false;
     }
 
-    onUpdate(displayAlert, message) {
+    onUpdate(displayAlert, message, dateUpdated, isOpen, isWorkday) {
         // popup message
         this.setState({displayAlert: displayAlert, feedbackMessage: message});
 
-        //this.refreshDates();
+        if(isOpen){
+            //add if not exists in openDates
+            this.state.openStandinDates.set(dateUpdated, 1);
+        }
+        else{
+            //remove from openDates
+            this.state.openStandinDates.delete(dateUpdated);
+        }
     }
 
     getRule() {
@@ -122,7 +131,8 @@ class WorkSignUp extends Component {
             , contentType: 'application/json'
             , success: function (resp) {
                 self.setState({openWorkday: resp});
-                self.appendToDictOfDatesWorkday(resp);
+                self.appendOpenWorkdayDatesMetadata(resp);
+                self.appendOpenWorkdayDates(resp);
             }
         });
     }
@@ -137,7 +147,8 @@ class WorkSignUp extends Component {
             , contentType: 'application/json'
             , success: function (resp) {
                 self.setState({openStandin: resp});
-                self.appendToDictOfDatesStandin(resp);
+                self.appendOpenStandinDatesMetadata(resp);
+                self.appendOpenStandinDates(resp);
             }
         });
     }
@@ -153,6 +164,7 @@ class WorkSignUp extends Component {
             , success: function (resp) {
                 self.setState({openSwitchWorkday: resp});
                 self.appendSwitchDaysToDictOfDatesWorkday(resp);
+
             }
         });
     }
@@ -261,8 +273,37 @@ class WorkSignUp extends Component {
             return 'Full-day from 0830 till 1630';
         }
     }
+    appendOpenStandinDates(response_array) {
+        var self = this;
+        // this function returns a dictionary of key=standin_date timestamp and a value=0
+        response_array
+            .filter(function (s) {
+                return self.isInChosenTerm(s.standin_date);
+            })
+            .map(
+                (i) => (
+            this.state.openStandinDates.set(i.standin_date, 1)
+        )
+        )
+        ;
+    }
 
-    appendToDictOfDatesStandin(response_array) {
+    appendOpenWorkdayDates(response_array) {
+        var self = this;
+        // this function returns a dictionary of key=work_date timestamp and a value=1
+        response_array
+            .filter(function (s) {
+                return self.isInChosenTerm(s.work_date);
+            })
+            .map(
+                (i) => (
+            this.state.openWorkdayDates.set(i.work_date, 1)
+        )
+        )
+        ;
+    };
+
+    appendOpenStandinDatesMetadata(response_array) {
         var self = this;
         // this function returns a dictionary of key=standin_date timestamp and a value=0
         response_array
@@ -274,11 +315,11 @@ class WorkSignUp extends Component {
             this.state.dictOpenStandinMetadata.set(
                 i.standin_date,
                 this.getDef(false, false, null, null, null, null))))
-            .map((i) => (this.state.openStandinDates.set(i.standin_date, 1)))
+
         ;
     }
 
-    appendToDictOfDatesWorkday(response_array) {
+    appendOpenWorkdayDatesMetadata(response_array) {
         var self = this;
         // this function returns a dictionary of key=work_date timestamp and a value=1
         response_array
@@ -288,9 +329,9 @@ class WorkSignUp extends Component {
             .map((i) => (
             this.state.dictOpenWorkdayMetadata.set(i.work_date,
                 this.getDef(true, false, i.is_half_day, i.from_time_in_24hours, i.to_time_in_24hours, null))))
-        .map((i) => (this.state.openWorkdayDates.set(i.work_date, 1)))
+
         ;
-    }
+    };
 
     appendSwitchDaysToDictOfDatesStandin(response_array) {
         var self = this;
@@ -333,26 +374,13 @@ class WorkSignUp extends Component {
                     return isFutureDate(s.standin_date);
                 })
                 .map((s) =>
-            < MyDatePicker
-        key = {s.standin_date + s.id
-    }
-        chosenDate = {s.standin_date
-    }
-        openDatesMetadata = {this.state.dictOpenStandinMetadata
-    }
-        openDates = {this.state.openStandinDates
-    }
-        isWorkday = {false}
-        signupId = {s.id
-    }
-        onUpdate = {this.onUpdate.bind(this)
-    }
-        isHalfDay = {false}
-        isSwitchDay = {this.isMySwitchDay(s.standin_date)
-    }
-        displayText = {this.getText(false, false, s.from_time_in_24hours, s.to_time_in_24hours)
-    }/>
-    )
+            <MyDatePicker key = {s.standin_date + s.id} chosenDate = {s.standin_date}
+            openDatesMetadata = {this.state.dictOpenStandinMetadata}
+            openDates = {this.state.openStandinDates}
+            isWorkday = {false} signupId = {s.id} onUpdate = {this.onUpdate.bind(this)}
+            isHalfDay = {false} isSwitchDay = {this.isMySwitchDay(s.standin_date)}
+            displayText = {this.getText(false, false, s.from_time_in_24hours, s.to_time_in_24hours)} />
+        )
         ;
 
         const workdays = this.state.myWorkday;
@@ -367,27 +395,13 @@ class WorkSignUp extends Component {
                     return isFutureDate(s.work_date);
                 })
                 .map((s) =>
-            < MyDatePicker
-        key = {s.work_date + s.id
-    }
-        chosenDate = {s.work_date
-    }
-        openDatesMetadata = {this.state.dictOpenWorkdayMetadata
-    }
-        openDates = {this.state.openWorkdayDates
-    }
-        isWorkday = {true}
-        signupId = {s.id
-    }
-        onUpdate = {this.onUpdate.bind(this)
-    }
-        isHalfDay = {s.is_half_day
-    }
-        isSwitchDay = {this.isMySwitchDay(s.work_date)
-    }
-        displayText = {this.getText(true, s.is_half_day, s.from_time_in_24hours, s.to_time_in_24hours, null)
-    }/>
-    )
+            <MyDatePicker key = {s.work_date + s.id} chosenDate = {s.work_date}
+            openDatesMetadata = {this.state.dictOpenWorkdayMetadata}
+            openDates = {this.state.openWorkdayDate}
+            isWorkday = {true} signupId = {s.id} onUpdate = {this.onUpdate.bind(this)}
+            isHalfDay = {s.is_half_day} isSwitchDay = {this.isMySwitchDay(s.work_date)}
+            displayText = {this.getText(true, s.is_half_day, s.from_time_in_24hours, s.to_time_in_24hours, null)} />
+        )
         ;
 
         //create new date columns based on rule set
@@ -403,10 +417,9 @@ class WorkSignUp extends Component {
 
         const standinFromRule = standinRange
                 .map((s) =>
-            < MyDatePicker
-        key = {'standin' +s}
-        openDatesMetadata = {this.state.dictOpenStandinMetadata
-    }
+            <MyDatePicker key = {'standin' +s}
+        openDatesMetadata = {this.state.dictOpenStandinMetadata}
+        openDates = {this.state.openStandinDates}
         isWorkday = {false}
         signupId = {null}
         isHalfDay = {false}
@@ -420,8 +433,8 @@ class WorkSignUp extends Component {
                 .map((s) =>
             < MyDatePicker
         key = {'workday' +s}
-        openDatesMetadata = {this.state.dictOpenWorkdayMetadata
-    }
+        openDatesMetadata = {this.state.dictOpenWorkdayMetadata}
+        openDates = {this.state.openWorkdayDates}
         isWorkday = {true}
         signupId = {null}
         isHalfDay = {false}
