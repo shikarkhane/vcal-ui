@@ -165,7 +165,7 @@ class MyDatePicker extends Component {
                 , contentType: 'application/json'
                 , success: function (resp) {
                     //console.log(resp);
-                    self.props.onUpdate(true, "Deleted");
+                    self.props.onFeedbackUpdate(true, "Deleted");
                 }
             });
         }
@@ -177,7 +177,7 @@ class MyDatePicker extends Component {
                 , contentType: 'application/json'
                 , success: function (resp) {
                     //console.log(resp);
-                    self.props.onUpdate(true, "Deleted");
+                    self.props.onFeedbackUpdate(true, "Deleted");
                 }
             });
         }
@@ -185,6 +185,18 @@ class MyDatePicker extends Component {
         if (this.props.isSwitchDay) {
             //todo add serverside api and call here to delete switchday
             console.log("delete switch day based on switch id");
+            reqwest({
+                url: conf.serverUrl + '/switchday/' + switchId + '/'
+                , type: 'json'
+                , method: 'delete'
+                , contentType: 'application/json'
+                , success: function (resp) {
+                    if (resp.status === 'ok') {
+                        console.log('switch day was unpublished');
+                    }
+
+                }
+            });
         }
 
     }
@@ -216,7 +228,8 @@ class MyDatePicker extends Component {
             , data: JSON.stringify({chosen_date: chosenDate})
             , success: function (resp) {
                 if (resp.status === 'ok') {
-                    self.props.onUpdate(true, "Saved");
+                    self.props.onFeedbackUpdate(true, "Saved");
+                    self.props.onOpenDatesUpdate(chosenDate, false, isWorkday);
                 }
 
             }
@@ -234,11 +247,12 @@ class MyDatePicker extends Component {
             if (!isWith30DaysFromNow(deletedDate)) {
                 self.setState({visibleByte: "hidden"});
                 this.handleDeleteSignup();
+                self.props.onOpenDatesUpdate(deletedDate, true, self.props.isWorkday);
                 this.clearText();
                 return true;
             }
             else {
-                self.props.onUpdate(true, "Endast byte är möjligt eftersom datumet är inom 30 dagar");
+                self.props.onFeedbackUpdate(true, "Endast byte är möjligt eftersom datumet är inom 30 dagar");
                 return false;
             }
 
@@ -249,9 +263,10 @@ class MyDatePicker extends Component {
                 var deletedDate = (this.state.date.clone()).utc().startOf('day').unix();
                 if (!isWith30DaysFromNow(deletedDate)) {
                     this.handleDeleteSignup();
+                    self.props.onOpenDatesUpdate(deletedDate, true, self.props.isWorkday);
                 }
                 else {
-                    self.props.onUpdate(true, "Endast byte är möjligt eftersom datumet är inom 30 dagar");
+                    self.props.onFeedbackUpdate(true, "Endast byte är möjligt eftersom datumet är inom 30 dagar");
                     return false;
                 }
             }
@@ -287,7 +302,8 @@ class MyDatePicker extends Component {
                         //console.log(resp);
                         if (resp.status === 'ok') {
                             self.setState({signupId: resp.id});
-                            self.props.onUpdate(true, "Saved", chosenDate, false, false);
+                            self.props.onFeedbackUpdate(true, "Saved");
+                            self.props.onOpenDatesUpdate(chosenDate, false, isWorkday);
                         }
                     }
                 });

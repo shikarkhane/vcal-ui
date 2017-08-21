@@ -63,17 +63,29 @@ class WorkSignUp extends Component {
         return false;
     }
 
-    onUpdate(displayAlert, message, dateUpdated, isOpen, isWorkday) {
+    onFeedbackUpdate(displayAlert, message) {
         // popup message
         this.setState({displayAlert: displayAlert, feedbackMessage: message});
-
+    }
+    onOpenDatesUpdate(dateUpdated, isOpen, isWorkday) {
+        // this method keeps openDates state updated
         if(isOpen){
-            //add if not exists in openDates
-            this.state.openStandinDates.set(dateUpdated, 1);
+            if(isWorkday){
+                //add if not exists in openDates
+                this.state.openWorkdayDates.set(dateUpdated, 1);
+            }
+            else{
+                this.state.openStandinDates.set(dateUpdated, 1);
+            }
         }
         else{
-            //remove from openDates
-            this.state.openStandinDates.delete(dateUpdated);
+            if(isWorkday){
+                this.state.openWorkdayDates.delete(dateUpdated);
+            }
+            else{
+                //remove from openDates
+                this.state.openStandinDates.delete(dateUpdated);
+            }
         }
     }
 
@@ -377,7 +389,9 @@ class WorkSignUp extends Component {
             <MyDatePicker key = {s.standin_date + s.id} chosenDate = {s.standin_date}
             openDatesMetadata = {this.state.dictOpenStandinMetadata}
             openDates = {this.state.openStandinDates}
-            isWorkday = {false} signupId = {s.id} onUpdate = {this.onUpdate.bind(this)}
+            isWorkday = {false} signupId = {s.id}
+            onFeedbackUpdate = {this.onFeedbackUpdate.bind(this)}
+            onOpenDatesUpdate = {this.onOpenDatesUpdate.bind(this)}
             isHalfDay = {false} isSwitchDay = {this.isMySwitchDay(s.standin_date)}
             displayText = {this.getText(false, false, s.from_time_in_24hours, s.to_time_in_24hours)} />
         )
@@ -398,7 +412,9 @@ class WorkSignUp extends Component {
             <MyDatePicker key = {s.work_date + s.id} chosenDate = {s.work_date}
             openDatesMetadata = {this.state.dictOpenWorkdayMetadata}
             openDates = {this.state.openWorkdayDate}
-            isWorkday = {true} signupId = {s.id} onUpdate = {this.onUpdate.bind(this)}
+            isWorkday = {true} signupId = {s.id}
+            onFeedbackUpdate = {this.onFeedbackUpdate.bind(this)}
+            onOpenDatesUpdate = {this.onOpenDatesUpdate.bind(this)}
             isHalfDay = {s.is_half_day} isSwitchDay = {this.isMySwitchDay(s.work_date)}
             displayText = {this.getText(true, s.is_half_day, s.from_time_in_24hours, s.to_time_in_24hours, null)} />
         )
@@ -424,8 +440,8 @@ class WorkSignUp extends Component {
         signupId = {null}
         isHalfDay = {false}
         isSwitchDay = {false}
-        onUpdate = {this.onUpdate.bind(this)
-    }
+        onFeedbackUpdate = {this.onFeedbackUpdate.bind(this)}
+        onOpenDatesUpdate = {this.onOpenDatesUpdate.bind(this)}
         displayText = "" / >
     )
         ;
@@ -439,8 +455,8 @@ class WorkSignUp extends Component {
         signupId = {null}
         isHalfDay = {false}
         isSwitchDay = {false}
-        onUpdate = {this.onUpdate.bind(this)
-    }
+        onFeedbackUpdate = {this.onFeedbackUpdate.bind(this)}
+        onOpenDatesUpdate = {this.onOpenDatesUpdate.bind(this)}
         displayText = "" / >
     )
         ;
