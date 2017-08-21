@@ -2,9 +2,8 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import { Link } from 'react-router';
 import MyDatePicker from './CustomCalendar';
-import {getHumanDate, isNonWorkingDay, makeId, isFutureDate} from './Utility';
+import {isNonWorkingDay, isFutureDate} from './Utility';
 import Feedback from './Feedback';
 
 class WorkSignUp extends Component {
@@ -372,10 +371,10 @@ class WorkSignUp extends Component {
     }
 
     render() {
-        var self = this;
+        var self=this;
         // days already selected by user
-        const standins = this.state.myStandin;
-        const standinElements = standins
+        const standins=this.state.myStandin;
+        const standinElements=standins
                 .filter(function (s) {
                     return self.isInChosenTerm(s.standin_date);
                 })
@@ -386,19 +385,19 @@ class WorkSignUp extends Component {
                     return isFutureDate(s.standin_date);
                 })
                 .map((s) =>
-            <MyDatePicker key = {s.standin_date + s.id} chosenDate = {s.standin_date}
-            openDatesMetadata = {this.state.dictOpenStandinMetadata}
-            openDates = {this.state.openStandinDates}
-            isWorkday = {false} signupId = {s.id}
-            onFeedbackUpdate = {this.onFeedbackUpdate.bind(this)}
-            onOpenDatesUpdate = {this.onOpenDatesUpdate.bind(this)}
-            isHalfDay = {false} isSwitchDay = {this.isMySwitchDay(s.standin_date)}
-            displayText = {this.getText(false, false, s.from_time_in_24hours, s.to_time_in_24hours)} />
+            <MyDatePicker key={s.standin_date + s.id} chosenDate={s.standin_date}
+            openDatesMetadata={this.state.dictOpenStandinMetadata}
+            openDates={this.state.openStandinDates}
+            isWorkday={false} signupId={s.id}
+            onFeedbackUpdate={this.onFeedbackUpdate.bind(this)}
+            onOpenDatesUpdate={this.onOpenDatesUpdate.bind(this)}
+            isHalfDay={false} isSwitchDay={this.isMySwitchDay(s.standin_date)}
+            displayText={this.getText(false, false, s.from_time_in_24hours, s.to_time_in_24hours)} />
         )
         ;
 
-        const workdays = this.state.myWorkday;
-        const workdayElements = workdays
+        const workdays=this.state.myWorkday;
+        const workdayElements=workdays
                 .filter(function (s) {
                     return self.isInChosenTerm(s.work_date);
                 })
@@ -409,115 +408,87 @@ class WorkSignUp extends Component {
                     return isFutureDate(s.work_date);
                 })
                 .map((s) =>
-            <MyDatePicker key = {s.work_date + s.id} chosenDate = {s.work_date}
-            openDatesMetadata = {this.state.dictOpenWorkdayMetadata}
-            openDates = {this.state.openWorkdayDate}
-            isWorkday = {true} signupId = {s.id}
-            onFeedbackUpdate = {this.onFeedbackUpdate.bind(this)}
-            onOpenDatesUpdate = {this.onOpenDatesUpdate.bind(this)}
-            isHalfDay = {s.is_half_day} isSwitchDay = {this.isMySwitchDay(s.work_date)}
-            displayText = {this.getText(true, s.is_half_day, s.from_time_in_24hours, s.to_time_in_24hours, null)} />
+            <MyDatePicker key={s.work_date + s.id} chosenDate={s.work_date}
+            openDatesMetadata={this.state.dictOpenWorkdayMetadata}
+            openDates={this.state.openWorkdayDate}
+            isWorkday={true} signupId={s.id}
+            onFeedbackUpdate={this.onFeedbackUpdate.bind(this)}
+            onOpenDatesUpdate={this.onOpenDatesUpdate.bind(this)}
+            isHalfDay={s.is_half_day} isSwitchDay={this.isMySwitchDay(s.work_date)}
+            displayText={this.getText(true, s.is_half_day, s.from_time_in_24hours, s.to_time_in_24hours, null)} />
         )
         ;
 
         //create new date columns based on rule set
-        const range = n =>
+        const range=n =>
         Array.from({length: n}, (value, key) => key)
         ;
 
-        var n = this.getStandinRule() - standinElements.length;
-        const standinRange = range(n);
+        var n=this.getStandinRule() - standinElements.length;
+        const standinRange=range(n);
 
-        var y = this.getWorkdayRule() - workdayElements.length;
-        const workdayRange = range(y);
+        var y=this.getWorkdayRule() - workdayElements.length;
+        const workdayRange=range(y);
 
-        const standinFromRule = standinRange
+        const standinFromRule=standinRange
                 .map((s) =>
-            <MyDatePicker key = {'standin' +s}
-        openDatesMetadata = {this.state.dictOpenStandinMetadata}
-        openDates = {this.state.openStandinDates}
-        isWorkday = {false}
-        signupId = {null}
-        isHalfDay = {false}
-        isSwitchDay = {false}
-        onFeedbackUpdate = {this.onFeedbackUpdate.bind(this)}
-        onOpenDatesUpdate = {this.onOpenDatesUpdate.bind(this)}
-        displayText = "" / >
+            <MyDatePicker key={'standin' +s}
+        openDatesMetadata={this.state.dictOpenStandinMetadata}
+        openDates={this.state.openStandinDates}
+        isWorkday={false}
+        signupId={null}
+        isHalfDay={false}
+        isSwitchDay={false}
+        onFeedbackUpdate={this.onFeedbackUpdate.bind(this)}
+        onOpenDatesUpdate={this.onOpenDatesUpdate.bind(this)}
+        displayText="" />
     )
         ;
-        const workdayFromRule = workdayRange
+        const workdayFromRule=workdayRange
                 .map((s) =>
             < MyDatePicker
-        key = {'workday' +s}
-        openDatesMetadata = {this.state.dictOpenWorkdayMetadata}
-        openDates = {this.state.openWorkdayDates}
-        isWorkday = {true}
-        signupId = {null}
-        isHalfDay = {false}
-        isSwitchDay = {false}
-        onFeedbackUpdate = {this.onFeedbackUpdate.bind(this)}
-        onOpenDatesUpdate = {this.onOpenDatesUpdate.bind(this)}
-        displayText = "" / >
+        key={'workday' +s}
+        openDatesMetadata={this.state.dictOpenWorkdayMetadata}
+        openDates={this.state.openWorkdayDates}
+        isWorkday={true}
+        signupId={null}
+        isHalfDay={false}
+        isSwitchDay={false}
+        onFeedbackUpdate={this.onFeedbackUpdate.bind(this)}
+        onOpenDatesUpdate={this.onOpenDatesUpdate.bind(this)}
+        displayText="" />
     )
         ;
 
 
         return (
-            < div >
-            < Header / >
-            < h1 > Åtagande < / h1 >
-            < h4 > Fyll
-        i
-        datum
-        nedan
-        för
-        att
-        uppfylla
-        ditt
-        åtagande < / h4 >
-        < Feedback
-        displayAlert = {this.state.displayAlert
-    }
-        message = {this.state.feedbackMessage
-    } />
+            <div>
+            <Header />
+            <h1> Åtagande</h1>
+            <h4> Fyll i datum nedan för att uppfylla ditt åtagande</h4>
+            <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
 
-    <
-        div
-        className = "panel panel-default" >
-            < div
-        className = "panel-heading" > Vikariedagar < / div >
-            < div
-        className = "panel-body" >
-            < div
-        className = "list-group" >
-            {standinElements}
-        {
-            standinFromRule
-        }
-    </
-        div >
-        < / div >
-        < / div >
+            <div className="panel panel-default">
+                 <div className="panel-heading"> Vikariedagar</div>
+                    <div className="panel-body">
+                        <div className="list-group">
+                            {standinElements}
+                            {standinFromRule}
+                        </div>
+                    </div>
+                 </div>
 
-        < div
-        className = "panel panel-default" >
-            < div
-        className = "panel-heading" > Arbetsdagar < / div >
-            < div
-        className = "panel-body" >
-            < div
-        className = "list-group" >
-            {workdayElements}
-        {
-            workdayFromRule
-        }
-    </
-        div >
-        < / div >
-        < / div >
-        < / div >
-    )
-        ;
+                <div className="panel panel-default">
+                    <div className="panel-heading"> Arbetsdagar</div>
+                        <div className="panel-body">
+                            <div className="list-group">
+                                {workdayElements}
+                                {workdayFromRule}
+                            </div>
+                        </div>
+                    </div>
+               </div>
+            );
     }
 }
 

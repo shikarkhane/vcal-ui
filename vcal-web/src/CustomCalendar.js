@@ -95,7 +95,6 @@ class MyDatePicker extends Component {
             disabledByte: true, byteText: "Byte publicerat",
             byteButtonClass: "btn btn-warning"
         });
-        var self = this;
         var groupId = localStorage.getItem("groupId");
         var userId = localStorage.getItem("userId");
         var isWorkday = this.props.isWorkday;
@@ -260,10 +259,10 @@ class MyDatePicker extends Component {
         else {
             if (this.state.date) {
                 // if user chose another date while there exists a date in the date-picker
-                var deletedDate = (this.state.date.clone()).utc().startOf('day').unix();
-                if (!isWith30DaysFromNow(deletedDate)) {
+                var overwrittenDate = (this.state.date.clone()).utc().startOf('day').unix();
+                if (!isWith30DaysFromNow(overwrittenDate)) {
                     this.handleDeleteSignup();
-                    self.props.onOpenDatesUpdate(deletedDate, true, self.props.isWorkday);
+                    self.props.onOpenDatesUpdate(overwrittenDate, true, self.props.isWorkday);
                 }
                 else {
                     self.props.onFeedbackUpdate(true, "Endast byte är möjligt eftersom datumet är inom 30 dagar");
@@ -314,65 +313,40 @@ class MyDatePicker extends Component {
     }
 
     render() {
-        const visibilityStyle = {
-            visibility: this.state.visibleByte
-        };
-
-
+        const visibilityStyle = { visibility: this.state.visibleByte};
+        
         return (
-            < li
-        className = "list-group-item" >
-            < SingleDatePicker
-        date = {this.state.date
-    }
-        focused = {this.state.focused
-    }
-        onDateChange = {(date) =>
-        {
-            // clear the date if its not within 30 days
-            if (this.handleSave(date)) {
-                this.setState({date});
-            }
+            <li className="list-group-item" >
+                < SingleDatePicker date={this.state.date} focused={this.state.focused}
+                    onDateChange={(date) =>
+                            {
+                                // clear the date if its not within 30 days
+                                if (this.handleSave(date)) {
+                                    this.setState({date});
+                                }
+                            }
+                        }
+                    onFocusChange={({focused}) =>
+                            {
+                                this.setState({focused});
+                            }
+                        }
+                    showClearDate
+                    displayFormat="MMM D"
+                    isDayBlocked={this.isDayBlocked}
+                    renderCalendarInfo={this.calendarInfo}
+                    isDayHighlighted={this.highlightHalfDay}
+                />
+                <button type="button" className={this.state.byteButtonClass}
+                    onClick={this.handleSwitchDate} disabled={this.state.disabledByte}
+                    style={visibilityStyle} >
 
-        }
-    }
-        onFocusChange = {({focused}) =>
-        {
-            this.setState({focused});
-        }
-    }
-        showClearDate
-        displayFormat = "MMM D"
-        isDayBlocked = {this.isDayBlocked
-    }
-        renderCalendarInfo = {this.calendarInfo
-    }
-        isDayHighlighted = {this.highlightHalfDay
-    }
-    />
-    <
-        button
-        type = "button"
-        className = {this.state.byteButtonClass
-    }
-        onClick = {this.handleSwitchDate
-    }
-        disabled = {this.state.disabledByte
-    }
-        style = {visibilityStyle} >
-            {this.state.byteText
-    }
-    </
-        button >
+                        {this.state.byteText}
+                </button >
 
-
-        < span
-        className = "badge" > {this.state.displayText
-    }</
-        span >
-        < / li >
-
-    )
+                <span className="badge" > {this.state.displayText}</span >
+            </li>
+        )
     }
 }
 
