@@ -351,10 +351,12 @@ class WorkSignUp extends Component {
             .filter(function (s) {
                 return self.isInChosenTerm(s.switch_date);
             })
-            .map((i) => (this.state.dictOpenStandinMetadata.set(i.switch_date,
-            this.getDef(false, true, null, null, null, i.standin_user_id)))
-    )
-        ;
+            .map((i) => {
+                this.state.dictOpenStandinMetadata.set(i.switch_date,
+                    this.getDef(false, true, null, null, null, i.standin_user_id));
+                this.state.openStandinDates.set(i.switch_date, 1);
+                }
+            );
     }
 
     appendSwitchDaysToDictOfDatesWorkday(response_array) {
@@ -364,10 +366,13 @@ class WorkSignUp extends Component {
             .filter(function (s) {
                 return self.isInChosenTerm(s.switch_date);
             })
-            .map((i) => (this.state.dictOpenWorkdayMetadata.set(i.switch_date,
-            this.getDef(true, true, i.is_half_day, i.from_time_in_24hours, i.to_time_in_24hours, i.standin_user_id)))
-    )
-        ;
+            .map((i) => {
+                this.state.dictOpenWorkdayMetadata.set(i.switch_date,
+                    this.getDef(true, true, i.is_half_day, i.from_time_in_24hours,
+                        i.to_time_in_24hours, i.standin_user_id));
+                this.state.openWorkdayDates.set(i.switch_date, 1);
+                }
+            );
     }
 
     render() {
