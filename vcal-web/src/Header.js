@@ -15,6 +15,7 @@ class Header extends Component {
      this.checksAndGets();
 
      var groupName = localStorage.getItem("groupName");
+     var isTermOverridden = localStorage.getItem("isTermOverridden");
      var defaultTermId = localStorage.getItem("defaultTermId");
      var termName = localStorage.getItem("termName");
      var termId = localStorage.getItem("termId");
@@ -28,7 +29,7 @@ class Header extends Component {
      }
        this.setState({groupName: groupName });
 
-       if (defaultTermId && allTerms){
+       if (defaultTermId && allTerms && !isTermOverridden){
            var terms = JSON.parse(allTerms);
            var f = (terms.find(x => x.id === defaultTermId));
            if (f){

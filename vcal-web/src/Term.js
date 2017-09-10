@@ -15,6 +15,7 @@ class Term extends Component {
    var _data = this.state.data;
    _data.unshift(newElement);
    this.setState({ data : _data});
+
  }
  componentDidMount() {
       this.getTerms();

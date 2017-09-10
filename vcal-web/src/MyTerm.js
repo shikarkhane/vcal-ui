@@ -8,6 +8,7 @@ class TermElement extends Component{
   handleChooseTerm(termId, termName){
     localStorage.setItem("termId", termId);
     localStorage.setItem("termName", termName);
+      localStorage.setItem("isTermOverridden", true);
     hashHistory.push('/');
   }
   render(){
