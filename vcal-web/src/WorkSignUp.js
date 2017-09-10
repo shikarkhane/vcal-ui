@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
 import MyDatePicker from './CustomCalendar';
-import {isNonWorkingDay, isFutureDate} from './Utility';
+import {isNonWorkingDay, isFutureDate, isInChosenTerm} from './Utility';
 import Feedback from './Feedback';
 
 class WorkSignUp extends Component {
@@ -229,20 +229,6 @@ class WorkSignUp extends Component {
         return true;
     }
 
-    isInChosenTerm(date) {
-        var termId = localStorage.getItem("termId");
-        var terms = JSON.parse(localStorage.getItem("allTerms"));
-        var f = (terms.find(x => x.id === termId)
-    )
-        ;
-        if (f) {
-            if (date >= f.start_date && date <= f.end_date) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     getDef(isWorkday, isSwitchDay, isHalfDay, from, to, switchUserId) {
         function isHalfDayText(isHalfDay) {
             var text = "Full-day";
@@ -289,7 +275,7 @@ class WorkSignUp extends Component {
         // this function returns a dictionary of key=standin_date timestamp and a value=0
         response_array
             .filter(function (s) {
-                return self.isInChosenTerm(s.standin_date);
+                return isInChosenTerm(s.standin_date);
             })
             .map(
                 (i) => (
@@ -304,7 +290,7 @@ class WorkSignUp extends Component {
         // this function returns a dictionary of key=work_date timestamp and a value=1
         response_array
             .filter(function (s) {
-                return self.isInChosenTerm(s.work_date);
+                return isInChosenTerm(s.work_date);
             })
             .map(
                 (i) => (
@@ -319,7 +305,7 @@ class WorkSignUp extends Component {
         // this function returns a dictionary of key=standin_date timestamp and a value=0
         response_array
             .filter(function (s) {
-                return self.isInChosenTerm(s.standin_date);
+                return isInChosenTerm(s.standin_date);
             })
             .map(
                 (i) => (
@@ -335,7 +321,7 @@ class WorkSignUp extends Component {
         // this function returns a dictionary of key=work_date timestamp and a value=1
         response_array
             .filter(function (s) {
-                return self.isInChosenTerm(s.work_date);
+                return isInChosenTerm(s.work_date);
             })
             .map((i) => (
             this.state.dictOpenWorkdayMetadata.set(i.work_date,
@@ -349,7 +335,7 @@ class WorkSignUp extends Component {
         // this function appends to existing
         response_array
             .filter(function (s) {
-                return self.isInChosenTerm(s.switch_date);
+                return isInChosenTerm(s.switch_date);
             })
             .map((i) => {
                 this.state.dictOpenStandinMetadata.set(i.switch_date,
@@ -364,7 +350,7 @@ class WorkSignUp extends Component {
         // this function appends to existing
         response_array
             .filter(function (s) {
-                return self.isInChosenTerm(s.switch_date);
+                return isInChosenTerm(s.switch_date);
             })
             .map((i) => {
                 this.state.dictOpenWorkdayMetadata.set(i.switch_date,
@@ -381,7 +367,7 @@ class WorkSignUp extends Component {
         const standins=this.state.myStandin;
         const standinElements=standins
                 .filter(function (s) {
-                    return self.isInChosenTerm(s.standin_date);
+                    return isInChosenTerm(s.standin_date);
                 })
                 .filter(function (s) {
                     return !isNonWorkingDay(s.standin_date);
@@ -404,7 +390,7 @@ class WorkSignUp extends Component {
         const workdays=this.state.myWorkday;
         const workdayElements=workdays
                 .filter(function (s) {
-                    return self.isInChosenTerm(s.work_date);
+                    return isInChosenTerm(s.work_date);
                 })
                 .filter(function (s) {
                     return !isNonWorkingDay(s.work_date);

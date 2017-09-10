@@ -1,7 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import {getHumanDate, isFutureDate}from './Utility';
+import {getHumanDate, isFutureDate, isInChosenTerm}from './Utility';
 
 class WorkdayElement extends Component{
     constructor(props) {
@@ -49,6 +49,7 @@ class ListWorkday extends Component {
     const wds = this.props.data;
     const workdayButtons = wds
             .filter(function(s) { return isFutureDate(s.work_date); })
+            .filter(function (s) { return isInChosenTerm(s.work_date); })
             .map((wd) =>
     <WorkdayElement key={wd.work_date+wd.id} workdayId={wd.id}
       date={getHumanDate(wd.work_date)}

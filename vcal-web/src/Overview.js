@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import {getHumanDate, isNonWorkingDay, getUserInfo, isFutureDate} from './Utility';
+import {getHumanDate, isNonWorkingDay, getUserInfo, isFutureDate, isInChosenTerm} from './Utility';
 
 class PickDate extends Component{
     render(){
@@ -98,6 +98,7 @@ class Overview extends Component {
     const standinElements = standins
             .filter(function(s) { return !isNonWorkingDay(s.standin_date); })
             .filter(function(s) { return isFutureDate(s.standin_date); })
+            .filter(function (s) { return isInChosenTerm(s.standin_date); })
             .map((s) =>
     <PickDate key={s.standin_date+s.id} chosenDate={s.standin_date} isWorkday="0" userId="" />
       );
@@ -105,6 +106,7 @@ class Overview extends Component {
     const workdayElements = workdays
             .filter(function(s) { return !isNonWorkingDay(s.work_date); })
             .filter(function(s) { return isFutureDate(s.work_date); })
+            .filter(function (s) { return isInChosenTerm(s.work_date); })
             .map((s) =>
     <PickDate key={s.work_date+s.id} chosenDate={s.work_date} isWorkday="1" userId="" />
     );
@@ -112,6 +114,7 @@ class Overview extends Component {
       const nonStandinElements = nonstandins
               .filter(function(s) { return !isNonWorkingDay(s.standin_date); })
               .filter(function(s) { return isFutureDate(s.standin_date); })
+              .filter(function (s) { return isInChosenTerm(s.standin_date); })
               .map((s) =>
           <PickDate key={s.standin_date+s.id} chosenDate={s.standin_date} isWorkday="0"
       userId={s.standin_user_id}/>
@@ -120,6 +123,7 @@ class Overview extends Component {
       const nonWorkdayElements = nonworkdays
               .filter(function(s) { return !isNonWorkingDay(s.work_date); })
               .filter(function(s) { return isFutureDate(s.work_date); })
+              .filter(function (s) { return isInChosenTerm(s.work_date); })
               .map((s) =>
           <PickDate key={s.work_date+s.id} chosenDate={s.work_date} isWorkday="1"
       userId={s.standin_user_id}/>

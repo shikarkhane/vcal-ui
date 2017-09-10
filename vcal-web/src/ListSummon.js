@@ -1,7 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import {getHumanDate, isFutureDate} from './Utility';
+import {getHumanDate, isFutureDate, isInChosenTerm} from './Utility';
 
 
 class SummonElement extends Component{
@@ -45,6 +45,7 @@ class ListSummon extends Component {
     const smons = this.props.data;
     const summonButtons = smons
             .filter(function(s) { return isFutureDate(s.work_date); })
+            .filter(function (s) { return isInChosenTerm(s.work_date); })
             .map((smon) =>
     <SummonElement key={smon.work_date+smon.id} summonId={smon.id}
       date={getHumanDate(smon.work_date)}

@@ -97,6 +97,22 @@ var _getUserInfo = function(userId){
   });
   return (returnValue);
 };
+
+var _isInChosenTerm = function(date) {
+  var termId = localStorage.getItem("termId");
+  var terms = JSON.parse(localStorage.getItem("allTerms"));
+  var f = (terms.find(x => x.id === termId)
+)
+  ;
+  if (f) {
+    if (date >= f.start_date && date <= f.end_date) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export const isInChosenTerm = _isInChosenTerm;
 export const getHumanDate = _getHumanDate;
 export const isNonWorkingDay = _isNonWorkingDay;
 export const getDateFormat = _getDateFormat;
