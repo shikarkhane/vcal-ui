@@ -16,12 +16,15 @@ class WorkSignUp extends Component {
             dictOpenWorkdayMetadata: new Map(), dictOpenStandinMetadata: new Map(),
             openWorkdayDates: new Map(), openStandinDates: new Map(),
             ruleSet: {"standin": [0, 0, 0], "workday": [0, 0, 0]}, childrenCount: 0,
-            feedbackMessage: "", displayAlert: false
+            feedbackMessage: "", displayAlert: false, hideExtraStandin: true,
+            hideExtraWorkday: true
         };
 
         this.getStandinRule = this.getStandinRule.bind(this);
         this.getWorkdayRule = this.getWorkdayRule.bind(this);
         this.refreshDates = this.refreshDates.bind(this);
+        this.addMoreStandin = this.addMoreStandin.bind(this);
+        this.addMoreWorkday = this.addMoreWorkday.bind(this);
         this.appendOpenStandinDatesMetadata = this.appendOpenStandinDatesMetadata.bind(this);
         this.appendOpenWorkdayDatesMetadata = this.appendOpenWorkdayDatesMetadata.bind(this);
         this.appendOpenStandinDates = this.appendOpenStandinDates.bind(this);
@@ -361,6 +364,13 @@ class WorkSignUp extends Component {
             );
     }
 
+    addMoreStandin(){
+        this.setState({hideExtraStandin: false});
+    }
+    addMoreWorkday(){
+        this.setState({hideExtraWorkday: false});
+    }
+
     render() {
         var self=this;
         // days already selected by user
@@ -451,6 +461,43 @@ class WorkSignUp extends Component {
     )
         ;
 
+        //extra days on add click
+        var nExtra = 4;
+        const extraStandinRange=range(nExtra);
+
+        var yExtra = 2;
+        const extraWorkdayRange=range(yExtra);
+
+        const extraStandin=extraStandinRange
+                .map((s) =>
+            <MyDatePicker key={'standin' +s}
+        openDatesMetadata={this.state.dictOpenStandinMetadata}
+        openDates={this.state.openStandinDates}
+        isWorkday={false}
+        signupId={null}
+        isHalfDay={false}
+        isSwitchDay={false}
+        onFeedbackUpdate={this.onFeedbackUpdate.bind(this)}
+        onOpenDatesUpdate={this.onOpenDatesUpdate.bind(this)}
+        displayText="" />
+    )
+        ;
+        const extraWorkday=extraWorkdayRange
+                .map((s) =>
+            < MyDatePicker
+        key={'workday' +s}
+        openDatesMetadata={this.state.dictOpenWorkdayMetadata}
+        openDates={this.state.openWorkdayDates}
+        isWorkday={true}
+        signupId={null}
+        isHalfDay={false}
+        isSwitchDay={false}
+        onFeedbackUpdate={this.onFeedbackUpdate.bind(this)}
+        onOpenDatesUpdate={this.onOpenDatesUpdate.bind(this)}
+        displayText="" />
+    )
+        ;
+
 
         return (
             <div>
@@ -466,6 +513,11 @@ class WorkSignUp extends Component {
                             {standinElements}
                             {standinFromRule}
                         </div>
+                        <button className="btn btn-default" onClick={this.addMoreStandin}
+                            disabled={!this.state.hideExtraStandin}>Add Extra</button>
+                        <div className="list-group" hidden={this.state.hideExtraStandin}>
+                            {extraStandin}
+                        </div>
                     </div>
                  </div>
 
@@ -475,6 +527,13 @@ class WorkSignUp extends Component {
                             <div className="list-group">
                                 {workdayElements}
                                 {workdayFromRule}
+                            </div>
+
+        <button className="btn btn-default" onClick={this.addMoreWorkday}
+        disabled={!this.state.hideExtraWorkday}>Add Extra</button>
+
+                            <div className="list-group" hidden={this.state.hideExtraWorkday}>
+                            {extraWorkday}
                             </div>
                         </div>
                     </div>
