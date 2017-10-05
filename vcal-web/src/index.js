@@ -11,7 +11,7 @@ import MyTerm from './MyTerm';
 import Summon from './Summon';
 import Workday from './Workday';
 import Term from './Term';
-import NoShowUps from './NoShowUps';
+import NoShowUps from './ShowUps';
 import Invite from './Invite';
 import Member from './Member';
 import Rule from './Rule';

@@ -100,8 +100,8 @@ class NoNoShowUps extends Component {
     return (
       <div>
         <Header />
-        <h1>No ShowUps</h1>
-        <h3>Only mark those who didn't show up for work</h3>
+        <h1>ShowUps</h1>
+        <h3>Mark those who showed up for work</h3>
           <div className="row">
             <div className="col-xs-12 col-lg-6">
                 <div className="input-group">

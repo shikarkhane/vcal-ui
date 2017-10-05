@@ -71,64 +71,90 @@ class Statistic extends Component {
         });
     }
 
+    // helper function to group by item of an object
+    groupByArray(xs, key) { return xs.reduce(function (rv, x) { let v = key instanceof Function ? key(x) : x[key]; let el = rv.find((r) => r && r.key === v); if (el) { el.values.push(x); } else { rv.push({ key: v, values: [x] }); } return rv; }, []); }
+
+    filterDates(data, isWorkdayData){
+        if ( isWorkdayData){
+            return(
+                data
+                    .filter(function(s) { return !isNonWorkingDay(s.work_date); })
+                    .filter(function (s) { return isInChosenTerm(s.work_date); })
+            );
+        }
+        else{
+            return(
+                data
+                .filter(function(s) { return !isNonWorkingDay(s.standin_date); })
+                .filter(function (s) { return isInChosenTerm(s.standin_date); })
+            );
+        }
+
+    }
+
+
   render() {
+
     const standins = this.state.openStandin;
-    const standinArray = standins
-            .filter(function(s) { return !isNonWorkingDay(s.standin_date); })
-            .filter(function (s) { return isInChosenTerm(s.standin_date); })
-            .map((s) => (1)
-      );
+    const standinArray = this.filterDates(standins, false).map((s) => (1));
+
     const workdays = this.state.openWorkday;
-    const workdayArray = workdays
-            .filter(function(s) { return !isNonWorkingDay(s.work_date); })
-            .filter(function (s) { return isInChosenTerm(s.work_date); })
-            .map((s) => (1)
-    );
+    const workdayArray = this.filterDates(workdays, true).map((s) => (1));
+
       var standinCount = standinArray.length;
       var workdayCount = workdayArray.length;
 
       // reduce booked into count by user
       const nonstandins = this.state.nonOpenStandin;
-      const nonStandinArray = nonstandins
-              .filter(function(s) { return !isNonWorkingDay(s.standin_date); })
-              .filter(function (s) { return isInChosenTerm(s.standin_date); })
-              .map((s) =>
-          (s.standin_user_id)
-  );
+      //this.groupByArray(nonstandins, "standin_user_id").map(x=>[x.key, x.values.length])
+      //this.groupByArray(nonstandins, "standin_user_id").map(function(obj){var r={}; r[obj.key] = obj.values.length; return r;});
+
+      const standinCountByUser = this.groupByArray((this.filterDates(nonstandins, false)), "standin_user_id")
+                                .map(x=>[x.key, x.values.length]);
+
+      const utfallDetails = (this.filterDates(nonstandins, false))
+          .filter(function(s) { return s.has_not_worked; })
+      const utfallStandinCountByUser = this.groupByArray(utfallDetails, "standin_user_id")
+              .map(x=>[x.key, x.values.length]);
+
       const nonworkdays = this.state.nonOpenWorkday;
-      const nonWorkdayArray = nonworkdays
-              .filter(function(s) { return !isNonWorkingDay(s.work_date); })
-              .filter(function (s) { return isInChosenTerm(s.work_date); })
-              .map((s) =>
-          (s.standin_user_id)
-  );
+      const workdayCountByUser = this.groupByArray((this.filterDates(nonworkdays, true)), "standin_user_id")
+                                .map(x=>[x.key, x.values.length]);
+
+
 
       var userStandinStat = {}; // this will look like { '2jhjkh339-23jhjh32': 5, ...}
-      for (var i = 0; i < nonStandinArray.length; i++) {
-          if( userStandinStat[nonStandinArray[i]] === null || userStandinStat[nonStandinArray[i]] === undefined) {
-              userStandinStat[nonStandinArray[i]] = 0;
-          }
-          userStandinStat[nonStandinArray[i]] += 1;
-      }
+      for (var i = 0; i < standinCountByUser.length; i++) {
+          userStandinStat[standinCountByUser[i][0]] = standinCountByUser[i][1];
+      };
+
+        var userUtfallStat = {}; // this will look like { '2jhjkh339-23jhjh32': 5, ...}
+        for (var i = 0; i < utfallStandinCountByUser.length; i++) {
+            userUtfallStat[utfallStandinCountByUser[i][0]] = utfallStandinCountByUser[i][1];
+        };
+
       var userWorkdayStat = {};
-      for (var i = 0; i < nonWorkdayArray.length; i++) {
-          if( userWorkdayStat[nonWorkdayArray[i]] === null || userWorkdayStat[nonWorkdayArray[i]] === undefined) {
-              userWorkdayStat[nonWorkdayArray[i]] = 0;
-          }
-          userWorkdayStat[nonWorkdayArray[i]] += 1;
-      }
+      for (var i = 0; i < workdayCountByUser.length; i++) {
+          userWorkdayStat[workdayCountByUser[i][0]] = workdayCountByUser[i][1];
+      };
 
       //consolidate
       var userStats = {}; // this will look like { '2jhjkh339-23jhjh32': [5,2] , '2jhjkh339-23jhjh32': [0,2] , ...}
       for (var key in userStandinStat) {
           if( userStats[key] === null || userStats[key] === undefined) {
-              userStats[key] = {"standin_count": 0, "workday_count": 0};
+              userStats[key] = {"standin_count": 0, "workday_count": 0, "utfall": 0};
           }
           userStats[key]['standin_count'] += userStandinStat[key];
       };
+      for (var key in userUtfallStat) {
+          if( userStats[key] === null || userStats[key] === undefined) {
+              userStats[key] = {"standin_count": 0, "workday_count": 0, "utfall": 0};
+          }
+          userStats[key]['utfall'] += userUtfallStat[key];
+      };
       for (var key in userWorkdayStat) {
           if( userStats[key] === null || userStats[key] === undefined) {
-              userStats[key] = {"standin_count": 0, "workday_count": 0};
+              userStats[key] = {"standin_count": 0, "workday_count": 0, "utfall": 0};
           }
           userStats[key]['workday_count'] += userWorkdayStat[key];
       };
@@ -138,7 +164,8 @@ class Statistic extends Component {
       for( var r in userStats){
           finalStats.push({"userId": r,
               "standin_count": userStats[r]["standin_count"],
-              "workday_count": userStats[r]["workday_count"]
+              "workday_count": userStats[r]["workday_count"],
+              "utfall_count": userStats[r]["utfall"]
           })
       };
 
@@ -151,6 +178,7 @@ class Statistic extends Component {
               <td>{(getUserInfo(s.userId)).name}</td>
               <td>{s.standin_count}</td>
               <td>{s.workday_count}</td>
+      <td>{s.utfall_count}</td>
           </tr>
   );
 
@@ -167,6 +195,7 @@ class Statistic extends Component {
                   <th>Name</th>
                   <th>Stand-in</th>
                   <th>Workday</th>
+          <th>Utfall</th>
               </tr>
           </thead>
           <tbody>
