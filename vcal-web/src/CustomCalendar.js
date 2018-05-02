@@ -339,7 +339,7 @@ class MyDatePicker extends Component {
                     isDayHighlighted={this.highlightHalfDay}
                 />
                 <button type="button" className={this.state.byteButtonClass}
-                    onClick={this.handleSwitchDate} disabled={this.state.disabledByte}
+                    onClick={this.handleSwitchDate} disabled={this.state.disabledByte || this.props.disabled}
                     style={visibilityStyle} >
 
                         {this.state.byteText}
