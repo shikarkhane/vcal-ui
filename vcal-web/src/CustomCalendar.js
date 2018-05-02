@@ -314,10 +314,11 @@ class MyDatePicker extends Component {
 
     render() {
         const visibilityStyle = { visibility: this.state.visibleByte};
-        
+
         return (
             <li className="list-group-item" >
                 < SingleDatePicker date={this.state.date} focused={this.state.focused}
+                    disabled={this.props.disabled}
                     onDateChange={(date) =>
                             {
                                 // clear the date if its not within 30 days
@@ -331,7 +332,7 @@ class MyDatePicker extends Component {
                                 this.setState({focused});
                             }
                         }
-                    showClearDate
+                    showClearDate={!this.props.disabled}
                     displayFormat="MMM D"
                     isDayBlocked={this.isDayBlocked}
                     renderCalendarInfo={this.calendarInfo}

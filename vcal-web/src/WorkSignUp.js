@@ -382,11 +382,9 @@ class WorkSignUp extends Component {
                 .filter(function (s) {
                     return !isNonWorkingDay(s.standin_date);
                 })
-                .filter(function (s) {
-                    return isFutureDate(s.standin_date);
-                })
                 .map((s) =>
             <MyDatePicker key={s.standin_date + s.id} chosenDate={s.standin_date}
+            disabled={!isFutureDate(s.standin_date)}
             openDatesMetadata={this.state.dictOpenStandinMetadata}
             openDates={this.state.openStandinDates}
             isWorkday={false} signupId={s.id}
@@ -405,11 +403,9 @@ class WorkSignUp extends Component {
                 .filter(function (s) {
                     return !isNonWorkingDay(s.work_date);
                 })
-                .filter(function (s) {
-                    return isFutureDate(s.work_date);
-                })
                 .map((s) =>
             <MyDatePicker key={s.work_date + s.id} chosenDate={s.work_date}
+            disabled={!isFutureDate(s.work_date)}
             openDatesMetadata={this.state.dictOpenWorkdayMetadata}
             openDates={this.state.openWorkdayDate}
             isWorkday={true} signupId={s.id}
