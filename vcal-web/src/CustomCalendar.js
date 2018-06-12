@@ -225,10 +225,16 @@ class MyDatePicker extends Component {
             , method: 'delete'
             , contentType: 'application/json'
             , data: JSON.stringify({chosen_date: chosenDate})
+            , error: function (err) {
+                self.props.onFeedbackUpdate(true, "Error!");
+            }
             , success: function (resp) {
                 if (resp.status === 'ok') {
                     self.props.onFeedbackUpdate(true, "Saved");
                     self.props.onOpenDatesUpdate(chosenDate, false, isWorkday);
+                }
+                else{
+                    self.props.onFeedbackUpdate(true, "Error!");
                 }
 
             }
@@ -297,12 +303,18 @@ class MyDatePicker extends Component {
                         chosen_date: chosenDate, user_id: userId,
                         is_workday: isWorkday
                     })
+                    , error: function (err) {
+                        self.props.onFeedbackUpdate(true, "Error!");
+                    }
                     , success: function (resp) {
                         //console.log(resp);
                         if (resp.status === 'ok') {
                             self.setState({signupId: resp.id});
                             self.props.onFeedbackUpdate(true, "Saved");
                             self.props.onOpenDatesUpdate(chosenDate, false, isWorkday);
+                        }
+                        else{
+                            self.props.onFeedbackUpdate(true, "Error!");
                         }
                     }
                 });
