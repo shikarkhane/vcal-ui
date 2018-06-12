@@ -148,7 +148,9 @@ class Header extends Component {
       , method: 'get'
       , contentType: 'application/json'
       , success: function (resp) {
-        localStorage.setItem("role", resp.role);
+            if (!localStorage.getItem("adminOverrideInProgress")){
+                localStorage.setItem("role", resp.role);
+            }
         localStorage.setItem("isActive", resp.is_active);
       }
     });

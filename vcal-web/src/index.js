@@ -23,6 +23,7 @@ import Dashboard from './Dashboard';
 import Holidays from './Holidays';
 import Overview from './Overview';
 import Statistic from './Statistic';
+import AssignUser from './Assign';
 
 ReactDOM.render(
   <Router history={hashHistory}>
@@ -44,6 +45,7 @@ ReactDOM.render(
     <Route path="/holidays" component={Holidays}></Route>
     <Route path="/overview" component={Overview}></Route>
     <Route path="/statistic" component={Statistic}></Route>
+    <Route path="/assign" component={AssignUser}></Route>
   </Router>
   , document.getElementById('root')
 );

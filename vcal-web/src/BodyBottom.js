@@ -26,6 +26,7 @@ class AdminUserAction extends Component{
           <ActionButton actionLinkName="NoShowUps" actionLabel="Show-ups" notifyCount="0" disabled={!this.state.isRuleSet}/>
           <ActionButton actionLinkName="rule" actionLabel="Rule" notifyCount="0" disabled={false}/>
           <ActionButton actionLinkName="holidays" actionLabel="Holidays" notifyCount="0" disabled={false}/>
+        <ActionButton actionLinkName="assign" actionLabel="Assign" notifyCount="0" disabled={false}/>
       </div>
     );
   }
