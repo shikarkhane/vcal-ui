@@ -9,16 +9,20 @@ class CreateWorkday extends Component {
    super(props);
    this.state = {workDate: '', fromTime: '', tillTime : '',
      halfDay: false, createDisabled: false,
-       feedbackMessage:"", displayAlert: false};
+       feedbackMessage:"", displayAlert: false, numberOfVikarie:1};
 
    this.changeDate = this.changeDate.bind(this);
    this.changeFromTime = this.changeFromTime.bind(this);
    this.changeTillTime = this.changeTillTime.bind(this);
    this.changeHalfDay = this.changeHalfDay.bind(this);
    this.handleSave = this.handleSave.bind(this);
+      this.changeNumberOfVikarie = this.changeNumberOfVikarie.bind(this);
 
  }
 
+    changeNumberOfVikarie(e){
+        this.setState({numberOfVikarie: e.target.value });
+    }
   changeDate(e){
     this.setState({workDate: e.target.value });
   }
@@ -28,6 +32,7 @@ class CreateWorkday extends Component {
   changeTillTime(e){
     this.setState({tillTime: e.target.value });
   }
+
   changeHalfDay(e){
     this.setState({halfDay: e.target.checked });
   }
@@ -42,23 +47,27 @@ class CreateWorkday extends Component {
           from_time: this.state.fromTime, to_time: this.state.tillTime,
           standin_user_id: "", is_half_day: this.state.halfDay, id: makeId()};
 
-    reqwest({
-        url: conf.serverUrl + '/workday/' + groupId + '/'
-      , type: 'json'
-      , method: 'post'
-      , contentType: 'application/json'
-      , data: JSON.stringify(jsonBody)
-      , success: function (resp) {
-          //console.log(resp);
-            if (resp.status === 'ok'){
-                jsonBody.id = resp.id;
-                self.props.onUpdate(jsonBody);
-                self.setState({feedbackMessage : resp.message});
-                self.setState({displayAlert: true});
+      // create number of instances based on needed vikarie count
+      for (var i = 1; i <= this.state.numberOfVikarie; i++) {
+          reqwest({
+              url: conf.serverUrl + '/workday/' + groupId + '/'
+              , type: 'json'
+              , method: 'post'
+              , contentType: 'application/json'
+              , data: JSON.stringify(jsonBody)
+              , success: function (resp) {
+                  //console.log(resp);
+                  if (resp.status === 'ok'){
+                      jsonBody.id = resp.id;
+                      self.props.onUpdate(jsonBody);
+                      self.setState({feedbackMessage : resp.message});
+                      self.setState({displayAlert: true});
 
-            }
-        }
-    });
+                  }
+              }
+          });
+      }
+
   }
   render() {
     return (
@@ -88,6 +97,14 @@ class CreateWorkday extends Component {
                   onChange={this.changeTillTime} value={this.state.tillTime}/>
           </div>
         </div>
+      <div className="form-group">
+          <label htmlFor="numberOfVikarie" className="col-sm-2 control-label">Number of Vikarie needed:</label>
+              <div className="col-sm-10">
+                  <input type="number" className="form-control" id="numberOfVikarie"
+              placeholder="1"
+              onChange={this.changeNumberOfVikarie} value={this.state.numberOfVikarie}/>
+          </div>
+      </div>
         <div className="form-group">
           <div className="col-sm-offset-2 col-sm-10">
             <div className="checkbox">
@@ -98,6 +115,7 @@ class CreateWorkday extends Component {
             </div>
           </div>
         </div>
+
         <div className="form-group">
           <div className="col-sm-offset-2 col-sm-10">
             <button type="submit" className="btn btn-default" disabled={this.state.createDisabled}>Create</button>
