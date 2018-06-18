@@ -1,7 +1,7 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
-import {getHumanDate, isFutureDate, isInChosenTerm}from './Utility';
+import {getHumanDate, isFutureDate, isInChosenTerm, getUserInfo}from './Utility';
 
 class WorkdayElement extends Component{
     constructor(props) {
@@ -26,13 +26,15 @@ class WorkdayElement extends Component{
     var workdayId = this.props.workdayId;
     var halfDayText = "full day";
     var isHalfDay = this.props.halfDay;
+    var name = (getUserInfo(this.props.userId)).name;
+
     if ( isHalfDay ){
       halfDayText = "half day";
     }
     return (
       <div className="alert alert-success" role="alert">
         On {this.props.date} , stand-in needed between {this.props.fromTime}
-        till  {this.props.tillTime} for {halfDayText}
+        till  {this.props.tillTime} for {halfDayText} (Booked by: {name})
 
         <button type="button" className="btn btn-warning pull-right" disabled={this.state.disabled}
           onClick={this.handleDeleteWorkday.bind(this, workdayId)} >
@@ -54,7 +56,7 @@ class ListWorkday extends Component {
     <WorkdayElement key={wd.work_date+wd.id} workdayId={wd.id}
       date={getHumanDate(wd.work_date)}
       fromTime={wd.from_time_in_24hours} tillTime={wd.to_time_in_24hours}
-      halfDay={wd.is_half_day} />
+      halfDay={wd.is_half_day} userId={wd.standin_user_id}/>
   );
     return (
       <div>
