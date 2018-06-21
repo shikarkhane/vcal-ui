@@ -28,7 +28,16 @@ class AllUserDropDown extends Component {
                     onClick={() =>this.overrideUser(x.id)}> {x.name}</button>);
         return (<div>
             <h1 className="display-4">Acting as:{(getUserInfo(localStorage.getItem("userId"))).name}</h1>
-                {userList}
+
+        <div className="dropdown">
+            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Change to user!
+        </button>
+        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {userList}
+        </div>
+        </div>
+
             </div>);
     }
 }
