@@ -156,13 +156,13 @@ class TermElement extends Component{
           <span className="badge">{totalKids}</span>
             <div className="form-group">
             <div className="col-sm-offset-4 col-sm-10">
-            <button className="btn btn-success pull-right"
+            <button className="btn btn-success float-right"
               onClick={this.handleSetDefaultTerm.bind(null)}>
             Make default</button>
             </div>
 
         <div className="col-sm-offset-2 col-sm-10">
-                <button type="submit" className="btn btn-default pull-right">
+                <button type="submit" className="btn btn-primary float-right">
         {buttonText}</button>
               </div>
             </div>

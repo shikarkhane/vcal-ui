@@ -146,7 +146,7 @@ class CreateSummon extends Component {
         </div>
         <div className="form-group">
           <div className="col-sm-offset-2 col-sm-10">
-            <button type="submit" className="btn btn-default" disabled={this.state.createDisabled}>
+            <button type="submit" className="btn btn-primary" disabled={this.state.createDisabled}>
                 Create</button>
           </div>
         </div>

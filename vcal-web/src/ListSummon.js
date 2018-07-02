@@ -30,7 +30,7 @@ class SummonElement extends Component{
         On {this.props.date} , stand-in needed between {this.props.fromTime}
         till  {this.props.tillTime}
 
-          <button type="button" className="btn btn-warning pull-right" disabled={this.state.disabled}
+          <button type="button" className="btn btn-warning float-right" disabled={this.state.disabled}
               onClick={this.handleDeleteSummon.bind(this, summonId)} >
             <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
           </button>

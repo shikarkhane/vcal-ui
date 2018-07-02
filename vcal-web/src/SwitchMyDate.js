@@ -70,7 +70,7 @@ class SwitchMyDate extends Component{
           {displayDate} between
             {fromTime} till {tillTime} for ({halfDayText})
 
-          <button type="button" className="btn btn-success pull-right"
+          <button type="button" className="btn btn-success float-right"
             onClick={this.handleSwitch.bind(null, isWorkday, chosenDate, fromTime,
               tillTime, isHalfDay)} disabled={disabled}>
             <span className="glyphicon glyphicon-transfer" aria-hidden="true"></span>
@@ -82,7 +82,7 @@ class SwitchMyDate extends Component{
       return (
         <div className={classSpecial} role="alert">
         {displayDate}
-        <button type="button" className="btn btn-success pull-right"
+        <button type="button" className="btn btn-success float-right"
           onClick={this.handleSwitch.bind(null, isWorkday, chosenDate, fromTime,
             tillTime, isHalfDay)} disabled={disabled}>
           <span className="glyphicon glyphicon-transfer" aria-hidden="true"></span>

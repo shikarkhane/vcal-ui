@@ -36,9 +36,9 @@ class WorkdayElement extends Component{
         On {this.props.date} , stand-in needed between {this.props.fromTime}
         till  {this.props.tillTime} for {halfDayText} (Booked by: {name})
 
-        <button type="button" className="btn btn-warning pull-right" disabled={this.state.disabled}
+        <button type="button" className="btn btn-warning float-right" disabled={this.state.disabled}
           onClick={this.handleDeleteWorkday.bind(this, workdayId)} >
-          <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          <span className="glyphicon glyphicon-remove" aria-hidden="true">X</span>
         </button>
       </div>
     );

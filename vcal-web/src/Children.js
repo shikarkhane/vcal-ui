@@ -70,7 +70,7 @@ class Children extends Component {
                 onChange={this.changeChildrenCount} value={this.state.childCount}/>
 
           <span className="input-group-btn">
-              <button className="btn btn-default" onClick={this.handleSave.bind(this)} type="button">Save</button>
+              <button className="btn btn-primary" onClick={this.handleSave.bind(this)} type="button">Save</button>
           </span>
           </div>
       </div>

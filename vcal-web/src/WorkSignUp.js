@@ -509,7 +509,7 @@ class WorkSignUp extends Component {
                             {standinElements}
                             {standinFromRule}
                         </div>
-                        <button className="btn btn-default" onClick={this.addMoreStandin}
+                        <button className="btn btn-primary" onClick={this.addMoreStandin}
                             disabled={!this.state.hideExtraStandin}>Add Extra</button>
                         <div className="list-group" hidden={this.state.hideExtraStandin}>
                             {extraStandin}
@@ -525,7 +525,7 @@ class WorkSignUp extends Component {
                                 {workdayFromRule}
                             </div>
 
-        <button className="btn btn-default" onClick={this.addMoreWorkday}
+        <button className="btn btn-primary" onClick={this.addMoreWorkday}
         disabled={!this.state.hideExtraWorkday}>Add Extra</button>
 
                             <div className="list-group" hidden={this.state.hideExtraWorkday}>

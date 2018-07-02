@@ -109,7 +109,7 @@ class NoNoShowUps extends Component {
                     <input type="date" className="form-control" onChange={this.changeDate}
                         aria-describedby="basic-addon1" value={this.state.chosenDate} />
                     <span className="input-group-btn">
-                        <button className="btn btn-default" onClick={this.getStandins.bind(this)} type="button">Get!</button>
+                        <button className="btn btn-primary" onClick={this.getStandins.bind(this)} type="button">Get!</button>
                     </span>
                 </div>
              </div>

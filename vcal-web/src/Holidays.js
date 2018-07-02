@@ -33,9 +33,9 @@ class HolidayElement extends Component{
             <div className="alert alert-success" role="alert">
              {this.props.date}
 
-                <button type="button" className="btn btn-warning pull-right" disabled={this.state.disabled}
+                <button type="button" className="btn btn-warning float-right" disabled={this.state.disabled}
                     onClick={this.handleDeleteHoliday.bind(this, holidayId)} >
-                    <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    <span className="glyphicon glyphicon-remove" aria-hidden="true">X</span>
                 </button>
             </div>
     );
@@ -120,7 +120,7 @@ class Holidays extends Component {
                         <input type="date" className="form-control" id="inputDate1"
                             onChange={this.changeDate} value={this.state.holidayDate} aria-describedby="basic-addon3"/>
                         <span className="input-group-btn">
-                            <button className="btn btn-default" onClick={this.handleSave.bind(this)} type="button">Add</button>
+                            <button className="btn btn-primary" onClick={this.handleSave.bind(this)} type="button">Add</button>
                         </span>
                     </div>
                 </div>
