@@ -215,8 +215,19 @@ class MyDatePicker extends Component {
                 chosen_date: chosenDate, user_id: userId,
                 is_workday: isWorkday, standinUserId: standinUserId
             })
+            , error: function (err) {
+                self.props.onFeedbackUpdate(true, "Error!");
+                self.clearText();
+            }
             , success: function (resp) {
-                console.log(resp);
+                if (resp.status === 'ok') {
+                    self.props.onFeedbackUpdate(true, "Saved");
+                }
+                else{
+                    self.props.onFeedbackUpdate(true, "Error!");
+                    self.clearText();
+                }
+
             }
         });
         reqwest({
@@ -229,14 +240,10 @@ class MyDatePicker extends Component {
                 self.props.onFeedbackUpdate(true, "Error!");
             }
             , success: function (resp) {
+                console.log(resp);
                 if (resp.status === 'ok') {
-                    self.props.onFeedbackUpdate(true, "Saved");
                     self.props.onOpenDatesUpdate(chosenDate, false, isWorkday);
                 }
-                else{
-                    self.props.onFeedbackUpdate(true, "Error!");
-                }
-
             }
         });
 
