@@ -356,6 +356,7 @@ class MyDatePicker extends Component {
                     isDayBlocked={this.isDayBlocked}
                     renderCalendarInfo={this.calendarInfo}
                     isDayHighlighted={this.highlightHalfDay}
+                    numberOfMonths={1}
                 />
                 <button type="button" className={this.state.byteButtonClass}
                     onClick={this.handleSwitchDate} disabled={this.state.disabledByte || this.props.disabled}
