@@ -252,7 +252,7 @@ class AssignUser extends Component {
                 + from + ' till ' + to);
         }
         else {
-            o.set("displayText", 'Full-day from 0830 till 1630.');
+            o.set("displayText", 'Full-day from 0800 till 1630.');
         }
         return o;
     }
@@ -271,7 +271,7 @@ class AssignUser extends Component {
                 + from + ' till ' + to;
         }
         else {
-            return 'Full-day from 0830 till 1630';
+            return 'Full-day from 0800 till 1630';
         }
     }
     appendOpenStandinDates(response_array) {
