@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom';
 
 import './index.css';
 
-import { Router, Route, hashHistory } from "react-router";
+import { Router, Route } from "react-router-dom";
+
+import {createHashHistory} from 'history';
+const hashHistory = createHashHistory();
 
 import App from './App';
 import MyGroup from './MyGroup';

@@ -3,21 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "0.8.4"
+    "react-scripts": "4.0.3"
   },
   "dependencies": {
-    "history": "^4.10.1",
+    "history": "^5.0.1",
     "moment": "^2.29.1",
-    "react": "^15.7.0",
+    "react": "^17.0.2",
     "react-addons-css-transition-group": "^15.6.2",
     "react-addons-shallow-compare": "^15.6.3",
-    "react-alert": "^1.0.14",
-    "react-bootstrap": "^0.30.7",
-    "react-dates": "^8.2.1",
-    "react-dom": "^15.7.0",
-    "react-google-login": "^2.11.3",
+    "react-alert": "^7.0.3",
+    "react-alert-template-basic": "^1.0.2",
+    "react-bootstrap": "^1.6.4",
+    "react-dates": "^21.8.0",
+    "react-dom": "^17.0.2",
+    "react-google-login": "^5.2.2",
     "react-native": "^0.66.1",
-    "react-router": "^3.2.6",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
     "reqwest": "^2.0.5"
   },
   "scripts": {
@@ -29,5 +31,17 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
   "main": "index.js",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

@@ -1,8 +1,10 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
-import { hashHistory, Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import reqwest from 'reqwest';
 import Feedback from './Feedback';
+import {createHashHistory} from'history';
+const hashHistory = createHashHistory();
 
 class Header extends Component {
   constructor(props) {

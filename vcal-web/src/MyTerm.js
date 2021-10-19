@@ -2,7 +2,8 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import { hashHistory } from 'react-router';
+import {createHashHistory} from'history';
+const hashHistory = createHashHistory();
 
 class TermElement extends Component{
   handleChooseTerm(termId, termName){

@@ -1,8 +1,9 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
-import {hashHistory} from 'react-router';
 import reqwest from 'reqwest';
+import {createHashHistory} from'history';
+const hashHistory = createHashHistory();
 
 class GoogleButton extends Component{
   handleAuthenticatedUser(){
