@@ -94,6 +94,9 @@ class GoogleButton extends Component{
         hostedDomain="gomorronsol.net"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
+        cookiePolicy={'single_host_origin'}
+        style={{ marginTop: '100px' }}
+        isSignedIn={true}
       />
     );
   }
