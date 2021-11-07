@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom';
 
 import './index.css';
 
-import { Router, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 
-import {createHashHistory} from 'history';
-const hashHistory = createHashHistory();
+import history from 'history/hash'
 
 import App from './App';
 import MyGroup from './MyGroup';
@@ -29,7 +28,7 @@ import Statistic from './Statistic';
 import AssignUser from './Assign';
 
 ReactDOM.render(
-  <Router history={hashHistory}>
+  <BrowserRouter history={history}>
     <Route path="/" component={App}></Route>
     <Route path="/mygroup" component={MyGroup}></Route>
     <Route path="/myterm" component={MyTerm}></Route>
@@ -49,6 +48,6 @@ ReactDOM.render(
     <Route path="/overview" component={Overview}></Route>
     <Route path="/statistic" component={Statistic}></Route>
     <Route path="/assign" component={AssignUser}></Route>
-  </Router>
+  </BrowserRouter>
   , document.getElementById('root')
 );

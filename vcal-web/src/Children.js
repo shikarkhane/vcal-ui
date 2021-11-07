@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
 import Feedback from './Feedback';
-import {createHashHistory} from'history';
-const hashHistory = createHashHistory();
+import history from 'history/hash';
 
 class Children extends Component {
   constructor(props) {
@@ -52,7 +51,7 @@ class Children extends Component {
             self.setState({feedbackMessage : resp.message});
             self.setState({displayAlert: true});
 
-            hashHistory.push('/');
+            history.push('/');
         }
     });
   }

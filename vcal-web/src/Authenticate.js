@@ -2,8 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import reqwest from 'reqwest';
-import {createHashHistory} from'history';
-const hashHistory = createHashHistory();
+import history from 'history/hash';
 
 class GoogleButton extends Component{
   handleAuthenticatedUser(){
@@ -23,14 +22,14 @@ class GoogleButton extends Component{
       , error: function (err) {
         //console.log(err);
         localStorage.clear();
-        hashHistory.push('/');
+        history.push('/');
       }
       , success: function (resp) {
           //console.log(resp);
           localStorage.setItem("userId", resp.userId);
           localStorage.setItem("role", resp.role);
           localStorage.setItem("isActive", resp.isActive);
-          hashHistory.push('/dashboard');
+          history.push('/dashboard');
         }
     });
   }
@@ -83,7 +82,7 @@ class GoogleButton extends Component{
       }
       else{
         localStorage.clear();
-        hashHistory.push('/');
+        history.push('/');
       }
     }
 

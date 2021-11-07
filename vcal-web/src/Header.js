@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import reqwest from 'reqwest';
 import Feedback from './Feedback';
-import {createHashHistory} from'history';
-const hashHistory = createHashHistory();
+import history from 'history/hash';
 
 class Header extends Component {
   constructor(props) {

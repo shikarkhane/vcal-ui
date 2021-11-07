@@ -2,15 +2,14 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import {createHashHistory} from'history';
-const hashHistory = createHashHistory();
+import history from 'history/hash';
 
 class TermElement extends Component{
   handleChooseTerm(termId, termName){
     localStorage.setItem("termId", termId);
     localStorage.setItem("termName", termName);
       localStorage.setItem("isTermOverridden", true);
-    hashHistory.push('/');
+    history.push('/');
   }
   render(){
     var termId = this.props.termId;
