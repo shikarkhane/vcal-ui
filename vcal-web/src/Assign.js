@@ -4,7 +4,7 @@ import reqwest from 'reqwest';
 import Header from './Header';
 import MyDatePicker from './CustomCalendar';
 import {isNonWorkingDay, isFutureDate, isInChosenTerm} from './Utility';
-import Feedback from './Feedback';
+//import Feedback from './Feedback';
 import AllUserDropDown from './AllUsers';
 
 class AssignUser extends Component {
@@ -68,7 +68,10 @@ class AssignUser extends Component {
 
     onFeedbackUpdate(displayAlert, message) {
         // popup message
-        this.setState({displayAlert: displayAlert, feedbackMessage: message});
+        //this.setState({displayAlert: displayAlert, feedbackMessage: message});
+        if ( displayAlert){
+            window.alert(message);
+        }
     }
     onOpenDatesUpdate(dateUpdated, isOpen, isWorkday) {
         // this method keeps openDates state updated
@@ -504,7 +507,7 @@ class AssignUser extends Component {
 
             <h1> Åtagande</h1>
             <h4> Fyll i datum nedan för att uppfylla ditt åtagande</h4>
-        <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
+
 
     <div className="panel panel-default">
             <div className="panel-heading"> Vikariedagar</div>

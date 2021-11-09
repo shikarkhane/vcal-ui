@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import {makeId}from './Utility';
-import Feedback from './Feedback';
+//import Feedback from './Feedback';
 
 class CreateSummon extends Component {
   constructor(props) {
@@ -71,8 +71,9 @@ class CreateSummon extends Component {
             if (resp.status === 'ok'){
                 jsonBody.id = resp.id;
                 self.props.onUpdate(jsonBody);
-                self.setState({feedbackMessage : resp.message});
-                self.setState({displayAlert: true});
+                //self.setState({feedbackMessage : resp.message});
+                //self.setState({displayAlert: true});
+                window.alert(resp.message)
 
             }
         }
@@ -94,7 +95,6 @@ class CreateSummon extends Component {
   render() {
     return (
       <form className="form-horizontal" onSubmit={this.handleSave}>
-        <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
 
         <div className="form-group">
           <label htmlFor="inputName1" className="col-sm-2 control-label">Name</label>

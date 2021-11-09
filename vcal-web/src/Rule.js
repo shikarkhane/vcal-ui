@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import Feedback from './Feedback';
+//import Feedback from './Feedback';
 
 class Rule extends Component {
 
@@ -42,8 +42,9 @@ class Rule extends Component {
            definition: {standin: [standinKid1, standinKid2, standinKid3],
              workday: [workdayKid1, workdayKid2, workdayKid3]}})
       , success: function (resp) {
-            self.setState({feedbackMessage : resp.message});
-            self.setState({displayAlert: true});
+            //self.setState({feedbackMessage : resp.message});
+            //self.setState({displayAlert: true});
+            window.alert(resp.message);
         }
     });
   }
@@ -103,7 +104,6 @@ class Rule extends Component {
       <div>
         <Header />
         <form onSubmit={this.handleSave}>
-        <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
           <h1>Rule</h1>
             <div className="form-group">
               <label className=" control-label">Stand-in days for Families with </label>

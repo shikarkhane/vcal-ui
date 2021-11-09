@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import reqwest from 'reqwest';
-import Feedback from './Feedback';
+//import Feedback from './Feedback';
 import history from 'history/hash';
 
 class Header extends Component {
@@ -117,6 +117,7 @@ class Header extends Component {
                 else{
                     localStorage.setItem("isRuleSet", 0);
                     self.setState({isRuleSet: false});
+                    window.alert(this.state.feedbackMessage);
                 }
             }
         });
@@ -185,8 +186,6 @@ class Header extends Component {
     var profileImgUrl =  profileObj.imageUrl;
     return (
       <div className="page-header clearfix">
-          <Feedback displayAlert={!this.state.isRuleSet} message={this.state.feedbackMessage} />
-
         <div className="float-left">
           <Link to={'/'}>
             <button type="button" className="btn btn-primary">

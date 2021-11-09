@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
 import {getHumanDate, makeId, isFutureDate, isInChosenTerm}from './Utility';
-import Feedback from './Feedback';
+//import Feedback from './Feedback';
 
 class HolidayElement extends Component{
+
+
     constructor(props) {
         super(props);
         this.handleDeleteHoliday = this.handleDeleteHoliday.bind(this);
@@ -21,8 +23,9 @@ class HolidayElement extends Component{
             , contentType: 'application/json'
             , success: function (resp) {
                 //console.log(resp);
-                self.setState({feedbackMessage : resp.message});
-                self.setState({displayAlert: true});
+                //self.setState({feedbackMessage : resp.message});
+                //self.setState({displayAlert: true});
+                //useAlert().show(resp.message);
             }
         });
     }
@@ -91,8 +94,10 @@ class Holidays extends Component {
             var hds = self.state.holidayDates;
             hds.unshift({"holiday_date": holidayDate, "id": makeId()});
             self.setState({holidayDates: hds});
-            self.setState({feedbackMessage : resp.message});
-            self.setState({displayAlert: true});
+            //self.setState({feedbackMessage : resp.message});
+            //self.setState({displayAlert: true});
+            //useAlert().show(resp.message);
+            window.alert(resp.message)
         }
     });
   }
@@ -110,7 +115,6 @@ class Holidays extends Component {
         <div>
             <Header />
             <h1>Public Holidays </h1>
-            <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
             <label htmlFor="basic-url">Enter public holidays</label>
 
             <form onSubmit={this.handleSave}>

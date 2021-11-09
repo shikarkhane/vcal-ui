@@ -2,7 +2,7 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import Feedback from './Feedback';
+//import Feedback from './Feedback';
 import history from 'history/hash';
 
 class Children extends Component {
@@ -48,9 +48,9 @@ class Children extends Component {
       , success: function (resp) {
           //console.log(resp);
             localStorage.setItem("childrenCount", self.state.childCount);
-            self.setState({feedbackMessage : resp.message});
-            self.setState({displayAlert: true});
-
+            //self.setState({feedbackMessage : resp.message});
+            //self.setState({displayAlert: true});
+            window.alert(resp.message);
             history.push('/');
         }
     });
@@ -61,7 +61,6 @@ class Children extends Component {
       <div>
         <Header />
         <h1>Children </h1>
-        <Feedback displayAlert={this.state.displayAlert} message={this.state.feedbackMessage} />
 
         <label htmlFor="basic-url">How many of your kids will attend day care in {termName} term?</label>
         <div className="input-group">
