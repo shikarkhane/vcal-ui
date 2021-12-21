@@ -2,14 +2,14 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import history from 'history/hash';
+import { withRouter} from 'react-router-dom';
 
 class TermElement extends Component{
   handleChooseTerm(termId, termName){
     localStorage.setItem("termId", termId);
     localStorage.setItem("termName", termName);
       localStorage.setItem("isTermOverridden", true);
-    history.push('/');
+      this.props.history.push('/');
   }
   render(){
     var termId = this.props.termId;
@@ -70,4 +70,4 @@ class MyTerm extends Component {
   }
 }
 
-export default MyTerm;
+export default withRouter(MyTerm);

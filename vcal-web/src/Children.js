@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
 //import Feedback from './Feedback';
-import history from 'history/hash';
+import { withRouter} from 'react-router-dom';
 
 class Children extends Component {
   constructor(props) {
@@ -51,8 +51,8 @@ class Children extends Component {
             //self.setState({feedbackMessage : resp.message});
             //self.setState({displayAlert: true});
             window.alert(resp.message);
-            history.push('/');
-        }
+            this.props.history.replace('/');
+        }.bind(this)
     });
   }
   render() {
@@ -77,4 +77,4 @@ class Children extends Component {
   }
 }
 
-export default Children;
+export default withRouter(Children);

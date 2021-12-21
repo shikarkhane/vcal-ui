@@ -2,14 +2,14 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import reqwest from 'reqwest';
 import Header from './Header';
-import history from 'history/hash';
+import { withRouter} from 'react-router-dom';
 
 class GroupElement extends Component{
   handleChooseGroup(groupId, groupName, defaultTermId){
     localStorage.setItem("groupId", groupId);
     localStorage.setItem("groupName", groupName);
       localStorage.setItem("defaultTermId", defaultTermId);
-    history.push('/');
+      this.props.history.push('/');
   }
   render(){
     var groupId = this.props.groupId;
@@ -69,4 +69,4 @@ class MyGroup extends Component {
   }
 }
 
-export default MyGroup;
+export default withRouter(MyGroup);

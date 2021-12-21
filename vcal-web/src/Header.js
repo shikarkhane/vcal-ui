@@ -1,9 +1,8 @@
 import { conf } from './Config';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link , withRouter} from 'react-router-dom';
 import reqwest from 'reqwest';
 //import Feedback from './Feedback';
-import history from 'history/hash';
 
 class Header extends Component {
   constructor(props) {
@@ -25,8 +24,8 @@ class Header extends Component {
 
    if ( Number(localStorage.getItem("role")) == 1){
      if (! groupName){
-        hashHistory.push('/mygroup');
-        return;
+         this.props.history.replace('/mygroup');
+
      }
        this.setState({groupName: groupName });
 
@@ -38,16 +37,12 @@ class Header extends Component {
            }
        }
        if (! termId) {
-           hashHistory.push('/myterm');
-           return;
+           this.props.history.replace('/myterm');
+
        }
 
        this.setState({termName: termName});
 
-       if (! childrenCount) {
-           hashHistory.push('/children');
-           return;
-       }
    }
 
 
@@ -213,4 +208,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

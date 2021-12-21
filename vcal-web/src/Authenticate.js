@@ -2,9 +2,9 @@ import { conf } from './Config';
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import reqwest from 'reqwest';
-import history from 'history/hash';
+import { withRouter} from 'react-router-dom';
 
-class GoogleButton extends Component{
+class Authenticate extends Component{
   handleAuthenticatedUser(){
     var profileObj = JSON.parse(localStorage.getItem("profileObj"));
     var tokenId = localStorage.getItem("tokenId");
@@ -22,15 +22,15 @@ class GoogleButton extends Component{
       , error: function (err) {
         //console.log(err);
         localStorage.clear();
-        history.push('/');
-      }
+        this.props.history.push('/');
+      }.bind(this)
       , success: function (resp) {
           //console.log(resp);
           localStorage.setItem("userId", resp.userId);
           localStorage.setItem("role", resp.role);
           localStorage.setItem("isActive", resp.isActive);
-          history.push('/dashboard');
-        }
+          this.props.history.push('/');
+        }.bind(this)
     });
   }
   isUserDomainApproved(email){
@@ -82,7 +82,7 @@ class GoogleButton extends Component{
       }
       else{
         localStorage.clear();
-        history.push('/');
+        this.props.history.push('/');
       }
     }
 
@@ -100,14 +100,5 @@ class GoogleButton extends Component{
     );
   }
 }
-class Authenticate extends Component {
-  render() {
-    return (
-      <div className="page-header">
-        <GoogleButton />
-      </div>
-    );
-  }
-}
 
-export default Authenticate;
+export default withRouter(Authenticate);
